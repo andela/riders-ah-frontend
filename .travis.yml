@@ -1,14 +1,17 @@
-language:
-  node_js
+language: node_js
 
-node_js: 
-  "10.15.3"
+node_js: '10.15.3'
+
+dist: xenial
+services:
+  - xvfb
 
 addons:
+  chrome: beta
   apt:
     packages:
       # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
-      - libgconf-2-4 
+      - libgconf-2-4
 
 cache:
   directories:
@@ -16,8 +19,10 @@ cache:
     - ~/.cache
 
 env:
-  global:
-    CC_TEST_REPORTER_ID=$cc_token
+  global: CC_TEST_REPORTER_ID=$cc_token
+
+before_install:
+  - '/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16'
 
 install:
   - npm install
@@ -26,6 +31,7 @@ install:
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
+  - npm start --silent &
 
 script:
   - npm run test:coverage
@@ -33,4 +39,3 @@ script:
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
-  
