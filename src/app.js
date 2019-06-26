@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
+import { BrowserRouter } from "react-router-dom";
+import Routes from './views/routes';
 import './assets/scss/main.scss';
 
+
 class App extends Component {
-    render() { 
-        return <h1>Hello Riders</h1>;
-    }
+  render() {
+    return (
+      <BrowserRouter>
+       <Routes/>
+      </BrowserRouter>
+    );
+  }
 }
- 
+
 export default App;
