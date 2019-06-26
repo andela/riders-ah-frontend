@@ -1,3 +1,5 @@
+## Badges
+[![CircleCI](https://circleci.com/gh/andela/riders-ah-frontend/tree/develop.svg?style=svg)](https://circleci.com/gh/andela/riders-ah-frontend/tree/develop)
 ## Vision
 
 Create a community of like minded authors to foster inspiration and innovation
