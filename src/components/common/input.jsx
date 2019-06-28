@@ -24,7 +24,7 @@ const Input = ({
         id={id}
       />
       {validateMessage ||
-        (error && <div className="error-message">{error}</div>)}
+        (error && <div className='error-message'>{error}</div>)}
     </Fragment>
   );
 };
@@ -36,6 +36,7 @@ Input.propTypes = {
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   className: PropTypes.string,
-  id: PropTypes.string
+  id: PropTypes.string,
+  validateMessage: PropTypes.object
 };
 export default Input;

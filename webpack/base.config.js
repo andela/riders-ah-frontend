@@ -24,7 +24,7 @@ module.exports = {
     extensions: ['.js', '.jsx', '.es6']
   },
   output: {
-    publicPath: '/',
+    publicPath: '/'
   },
   plugins: [
     new Dotenv(),
