@@ -1,4 +1,5 @@
-## Vision
+## Badges
+[![Build Status](https://travis-ci.org/andela/riders-ah-frontend.svg?branch=develop)](https://travis-ci.org/andela/riders-ah-frontend) [![Maintainability](https://api.codeclimate.com/v1/badges/32b36a376f95d1e21d5b/maintainability)](https://codeclimate.com/github/andela/riders-ah-frontend/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/32b36a376f95d1e21d5b/test_coverage)](https://codeclimate.com/github/andela/riders-ah-frontend/test_coverage)
 
 Create a community of like minded authors to foster inspiration and innovation
 by leveraging the modern web.
