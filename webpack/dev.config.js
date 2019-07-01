@@ -7,7 +7,11 @@ export default merge(baseConfig, {
     contentBase: path.join(__dirname, '../src'),
     historyApiFallback: true,
     writeToDisk: true,
-    port: process.env.PORT || 3002
+    port: process.env.PORT || 3002,
+    historyApiFallback: {
+      disableDotRule: true
+    },
+    port: 3002
   },
 
   module: {

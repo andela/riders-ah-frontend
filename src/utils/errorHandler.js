@@ -1,18 +1,19 @@
-import isPromise from "is-promise";
-import Notify from "../helpers/helpers";
+import isPromise from 'is-promise';
+import Notify from '../helpers/helpers';
 const errorHandler = () => {
   return next => action => {
     if (!isPromise(action.payload)) {
       return next(action);
     }
 
-     if (!action.meta || !action.meta.localError) {
+    if (!action.meta || !action.meta.localError) {
       return next(action).catch(error => {
+        console.log(error);
         Notify.setAlertError(error.message);
       });
     }
 
-     return next(action);
+    return next(action);
   };
 };
 export default errorHandler;

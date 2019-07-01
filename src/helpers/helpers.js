@@ -1,11 +1,11 @@
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
 class Helpers {
   static setToken(token) {
     if (localStorage.token) {
-      localStorage.removeItem("token");
+      localStorage.removeItem('token');
     }
-    localStorage.setItem("token", token);
+    localStorage.setItem('token', token);
   }
   static setAlertError(message) {
     toast.error(message);

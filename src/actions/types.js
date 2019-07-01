@@ -1,3 +1,8 @@
-export const TEST = 'TEST';
 export const REGISTER_USER = 'REGISTER_USER';
 export const ACCOUNT_VERIFICATION = 'ACCOUNT_VERIFICATION';
+export const RESET = 'RESET';
+export const RESET_EMAIL = 'RESET_EMAIL';
+export const NEW_PASSWORD = 'NEW_PASSWORD';
+export const CONFIRM_PASSWORD = 'CONFIRM_PASSWORD';
+export const COMPLETE_RESET = 'COMPLETE_RESET';
+export const SET_ALERT = 'COMPLETE_RESET';
