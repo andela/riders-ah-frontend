@@ -10,12 +10,10 @@ export default merge(baseConfig, {
     },
     writeToDisk: true,
     port: process.env.PORT || 3002,
-    historyApiFallback: {
-      disableDotRule: true
-    },
-    port: 3002
   },
-
+  output: {
+    publicPath: '/'
+  },
   module: {
     rules: []
   }

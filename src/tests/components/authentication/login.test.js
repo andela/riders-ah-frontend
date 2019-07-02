@@ -1,8 +1,27 @@
 import { act } from 'react-dom/test-utils';
-import DefaultLogin from '../../../components/authentication/login';
+import DefaultLogin,{Login} from '../../../components/authentication/login';
 import { findTestByAttr, store } from '../../../../helpers/utils/testUtils';
+import React from 'react';
+import { shallow } from 'enzyme';
+
+
+const props = {
+    loginUser: jest.fn(),
+    errors: {},
+    auth: { credentials: {isValid: true}},
+}
 describe('app component', () => {
+
   const login = mount(<DefaultLogin store={store} />);
+  const wrapper =  shallow(<Login {...props} />)
+
+  it('Should call loginToFacebook method when image is clicked',  () => {
+    wrapper.find('#loginToFacebook').simulate('click')
+});
+it('Should call loginToGoogle method when image is clicked', () => {
+    wrapper.find('#loginToGoogle').simulate('click')
+});
+
   it('should render without error', () => {
     const loginComponent = findTestByAttr(login, 'component-Login');
     expect(loginComponent.length).toEqual(1);
@@ -54,3 +73,4 @@ describe('app component', () => {
     expect(spy).toHaveBeenCalled();
   });
 });
+

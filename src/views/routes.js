@@ -18,10 +18,10 @@ const Routes = () => {
       <Route path="/verification" exact component={Verification} />
       <Route path="/reset" exact component={Reset} />
       <Route path="/completReset/:token" exact component={CompletReset} />
-      <Route path="/login" component={Login} />
-      <Route path="/articles" component={ViewArticles} />
-      <Route path="/" exact component={Home} />
-      <Route component={NotFound} />
+      <Route exact path="/" render={props=> <Home {...props} />} />     
+      <Route exact path="/login" render={props=> <Login {...props} />} />
+      <Route exact path="/articles" render={props => <ViewArticles {...props} />} />
+      <Route render={props=> <NotFound {...props} />} />
     </Switch>
   );
 };
