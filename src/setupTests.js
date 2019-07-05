@@ -8,3 +8,10 @@ global.React = React;
 global.shallow = shallow;
 global.render = render;
 global.mount = mount;
+global.MutationObserver = class {
+  constructor() {}
+  disconnect() {}
+  observe() {}
+  takeRecords() {return []}
+};
+global.document.getSelection = function() {}

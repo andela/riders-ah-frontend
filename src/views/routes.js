@@ -9,9 +9,11 @@ import { PropTypes } from 'prop-types';
 import { Home } from './';
 import ViewArticles from '../components/articles/viewArticles.jsx';
 import { Reset, CompletReset } from '../components';
+import { CreateOrUpdateArticle } from "../components";
+import PrivateRoute from '../../helpers/privateRoute';
 
 
-const Routes = () => {
+const Routes = props => {
   return (
     <Switch>
       <Route path="/signup" exact component={Signup} />
@@ -21,6 +23,8 @@ const Routes = () => {
       <Route exact path="/" render={props=> <Home {...props} />} />     
       <Route exact path="/login" render={props=> <Login {...props} />} />
       <Route exact path="/articles" render={props => <ViewArticles {...props} />} />
+      <PrivateRoute path="/articles/create" exact component={CreateOrUpdateArticle} isAuthanticated={props.auth.isAuthanticated}/>
+      <PrivateRoute path="/articles/update/:slug" exact component={CreateOrUpdateArticle} isAuthanticated={props.auth.isAuthanticated}/>
       <Route render={props=> <NotFound {...props} />} />
     </Switch>
   );

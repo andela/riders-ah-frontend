@@ -22,7 +22,7 @@ class App extends Component {
     return (
       <Provider store={store} id='component-App'>
         <BrowserRouter>
-          <Routes />
+            <Routes />
         </BrowserRouter>
       </Provider>
     );
