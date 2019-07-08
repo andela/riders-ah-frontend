@@ -18,19 +18,19 @@ const article = {
 
 describe('article component', () => {
     it('should render without error', () => {
-      const props = {state: {article}, fetchOneStory: jest.fn(slug => slug), match: { params: {slug: 'slug'} }}
+      const props = {state: {article}, fetchOneStory: jest.fn(slug => slug), fetchComment: jest.fn(slug => slug), match: { params: {slug: 'slug'} }}
       const component = shallow(<OneStoryComponent {...props} />);
       expect(component.length).toEqual(1);
     });
 
     it('should render without error', () => {
-        const props = {state: {article:{article}}, fetchOneStory: jest.fn(slug => slug), match: { params: {slug: 'slug'} }}
+        const props = {state: {article:{article}}, fetchOneStory: jest.fn(slug => slug), fetchComment: jest.fn(slug => slug), match: { params: {slug: 'slug'} }}
         const component = shallow(<OneStoryComponent {...props} />);
         expect(component.length).toEqual(1);
       });
 
       it('should render without error', () => {
-        const props = {state: {article}, fetchOneStory: jest.fn(slug => slug), match: { params: {slug: 'slug'} }}
+        const props = {state: {article}, fetchOneStory: jest.fn(slug => slug), fetchComment: jest.fn(slug => slug), match: { params: {slug: 'slug'} }}
         const component = mount(<OneStory {...props} store={store}/>);
         expect(component.length).toEqual(1);
       });

@@ -1,0 +1,87 @@
+.comments {
+  width: 72%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  left: 23%;
+}
+
+.overlap {
+  display: grid;
+  grid-template-areas: 'comment';
+}
+
+.type-comment {
+  grid-area: comment;
+  width: 55%;
+  padding: 16px;
+  margin: 2% 0%;
+  font-size: 17px;
+  cursor: text;
+  box-shadow: $boxShadow;
+  z-index: 1;
+}
+
+.write-comment {
+  grid-area: comment;
+  width: 99%;
+  height: 120px;
+  font-size: 16px;
+  border-radius: 10px;
+  border-color: white;
+}
+
+.comment-avatar {
+  width: 40px;
+  border-radius: 100%;
+}
+
+.icon {
+  width: 25px;
+  margin: 10px;
+  float: right;
+  border-radius: 100%;
+}
+
+.comment {
+  border: solid;
+  border-radius: 10px;
+  width: 58%;
+  border-color: #4b4a54;
+}
+.user-comment {
+  grid-area: comment;
+  width: 55%;
+  margin: 2% 0%;
+  box-shadow: $boxShadow;
+  z-index: 1;
+  padding: 16px;
+  #like {
+    @include layout(6px, 0px 0px 0px #afa8ba);
+    width: 30px;
+    cursor: pointer;
+    opacity: 0.7;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+.publish {
+  padding: 13px;
+  background-color: #0066ff;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.no-publish {
+  padding: 13px;
+  background-color: #7e0000;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.name {
+  color: teal;
+  cursor: pointer;
+}

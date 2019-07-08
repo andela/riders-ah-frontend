@@ -4,9 +4,9 @@ const ErrorMessage = ({ message }) => {
   if (message === true) {
     return <div className="">{message}</div>;
   } else if (message === "loading") {
-    return <div className="loadingMessage"><strong>{message}...</strong></div>;
+    return <div className="loading-message"><strong>{message}...</strong></div>;
   } else {
-    return <div className="errorMessage">{message}</div>;
+    return <div className="error-message">{message}</div>;
   }
 };
 

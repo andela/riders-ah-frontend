@@ -10,20 +10,15 @@ class AllArticles extends Component {
   componentDidMount() {
     this.props.getArticles();
   }
-
-  handleClick = slug => {
-    this.props.history.push(`/articles/${slug}`);
-  };
-
   render() {
     const { fetched } = this.props.state.articles;
     switch (fetched) {
       case '':
         return (
-          <div id="component-ViewArticles">
+          <div id='component-ViewArticles'>
             <NavBar />
-            <div className="masonry-container">
-              <div className="masonry">
+            <div className='masonry-container'>
+              <div className='masonry'>
                 <h2>loading...</h2>
               </div>
             </div>
@@ -31,10 +26,10 @@ class AllArticles extends Component {
         );
       case 'pending':
         return (
-          <div>
+          <div id='component-ViewArticles'>
             <NavBar />
-            <div className="masonry-container">
-              <div className="masonry">
+            <div className='masonry-container'>
+              <div className='masonry'>
                 <h2>loading...</h2>
               </div>
             </div>
@@ -46,8 +41,8 @@ class AllArticles extends Component {
           return (
             <div>
               <NavBar />
-              <div className="masonry-container">
-                <div className="masonry">No articles Available</div>
+              <div className='masonry-container'>
+                <div className='masonry'>No articles Available</div>
               </div>
             </div>
           );
@@ -55,16 +50,10 @@ class AllArticles extends Component {
         return (
           <div>
             <NavBar />
-            <div className="masonry-container">
-              <div className="masonry">
+            <div className='masonry-container'>
+              <div className='masonry'>
                 {articles.map(article => {
-                  return (
-                    <ArticleCard
-                      key={article.slug}
-                      article={article}
-                      onClick={this.handleClick}
-                    />
-                  );
+                  return <ArticleCard key={article.slug} article={article} />;
                 })}
               </div>
             </div>
@@ -74,8 +63,8 @@ class AllArticles extends Component {
         return (
           <div>
             <NavBar />
-            <div className="masonry-container">
-              <div className="masonry">
+            <div className='masonry-container'>
+              <div className='masonry'>
                 <h2>loading...</h2>
               </div>
             </div>
