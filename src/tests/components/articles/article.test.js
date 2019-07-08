@@ -1,20 +1,37 @@
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable no-undef */
-import ViewArticles from "../../../components/articles/viewArticles";
-import { findTestByAttr, store } from "../../../../helpers/utils/testUtils";
+import React from 'react';
+import OneStory, {OneStory as OneStoryComponent} from '../../../components/articles/oneStory';
+import { store } from '../../../../helpers/utils/testUtils';
+import { mount, shallow } from 'enzyme';
 
-const props = {
-    location:{
-        search:''
-    }
+const article = {
+ article: {  
+      data:{
+        article: {
+            author: {
+                username: 'John'
+            },
+            readingTime: 'read of 2 minutes',
+            createdAt: '2019-07-15 17:41:19.195+02'
+        }
+    }}
 }
-describe("app component", () => {
-  it("should render without error", () => {
-    const articles = mount(<ViewArticles {...props} store={store} />);
-    const articlesComponent = findTestByAttr(
-      articles,
-      "component-ViewArticles"
-    );
-    expect(articlesComponent.length).toEqual(1);
+
+describe('article component', () => {
+    it('should render without error', () => {
+      const props = {state: {article}, fetchOneStory: jest.fn(slug => slug), match: { params: {slug: 'slug'} }}
+      const component = shallow(<OneStoryComponent {...props} />);
+      expect(component.length).toEqual(1);
+    });
+
+    it('should render without error', () => {
+        const props = {state: {article:{article}}, fetchOneStory: jest.fn(slug => slug), match: { params: {slug: 'slug'} }}
+        const component = shallow(<OneStoryComponent {...props} />);
+        expect(component.length).toEqual(1);
+      });
+
+      it('should render without error', () => {
+        const props = {state: {article}, fetchOneStory: jest.fn(slug => slug), match: { params: {slug: 'slug'} }}
+        const component = mount(<OneStory {...props} store={store}/>);
+        expect(component.length).toEqual(1);
+      });
   });
-});

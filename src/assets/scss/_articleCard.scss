@@ -1,0 +1,40 @@
+.masonry-container {
+  display: flex;
+  justify-content: center;
+}
+.masonry {
+  margin-top: 90px;
+  width: 90%;
+  column-count: 3;
+  column-gap: 12px;
+  padding: 12px;
+  border-top: 2px solid grey;
+  border-bottom: 2px solid grey;
+  div {
+    cursor: pointer;
+    padding: 12px;
+    ul {
+      list-style-type: none;
+      padding: 0px;
+      line-height: 30px;
+    }
+  }
+  .element {
+    width: 100%;
+    transition: all 0.5s ease-in;
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+  .category {
+    border: none;
+    background-color: teal;
+    color: white;
+    padding: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      border: 2px solid teal;
+    }
+  }
+}

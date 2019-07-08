@@ -9,10 +9,11 @@ const props = {
     loginUser: jest.fn(),
     errors: {},
     auth: { credentials: {isValid: true}},
+    history:{location:{search:`?token=token&username=username`}}
 }
 describe('app component', () => {
 
-  const login = mount(<DefaultLogin store={store} />);
+  const login = mount(<DefaultLogin {...props} store={store} />);
   const wrapper =  shallow(<Login {...props} />)
 
   it('Should call loginToFacebook method when image is clicked',  () => {

@@ -12,6 +12,7 @@ import { Reset, CompletReset } from '../components';
 import { CreateOrUpdateArticle } from "../components";
 import PrivateRoute from '../../helpers/privateRoute';
 
+import oneStory from '../components/articles/oneStory.jsx'
 
 const Routes = props => {
   return (
@@ -25,7 +26,9 @@ const Routes = props => {
       <Route exact path="/articles" render={props => <ViewArticles {...props} />} />
       <PrivateRoute path="/articles/create" exact component={CreateOrUpdateArticle} isAuthanticated={props.auth.isAuthanticated}/>
       <PrivateRoute path="/articles/update/:slug" exact component={CreateOrUpdateArticle} isAuthanticated={props.auth.isAuthanticated}/>
+      <Route path="/articles/:slug" exact component={oneStory} />
       <Route render={props=> <NotFound {...props} />} />
+      <Route component={NotFound} />
     </Switch>
   );
 };
