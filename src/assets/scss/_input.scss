@@ -35,8 +35,17 @@
   color: white;
   width: 70%;
 }
+.btn-edit {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  color: #ffffff;
+  cursor: pointer;
+  background: teal;
+}
 
-.btn-blue:hover {
+.btn-blue:hover,
+.btn-edit:hover {
   background-color: #209b87;
   cursor: pointer;
 }

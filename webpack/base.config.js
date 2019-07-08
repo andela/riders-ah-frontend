@@ -33,7 +33,8 @@ module.exports = {
       template: path.join(__dirname, '../src', 'index.html')
     }),
     new CopyWebpackPlugin([
-      { from: './src/assets/videos', to: 'assets/videos' }
+      { from: './src/assets/videos', to: 'assets/videos' },
+      { from: './src/assets/images', to: 'assets/images' }
     ])
   ]
 };

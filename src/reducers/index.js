@@ -6,6 +6,8 @@ import getArticlesReducer from './viewArticles';
 import resetPasswordReducer from './resetPasswordReducer';
 import articleReducer from './articleReducer';
 import commentReducer from './commentReducer';
+import userReducer from './userReducer';
+
 export default combineReducers({
   registration: signupReducer,
   verify: verificationReducer,
@@ -13,5 +15,6 @@ export default combineReducers({
   auth: loginReducer,
   reset: resetPasswordReducer,
   article: articleReducer,
-  comment: commentReducer
+  comment: commentReducer,
+  userInfo: userReducer
 });

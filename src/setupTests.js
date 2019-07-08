@@ -12,6 +12,13 @@ global.MutationObserver = class {
   constructor() {}
   disconnect() {}
   observe() {}
-  takeRecords() {return []}
+  takeRecords() {
+    return [];
+  }
 };
-global.document.getSelection = function() {}
+global.document.getSelection = function() {};
+global.cloudinary = {
+  createUploadWidget: response => {
+    response;
+  }
+};

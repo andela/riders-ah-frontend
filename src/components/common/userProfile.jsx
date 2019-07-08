@@ -25,19 +25,19 @@ class UserProfile extends Component {
     const { profile } = this.state;
     return (
       <div>
-        <img src={writting} id="logo" />
-        <div className="dropdown">
-          <img src={profileImage} onClick={this.setMenu} className="avatar" />
-          <div className={`dropdown-content ${profile}`} id="myDropdown">
-            <Link to="/profile">Profile</Link>
-            <Link to="/articles/create">New story</Link>
-            <Link to="/login">Sign out</Link>
+        <img src={writting} id='logo' />
+        <div className='dropdown'>
+          <img src={profileImage} onClick={this.setMenu} className='avatar' />
+          <div className={`dropdown-content ${profile}`} id='myDropdown'>
+            <Link to='/profile'>Profile</Link>
+            <Link to='/articles/create'>New story</Link>
+            <Link to='/login'>Sign out</Link>
           </div>
         </div>
-        <div className="notification-bar">
-          <img src={notification} className="icon" />
+        <div className='notification-bar'>
+          <img src={notification} className='icon' />
         </div>
-        <input type="text" className="input-search" placeholder="Search..." />
+        <input type='text' className='input-search' placeholder='Search...' />
       </div>
     );
   }

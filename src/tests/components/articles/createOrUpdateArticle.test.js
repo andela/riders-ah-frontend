@@ -2,12 +2,12 @@ import React from 'react';
 import moxios from 'moxios';
 import promise from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
+import { MemoryRouter } from 'react-router-dom';
 import http from '../../../helpers/httpServices';
 import CreateOrUpdateArticle from '../../../components/articles/createOrUpdateArticle';
 import configureStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
 
 const mockStore = configureStore([thunk, promise]);
 
@@ -87,8 +87,7 @@ describe('Create and update  functionality', () => {
     const button = CreateArticleWrapper.find('button');
     const article = {
       title: 'My new article for testing purpose',
-      body:
-        "<p>ARTICLE</p>",
+      body: '<p>ARTICLE</p>',
       description: 'Educational'
     };
     button.simulate('click', article);
@@ -147,8 +146,7 @@ describe('Create and update  functionality', () => {
       const button = UpdateArticleWrapper.find('button');
       const article = {
         title: 'My new article for testing purpose',
-        body:
-          "<p>gjbnbn</p>'",
+        body: "<p>gjbnbn</p>'",
         description: 'Educational'
       };
       button.simulate('click', article);

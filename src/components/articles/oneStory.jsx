@@ -46,45 +46,47 @@ export class OneStory extends Component {
     this.props.deleteComment(id, slug);
   };
   render() {
-    const data  = this.props.state.article.article;
+    const data = this.props.state.article.article;
     const { comments } = this.state;
     const { slug } = this.props.match.params;
     if (this.props.state.article.fetched === 'done') {
-
       return (
         <div>
           <NavBar />
           <ToastContainer />
-            <h2 className="article-title">{data.title}</h2>
+          <h2 className='article-title'>{data.title}</h2>
           <Author
             names={data.author.username}
             readingTime={data.readingTime}
             date={<Moment fromNow>{data.createdAt}</Moment>}
             slug={data.slug}
           />
-          <div className="story">
-            <div className="words" dangerouslySetInnerHTML={{ __html: data.body }} />
+          <div className='story'>
+            <div
+              className='words'
+              dangerouslySetInnerHTML={{ __html: data.body }}
+            />
           </div>
           <div className='container2'>
-          <div className='comments'>
-            <h3>Comments</h3>
-            <WriteComment params={this.props.match.params} />
-            {comments.length < 1
-              ? ''
-              : comments.map(comment => {
-                  return (
-                    <ReadComment
-                      key={comment.id}
-                      comment={comment}
-                      params={this.props.match.params}
-                      onDelete={() => {
-                        this.handleDelete(comment.id, slug);
-                      }}
-                    />
-                  );
-                })}
+            <div className='comments'>
+              <h3>Comments</h3>
+              <WriteComment params={this.props.match.params} />
+              {comments.length < 1
+                ? ''
+                : comments.map(comment => {
+                    return (
+                      <ReadComment
+                        key={comment.id}
+                        comment={comment}
+                        params={this.props.match.params}
+                        onDelete={() => {
+                          this.handleDelete(comment.id, slug);
+                        }}
+                      />
+                    );
+                  })}
+            </div>
           </div>
-        </div>
         </div>
       );
     } else {
@@ -96,8 +98,6 @@ export class OneStory extends Component {
     }
   }
 }
-
-
 
 const mapStateToProps = state => {
   return { state };
