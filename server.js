@@ -1,8 +1,7 @@
 import express from 'express';
-import path from "path";
+import path from 'path';
 const port = process.env.PORT || 8080;
 const app = express();
-
 
 app.use(express.static(__dirname + '/build'));
 
