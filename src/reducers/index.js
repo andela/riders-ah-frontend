@@ -1,9 +1,11 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 import signupReducer from './signup';
 import verificationReducer from './verify';
-import resetPasswordReducer from "./resetPasswordReducer";
+import loginReducer from './loginReducer';
+import resetPasswordReducer from './resetPasswordReducer';
 export default combineReducers({
   registration: signupReducer,
   verify: verificationReducer,
+  auth: loginReducer,
   reset: resetPasswordReducer
 });

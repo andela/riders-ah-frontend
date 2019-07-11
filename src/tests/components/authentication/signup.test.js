@@ -1,5 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable no-undef */
 import Signup from "../../../components/authentication/signup";
 import Verification from "../../../components/authentication/verification";
 import { findTestByAttr, store } from "../../../../helpers/utils/testUtils";

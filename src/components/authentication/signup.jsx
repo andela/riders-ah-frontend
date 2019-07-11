@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import SimpleReactValidator from "simple-react-validator";
-import { PropTypes } from "prop-types";
-import { ToastContainer } from "react-toastify";
-import Input from "../common/input.jsx";
-import Button from "../common/button.jsx";
-import { signupUser } from "../../actions/signup";
-import Notify from "../../helpers/helpers";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import SimpleReactValidator from 'simple-react-validator';
+import { PropTypes } from 'prop-types';
+import { ToastContainer } from 'react-toastify';
+import Input from '../common/input.jsx';
+import Button from '../common/button.jsx';
+import { signupUser } from '../../actions/signup';
+import Notify from '../../helpers/helpers';
 class Signup extends Component {
   constructor() {
     super();
@@ -16,7 +16,7 @@ class Signup extends Component {
         password: {
           // name the rule
           message:
-            "The :attribute should be at 8 charcters minimum , with one capital letter, one special character, and a number",
+            'The :attribute should be at 8 charcters minimum , with one capital letter, one special character, and a number',
           rule: (val, params, validator) => {
             return (
               validator.helpers.testRegex(
@@ -31,9 +31,9 @@ class Signup extends Component {
   }
   state = {
     user: {
-      email: "",
-      password: "",
-      username: ""
+      email: '',
+      password: '',
+      username: ''
     }
   };
   onChangeHandler = event => {
@@ -49,7 +49,7 @@ class Signup extends Component {
       this.state.user.password
     );
   };
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     const { message } = nextProps.registration;
     if (message) {
       Notify.setAlertInfo(message);
@@ -64,39 +64,42 @@ class Signup extends Component {
           type="text"
           name="username"
           id="username"
+          className="form-input"
           onChange={this.onChangeHandler}
           value={this.state.user.username}
           placeholder="Username"
           validateMessage={this.validator.message(
-            "username",
+            'username',
             this.state.user.username,
-            "required"
+            'required'
           )}
         />
         <Input
           type="email"
           name="email"
           id="email"
+          className="form-input"
           onChange={this.onChangeHandler}
           value={this.state.user.email}
           placeholder="E-mail"
           validateMessage={this.validator.message(
-            "email",
+            'email',
             this.state.user.email,
-            "required|email"
+            'required|email'
           )}
         />
         <Input
           type="password"
           name="password"
           id="password"
+          className="form-input"
           onChange={this.onChangeHandler}
           value={this.state.user.password}
           placeholder="Password"
           validateMessage={this.validator.message(
-            "password",
+            'password',
             this.state.user.password,
-            "required|password"
+            'required|password'
           )}
         />
         <br />
