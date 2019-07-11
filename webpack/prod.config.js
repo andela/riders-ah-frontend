@@ -1,13 +1,12 @@
-import merge from "webpack-merge";
-import baseConfig from "./base.config.js";
-import path from "path";
+import merge from 'webpack-merge';
+import baseConfig from './base.config.js';
+import path from 'path';
 
 export default merge(baseConfig, {
   output: {
-    path: path.join(__dirname, "../build"),
-    filename: "index.bundle.js"
+    path: path.join(__dirname, '../build'),
+    filename: 'index.bundle.js'
   },
-  mode:"production",
-  module: {
-  }
+  mode: 'production',
+  module: {}
 });

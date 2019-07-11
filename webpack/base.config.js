@@ -28,7 +28,7 @@ module.exports = {
   },
   plugins: [
     new Dotenv(),
-    new webpack.EnvironmentPlugin(["NODE_ENV", "API_URL"]),
+    new webpack.EnvironmentPlugin(['NODE_ENV', 'API_URL']),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, '../src', 'index.html')
     }),

@@ -1,9 +1,15 @@
-import React from "react";
-import { PropTypes } from "prop-types";
+import React from 'react';
+import { PropTypes } from 'prop-types';
 
-const Button = ({ value, name, onClick, className, onSubmit }) => {
+const Button = ({ value, name, onClick, className, onSubmit, id }) => {
   return (
-    <button name={name} onClick={onClick} className={className} onSubmit={onSubmit}>
+    <button
+      name={name}
+      onClick={onClick}
+      className={className}
+      onSubmit={onSubmit}
+      id={id}
+    >
       {value}
     </button>
   );
@@ -14,7 +20,8 @@ Button.propTypes = {
   value: PropTypes.string,
   onClick: PropTypes.func,
   className: PropTypes.string,
-  onSubmit: PropTypes.func
+  onSubmit :PropTypes.string,
+  id: PropTypes.string
 };
 
-export default Button; 
+export default Button;
