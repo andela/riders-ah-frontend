@@ -1,1 +1,3 @@
 export const TEST = 'TEST';
+export const REGISTER_USER = 'REGISTER_USER';
+export const ACCOUNT_VERIFICATION = 'ACCOUNT_VERIFICATION';

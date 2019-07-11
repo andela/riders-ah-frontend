@@ -24,11 +24,11 @@ module.exports = {
     extensions: ['.js', '.jsx', '.es6']
   },
   output: {
-    publicPath: '/'
+    publicPath: '/',
   },
   plugins: [
     new Dotenv(),
-    new webpack.EnvironmentPlugin(['NODE_ENV']),
+    new webpack.EnvironmentPlugin(["NODE_ENV", "API_URL"]),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, '../src', 'index.html')
     }),

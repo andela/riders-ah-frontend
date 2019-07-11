@@ -1,5 +1,7 @@
-import { combineReducers } from 'redux';
-import testReduscer from './testReducer';
+import { combineReducers } from "redux";
+import signupReducer from './signup';
+import verificationReducer from './verify';
 export default combineReducers({
-  dummyState: testReduscer
+  registration: signupReducer,
+  verify: verificationReducer
 });
