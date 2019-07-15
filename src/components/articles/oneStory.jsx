@@ -10,12 +10,22 @@ import Moment from 'react-moment';
 import WriteComment from '../comment/writeComment';
 import ReadComment from '../comment/readComment';
 import { fetchComment, deleteComment } from '../../actions/comment';
+import Helpers from '../../helpers/helpers';
+import LikeAndDislike from './likeAndDislike';
 
+import {
+  getLikeAndDislikeCount,
+  likeArticle,
+  dislikeArticle
+} from '../../actions/articles';
 export class OneStory extends Component {
   state = {
-    comments: []
+    comments: [],
+    react: {
+      liked: Helpers.didILikeIt(this.props.state.likeAndDislike),
+      disliked: Helpers.didIDislikeIt(this.props.state.likeAndDislike)
+    }
   };
-
   componentDidMount() {
     const {
       match: {
@@ -45,10 +55,31 @@ export class OneStory extends Component {
   handleDelete = (id, slug) => {
     this.props.deleteComment(id, slug);
   };
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.state.likeAndDislike) {
+      const react = { ...this.state.react };
+      const liked = Helpers.didILikeIt(this.props.state.likeAndDislike);
+      const disliked = Helpers.didIDislikeIt(this.props.state.likeAndDislike);
+      react.liked = liked;
+      react.disliked = disliked;
+      this.setState({ react });
+    }
+  }
+  handleLike = () => {
+    const slug = this.props.match.params.slug;
+    this.props.likeArticle(slug);
+    this.props.getLikeAndDislikeCount(slug);
+  };
+  handleDislike = () => {
+    const slug = this.props.match.params.slug;
+    this.props.dislikeArticle(slug);
+    this.props.getLikeAndDislikeCount(slug);
+  };
+
   render() {
-    const data = this.props.state.article.article;
-    const { comments } = this.state;
     const { slug } = this.props.match.params;
+    const { comments } = this.state;
+    const data = this.props.state.article.article;
     if (this.props.state.article.fetched === 'done') {
       return (
         <div>
@@ -62,6 +93,15 @@ export class OneStory extends Component {
             slug={data.slug}
           />
           <div className='story'>
+          <div className="react">
+              <LikeAndDislike
+                liked={this.state.react.liked}
+                disliked={this.state.react.disliked}
+                info={this.props.state.likeAndDislike}
+                handleLike={this.handleLike}
+                handleDislike={this.handleDislike}
+              />
+            </div>
             <div
               className='words'
               dangerouslySetInnerHTML={{ __html: data.body }}
@@ -103,16 +143,22 @@ const mapStateToProps = state => {
   return { state };
 };
 
+
 OneStory.propTypes = {
   fetchOneStory: PropTypes.func,
   state: PropTypes.object,
   history: PropTypes.object,
   match: PropTypes.object,
   fetchComment: PropTypes.func,
-  deleteComment: PropTypes.func
+  deleteComment: PropTypes.func,
+  likeAndDislike: PropTypes.object,
+  getLikeAndDislikeCount: PropTypes.func,
+  likeArticle: PropTypes.func,
+  dislikeArticle: PropTypes.func
 };
 
 export default connect(
   mapStateToProps,
-  { fetchOneStory, fetchComment, deleteComment }
+
+  { fetchOneStory,fetchComment, deleteComment, getLikeAndDislikeCount, likeArticle, dislikeArticle }
 )(OneStory);

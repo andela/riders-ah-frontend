@@ -1,15 +1,20 @@
 import {
   CREATE_ARTICLE,
   UPDATE_ARTICLE,
-  FETCH_ARTICLE,
-  ONE_STORY
+  ONE_STORY,
+  GET_LIKES,
+  GET_DISLIKES,
+  LIKE_ARTICLE,
+  DISLIKE_ARTICLE
 } from '../actions/types';
 import { pending, fulfilled } from '../utils/actionUtil';
 
 const initialState = {
   success: false,
   fetched: '',
-  article: {}
+  article: {},
+  dislikes: {},
+  likes: {}
 };
 
 const articleReducer = (state = initialState, action) => {
@@ -28,22 +33,37 @@ const articleReducer = (state = initialState, action) => {
         success: true,
         message: 'Article updated Successfully'
       };
-    case fulfilled(FETCH_ARTICLE):
-      return {
-        ...state,
-        data: action.payload.data,
-        success: false,
-        isArticleRetrieved: true
-      };
     case pending(ONE_STORY):
       return {
-        ...state,
+        ...state, 
         fetched: 'pending'
       };
     case fulfilled(ONE_STORY):
       return {
         fetched: 'done',
-        article: action.payload.data.article
+        article: action.payload.data.article,
+        success:false,
+        isArticleRetrieved:true
+      };
+    case fulfilled(GET_DISLIKES):
+      return {
+        ...state,
+        dislikes: action.payload.data
+      };
+    case fulfilled(GET_LIKES):
+      return {
+        ...state,
+        likes: action.payload.data
+      };
+    case fulfilled(LIKE_ARTICLE):
+      return {
+        ...state,
+        message: 'Article Liked'
+      };
+    case fulfilled(DISLIKE_ARTICLE):
+      return {
+        ...state,
+        message: 'Article Disliked'
       };
     default:
       return state;

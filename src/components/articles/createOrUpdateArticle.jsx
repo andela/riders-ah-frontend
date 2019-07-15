@@ -9,10 +9,8 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Notify from '../../helpers/helpers';
 import { ToastContainer } from 'react-toastify';
-import {
-  createOrUpdateArticle,
-  fetchArticle
-} from '../../actions/articleAction';
+import { fetchOneStory } from '../../actions/oneStory';
+import { createOrUpdateArticle } from '../../actions/articleAction';
 import Joi from 'joi-browser';
 import Helpers from '../../helpers/helpers';
 import { modules, formats } from './editor';
@@ -35,19 +33,19 @@ class CreateOrUpdateArticle extends Component {
   componentDidMount() {
     const slug = this.props.match.params.slug;
     if (slug) {
-      this.props.fetchArticle(slug);
+      this.props.fetchOneStory(slug);
     }
   }
   componentWillReceiveProps(nextProps) {
     const slug = this.props.match.params.slug;
     if (slug) {
-      if (nextProps.article.data.article) {
+      if (nextProps.article.fetched === 'done') {
         const {
           title,
           tag,
           description,
           body
-        } = nextProps.article.data.article;
+        } = nextProps.article.article;
         const retrievedArticle = { ...this.state.article };
         retrievedArticle.title = title;
         retrievedArticle.tag = tag;
@@ -189,7 +187,7 @@ CreateOrUpdateArticle.defaultProps = {
 };
 
 CreateOrUpdateArticle.propTypes = {
-  fetchArticle: PropTypes.func,
+  fetchOneStory: PropTypes.func,
   createOrUpdateArticle: PropTypes.func,
   article: PropTypes.object,
   history: PropTypes.object,
@@ -198,5 +196,5 @@ CreateOrUpdateArticle.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { createOrUpdateArticle, fetchArticle }
+  { createOrUpdateArticle, fetchOneStory }
 )(CreateOrUpdateArticle);

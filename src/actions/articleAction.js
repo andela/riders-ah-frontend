@@ -1,4 +1,4 @@
-import { CREATE_ARTICLE, FETCH_ARTICLE, UPDATE_ARTICLE } from './types';
+import { CREATE_ARTICLE, UPDATE_ARTICLE } from './types';
 import http from '../helpers/httpServices';
 
 export const createOrUpdateArticle = (slug = null, article) => dispatch => {
@@ -19,10 +19,4 @@ export const createOrUpdateArticle = (slug = null, article) => dispatch => {
       payload: http.post('/api/v1/articles', newArticle)
     });
   }
-};
-export const fetchArticle = slug => dispatch => {
-  dispatch({
-    type: FETCH_ARTICLE,
-    payload: http.get(`/api/v1/articles/${slug}`)
-  });
 };

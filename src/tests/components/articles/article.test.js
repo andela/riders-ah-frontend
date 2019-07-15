@@ -7,14 +7,12 @@ import { mount, shallow } from 'enzyme';
 
 const article = {
   article: {
-    data: {
-      article: {
-        author: {
-          username: 'John'
-        },
-        readingTime: 'read of 2 minutes',
-        createdAt: '2019-07-15 17:41:19.195+02'
-      }
+    article: {
+      author: {
+        username: 'John'
+      },
+      readingTime: 'read of 2 minutes',
+      createdAt: '2019-07-15 17:41:19.195+02'
     }
   }
 };
@@ -22,10 +20,15 @@ const article = {
 describe('article component', () => {
   it('should render without error', () => {
     const props = {
-      state: { article },
+      state: { article,  
+        likeAndDislike: {
+        likes: {},
+        dislikes: {}
+      }, },
       fetchOneStory: jest.fn(slug => slug),
       fetchComment: jest.fn(slug => slug),
-      match: { params: { slug: 'slug' } }
+      match: { params: { slug: 'slug' } },
+      getLikeAndDislikeCount: jest.fn()
     };
     const component = shallow(
       <Provider store={store}>
@@ -39,10 +42,15 @@ describe('article component', () => {
 
   it('should render without error', () => {
     const props = {
-      state: { article: { article } },
+      state: { article: { article },   
+      likeAndDislike: {
+        likes: {},
+        dislikes: {}
+      } },
       fetchOneStory: jest.fn(slug => slug),
       fetchComment: jest.fn(slug => slug),
-      match: { params: { slug: 'slug' } }
+      match: { params: { slug: 'slug' } },
+      getLikeAndDislikeCount: jest.fn()
     };
     const component = shallow(
       <Provider store={store}>
@@ -56,10 +64,15 @@ describe('article component', () => {
 
   it('should render without error', () => {
     const props = {
-      state: { article },
+
+      state: { article, likeAndDislike: {
+        likes: {},
+        dislikes: {}
+      }},
       fetchOneStory: jest.fn(slug => slug),
       fetchComment: jest.fn(slug => slug),
-      match: { params: { slug: 'slug' } }
+      match: { params: { slug: 'slug' } },
+      getLikeAndDislikeCount: jest.fn()
     };
     const component = mount(
       <Provider store={store}>

@@ -1,8 +1,6 @@
-import moxios from 'moxios';
 import promise from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 import configureStore from 'redux-mock-store';
-import http from '../../helpers/httpServices';
 const mockStore = configureStore([thunk, promise]);
 const store = mockStore({});
 import {
@@ -20,11 +18,7 @@ import {
 
 describe('Reset Password actions', () => {
   beforeEach(() => {
-    moxios.install(http);
     store.clearActions();
-  });
-  afterEach(() => {
-    moxios.uninstall(http);
   });
   it('Should have email', () => {
     expect(email('kigali@andela.com')).toEqual(
