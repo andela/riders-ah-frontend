@@ -1,7 +1,19 @@
 {
   "name": "riders-ah-frontend",
   "scripts": {},
-  "env": {},
+  "env": {
+    "API_URL": {
+      "description": "API url for backend",
+      "value": "https://riders-ah-staging.herokuapp.com",
+      "required": true
+    },
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
+    "HEROKU_PARENT_APP_NAME": {
+      "required": true
+    }
+  },
   "formation": {
     "web": {
       "quantity": 1
