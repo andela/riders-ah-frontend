@@ -50,7 +50,9 @@ const Routes = props => {
         component={ViewProfile}
         isAuthanticated={props.auth.isAuthanticated}
       />
-      <Route component={NotFound} />
+      <Route exact path="/articles" render={props => <ViewArticles {...props} />} />
+      <Route exact path="/" render={props=> <Home {...props} />} /> 
+      <Route render={props=> <NotFound {...props} />} />
     </Switch>
   );
 };
