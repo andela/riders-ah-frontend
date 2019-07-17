@@ -9,7 +9,7 @@ const props = {
     loginUser: jest.fn(),
     errors: {},
     auth: { credentials: {isValid: true}},
-    history:{location:{search:`?token=token&username=username`}}
+    history:{location:{search:`?token=token&username=username`}, replace: jest.fn()}
 }
 describe('app component', () => {
 

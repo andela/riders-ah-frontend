@@ -1,6 +1,6 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
-import { PropTypes } from "prop-types";
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 const PrivateRoute = ({ component: Component, isAuthanticated, ...rest }) => {
   return (
     <Route
@@ -10,7 +10,7 @@ const PrivateRoute = ({ component: Component, isAuthanticated, ...rest }) => {
           <Component {...props} />
         ) : (
           <Redirect
-            to={{ pathname: "/login", state: { from: props.location } }}
+            to={{ pathname: '/login', state: { from: props.location } }}
           />
         )
       }

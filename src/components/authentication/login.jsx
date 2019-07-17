@@ -15,44 +15,47 @@ import {
   loginUser
 } from '../../actions/login';
 import validateCredentials from '../../../helpers/credentialsValidation';
+import Helpers from '../../helpers/helpers';
 
-const {API_URL} = process.env
+const { API_URL } = process.env;
 
 export class Login extends Component {
-  constructor(){
+  constructor() {
     super();
     this.state = {
-        errors: {}
-    }
-   this.loginToFacebook = this.loginToFacebook.bind(this);
-}
-loginToFacebook = () => {
-    window.location.replace(`${API_URL}/api/v1/login/facebook`);
-
-}
-loginToTwitter = () => {
-    window.location.replace(`${API_URL}/api/v1/login/twitter`);
-}
-loginToGoogle = () =>{
-    window.location.replace(`${API_URL}/api/v1/login/google`);
-}
-componentWillReceiveProps(nextProps){
-    if(nextProps.errors){
-        this.setState({
-            errors: nextProps.errors
-        })
-    }
-}
-componentDidMount(){
-  const { location } = this.props.history;
-  const { token, username, image } = queryString.parse(location.search);
-  if(token && username){
-    localStorage.token = token;
-    localStorage.username = username;
-    localStorage.image = image
-    window.location.replace('/articles');
+      errors: {}
+    };
+    this.loginToFacebook = this.loginToFacebook.bind(this);
   }
-}
+  loginToFacebook = () => {
+    window.location.replace(`${API_URL}/api/v1/login/facebook`);
+  };
+  loginToTwitter = () => {
+    window.location.replace(`${API_URL}/api/v1/login/twitter`);
+  };
+  loginToGoogle = () => {
+    window.location.replace(`${API_URL}/api/v1/login/google`);
+  };
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
+  componentDidMount() {
+    if (localStorage.token) {
+      this.props.history.replace('/articles');
+    }
+    const { location } = this.props.history;
+    const { token, username, image } = queryString.parse(location.search);
+    if (token && username) {
+      localStorage.token = token;
+      localStorage.username = username;
+      localStorage.image = image;
+      window.location.replace('/articles');
+    }
+  }
   handleEmailInput = event => {
     this.props.setEmail(event.target.value);
   };
@@ -75,23 +78,21 @@ componentDidMount(){
     const auth = this.props.auth;
     const { isAuthanticated } = auth;
     if (isAuthanticated && token) {
-      if (localStorage.token) {
-        localStorage.removeItem('token');
-        localStorage.setItem('token', token);
-      } else {
-        localStorage.setItem('token', token);
-      }
+      Helpers.setToken(token);
     }
-    isAuthanticated && this.props.history.push('/articles');
+    isAuthanticated && this.props.history.replace('/articles');
   }
   render() {
-
     const { auth } = this.props;
     const { credentials } = auth;
     return (
-      <div className='container' id='component-Login' >
+      <div className='container' id='component-Login'>
         <h1>Authors Haven - Log In</h1>
-        <form onSubmit={e => e.preventDefault()} action="viewArticles.html" method="">
+        <form
+          onSubmit={e => e.preventDefault()}
+          action='viewArticles.html'
+          method=''
+        >
           <LocalLogin
             onEmailChange={this.handleEmailInput}
             onPasswordChange={this.handlePasswordInput}
@@ -99,9 +100,21 @@ componentDidMount(){
             onClick={() => this.handleClick(credentials)}
           />
           <p>Log In below using:</p>
-          <img id="loginToFacebook" onClick={this.loginToFacebook } src={facebookImage}/>
-          <img id="loginToTwitter" src={twitterImage} onClick = {this.loginToTwitter}/>
-          <img id="loginToGoogle" src={googleImage} onClick = {this.loginToGoogle}/>
+          <img
+            id='loginToFacebook'
+            onClick={this.loginToFacebook}
+            src={facebookImage}
+          />
+          <img
+            id='loginToTwitter'
+            src={twitterImage}
+            onClick={this.loginToTwitter}
+          />
+          <img
+            id='loginToGoogle'
+            src={googleImage}
+            onClick={this.loginToGoogle}
+          />
         </form>
       </div>
     );
@@ -118,7 +131,7 @@ Login.propTypes = {
   history: PropTypes.object,
   token: PropTypes.string
 };
-const mapStateToProps = (state) =>({
+const mapStateToProps = state => ({
   errors: state.errors,
   auth: state.auth
 });
