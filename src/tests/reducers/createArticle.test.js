@@ -5,7 +5,7 @@ describe("Create Article Reducer", () => {
   it("should be able to create article", () => {
     const payload = {
         title: 'My new article for testing purpose',
-        body:'<strong><u>GFSJGFDHJVHJ…mbed/t6',
+        body:'<p>fsdfdgs</p>',
         description:'Educational', 
         image:'https://picsum.gm'
     };
@@ -32,7 +32,7 @@ describe("Create Article Reducer", () => {
   it("should ", () => {
     const payload = {
       title: 'My new article for testing purpose',
-      body:'<strong><u>GFSJGFDHJVHJ…mbed/t6',
+      body:'<strong><p>hghjg</p>',
       description:'Educational', 
       image:'https://picsum.gm'
   };

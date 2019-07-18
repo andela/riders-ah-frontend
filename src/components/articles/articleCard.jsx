@@ -18,7 +18,7 @@ const ArticleCard = ({ article, onClick }) => {
           <b>{article.title}</b>
         </li>
         <li>
-          <input type="button" className="category" value="Entertainment" />
+          <input type="button" className="btn-category" value="Entertainment" />
         </li>
         <li>
           <i>{<Moment fromNow>{dateToFormat}</Moment>}</i>&nbsp;.&nbsp;<i>{article.readingTime}</i>

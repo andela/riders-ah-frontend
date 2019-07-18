@@ -11,10 +11,10 @@ import {
 
 } from "../../actions/articleAction";
 describe("Create Article functionality", () => {
-  const slug = "my-new-article-for-testing-purpose-t37jxsyqewa";
+  const slug = "my-new-article-for-testi-purpose-t37jxsyqewa";
   const article = {
     title: "My new article for testing purpose",
-    body: "<strong><u>GFSJGFDHJVHJ…mbed/t6",
+    body: "<p>GFSJGFDHJVHJ</p>",
     description: "Educational",
     image: "https://picsum.gm"
   };

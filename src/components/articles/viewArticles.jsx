@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { PropTypes } from "prop-types";
-import NavBar from "../menu/navBar.jsx";
-import ArticleCard from "./articleCard.jsx";
-import { getArticles } from "../../actions/viewArticles";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
+import NavBar from '../common/navBar';
+import ArticleCard from './articleCard';
+import { getArticles } from '../../actions/viewArticles';
 
 let articles;
- class AllArticles extends Component {
+class AllArticles extends Component {
   componentDidMount() {
     this.props.getArticles();
   }
@@ -18,9 +18,9 @@ let articles;
   render() {
     const { fetched } = this.props.state.articles;
     switch (fetched) {
-      case "":
+      case '':
         return (
-          <div id="component-ViewArticles"> 
+          <div id="component-ViewArticles">
             <NavBar />
             <div className="masonry-container">
               <div className="masonry">
@@ -29,7 +29,7 @@ let articles;
             </div>
           </div>
         );
-      case "pending":
+      case 'pending':
         return (
           <div>
             <NavBar />
@@ -40,7 +40,7 @@ let articles;
             </div>
           </div>
         );
-      case "done":
+      case 'done':
         articles = this.props.state.articles.articles.data.articles;
         if (articles.length === 0) {
           return (
