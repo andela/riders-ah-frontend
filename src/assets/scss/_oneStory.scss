@@ -1,6 +1,7 @@
-.title {
+.article-title {
   width: 100%;
   text-align: center;
+  margin-top: 45px;
 }
 .story {
   margin-top: 10%;
@@ -74,7 +75,7 @@
   flex-direction: row;
   margin-bottom: 10px;
   position: relative;
-  top: 100px;
+  top: 25px;
 }
 
 .reading {
@@ -100,4 +101,26 @@
   &:hover {
     box-shadow: 0px 1px 0px #324b4b;
   }
+}
+
+.btn-update {
+  background-color: #157db1;
+  color: #ffffff;
+  width: 60px;
+  font-size: 12px;
+  padding: 10px;
+  border: 0px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.btn-delete {
+  background-color: #c54848;
+  color: #ffffff;
+  width: 60px;
+  font-size: 12px;
+  padding: 10px;
+  border: 0px;
+  border-radius: 5px;
+  margin-right: 10px;
 }

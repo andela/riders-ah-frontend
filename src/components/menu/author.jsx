@@ -2,8 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 import { deleteOneStory } from '../../actions/viewArticles';
-import Update from '../../assets/images/update.png';
-import Delete from '../../assets/images/delete.png';
+import  Button from '../common/button'
 class Author extends Component{
   update = (slug) => {
     window.location.replace(`/articles/update/${slug}`);
@@ -24,8 +23,8 @@ class Author extends Component{
             <input type="button" value="follow" className="follow"/><br/>
             <b>{date}</b><br/><i>{readingTime}</i> <br/>
             { names === auth.user.username ? (<Fragment>
-              <img src={Update} onClick = {this.update.bind(this, slug)}/>
-              <img src={Delete} onClick = {this.delete.bind(this, slug)}/>
+              <Button onClick = {this.update.bind(this, slug)} value="Update" className="btn-update"/>
+              <Button onClick = {this.delete.bind(this, slug)} value="Delete" className="btn-delete"/>
             </Fragment>) : ('') }
           </div>
       </div>)

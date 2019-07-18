@@ -8,7 +8,7 @@ class Home extends Component {
           <source src="../assets/videos/bg-video.mp4" type="video/mp4" />
           Your browser does not support HTML5 video.
         </video>
-        <div className="content">
+        <div className="content-landing">
           <div className="row">
             <div className="home-logo">
               <h1>Author Haven</h1>

@@ -1,7 +1,7 @@
 .write_content {
   width: 70%;
   margin-left: 200px;
-  margin-top: 9%;
+  margin-top: 2%;
 }
 .saveContent {
   width: 100px;
@@ -20,17 +20,22 @@
   margin-left: 20px;
 }
 .titleText {
-  width: 40% !important;
+  width: 83% !important;
 }
 .textForm {
-  width: 25%;
+  width: 83%;
   height: 15px;
   font-size: 16px;
   padding: 8px;
-  border-radius: 0.5em;
+  border: 1px solid;
+  border-radius: 4px;
+  margin-top: 10px;
+  margin-right: 55px;
 }
 .category {
   height: 35px !important;
+  width: 85%;
+  margin-bottom: 10px;
 }
 .ql-toolbar.ql-snow {
   background: #eaecec;

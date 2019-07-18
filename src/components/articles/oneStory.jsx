@@ -1,48 +1,55 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { PropTypes } from "prop-types";
-import { ToastContainer } from "react-toastify";
-import Author from '../menu/author.jsx'
-import NavBar from "../menu/navBar.jsx";
-import { fetchOneStory } from '../../actions/oneStory.js'
-import  {Loader}  from '../common/loader.jsx'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
+import { ToastContainer } from 'react-toastify';
+import Author from '../menu/author';
+import NavBar from '../common/navBar';
+import { fetchOneStory } from '../../actions/oneStory';
+import { Loader } from '../common/loader';
 import Moment from 'react-moment';
 
 export class OneStory extends Component {
   componentDidMount() {
-    const { match: { params: {slug} }} = this.props;
-    this.props.fetchOneStory(slug)
+    const {
+      match: {
+        params: { slug }
+      }
+    } = this.props;
+    this.props.fetchOneStory(slug);
   }
   render() {
-    const {article:  {data}} = this.props.state;
-    if(data){
+    const data  = this.props.state.article.article;
+    if (this.props.state.article.fetched === 'done') {
+
       return (
-      
         <div>
           <NavBar />
           <ToastContainer />
-          <Author names={data.article.author.username} 
-                  readingTime = {data.article.readingTime} 
-                  date = {<Moment fromNow>{data.article.createdAt}</Moment>}
-                  slug={data.article.slug}
-                  />
+            <h2 className="article-title">{data.title}</h2>
+          <Author
+            names={data.author.username}
+            readingTime={data.readingTime}
+            date={<Moment fromNow>{data.createdAt}</Moment>}
+            slug={data.slug}
+          />
           <div className="story">
-            <h2 className="title">{data.article.title}</h2>
-            <div dangerouslySetInnerHTML={{__html: data.article.body}} />
+            <div className="words" dangerouslySetInnerHTML={{ __html: data.body }} />
           </div>
         </div>
       );
-    } else{
-      return(<div><Loader /></div>)
+    } else {
+      return (
+        <div>
+          <Loader />
+        </div>
+      );
     }
-
   }
 }
 
 const mapStateToProps = state => {
   return { state };
 };
-
 
 OneStory.propTypes = {
   fetchOneStory: PropTypes.func,

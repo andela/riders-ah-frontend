@@ -1,12 +1,15 @@
 import {
   CREATE_ARTICLE,
   UPDATE_ARTICLE,
-  FETCH_ARTICLE
+  FETCH_ARTICLE,
+  ONE_STORY
 } from '../actions/types';
-import { fulfilled } from '../utils/actionUtil';
+import { pending, fulfilled } from '../utils/actionUtil';
 
 const initialState = {
-  success: false
+  success: false,
+  fetched: '',
+  article: {}
 };
 
 const articleReducer = (state = initialState, action) => {
@@ -29,8 +32,18 @@ const articleReducer = (state = initialState, action) => {
       return {
         ...state,
         data: action.payload.data,
-        success:false,
-        isArticleRetrieved:true
+        success: false,
+        isArticleRetrieved: true
+      };
+    case pending(ONE_STORY):
+      return {
+        ...state,
+        fetched: 'pending'
+      };
+    case fulfilled(ONE_STORY):
+      return {
+        fetched: 'done',
+        article: action.payload.data.article
       };
     default:
       return state;

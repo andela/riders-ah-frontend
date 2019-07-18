@@ -6,6 +6,8 @@ import { mount } from 'enzyme';
 import http from '../../../helpers/httpServices';
 import CreateOrUpdateArticle from '../../../components/articles/createOrUpdateArticle';
 import configureStore from 'redux-mock-store';
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 
 const mockStore = configureStore([thunk, promise]);
 
@@ -16,6 +18,7 @@ const props = {
     }
   }
 };
+
 describe('Create and update  functionality', () => {
   beforeEach(() => {
     moxios.install(http);
@@ -25,18 +28,34 @@ describe('Create and update  functionality', () => {
   });
 
   it('should render create article component', () => {
-    const CreateArticleWrapper = mount(<CreateOrUpdateArticle store={mockStore({})} />);
+    const CreateArticleWrapper = mount(
+      <Provider store={mockStore({ auth: { user: {} } })}>
+        <MemoryRouter>
+          <CreateOrUpdateArticle {...props} />
+        </MemoryRouter>
+      </Provider>
+    );
 
     expect(CreateArticleWrapper.exists()).toBe(true);
   });
   it('should render update article component', () => {
     const UpdateArticleWrapper = mount(
-      <CreateOrUpdateArticle store={mockStore({})} {...props} />
+      <Provider store={mockStore({ auth: { user: {} } })}>
+        <MemoryRouter>
+          <CreateOrUpdateArticle {...props} />
+        </MemoryRouter>
+      </Provider>
     );
     expect(UpdateArticleWrapper.exists()).toBe(true);
   });
   it('should input title when creating an article', () => {
-    const CreateArticleWrapper = mount(<CreateOrUpdateArticle store={mockStore({})} />);
+    const CreateArticleWrapper = mount(
+      <Provider store={mockStore({ auth: { user: {} } })}>
+        <MemoryRouter>
+          <CreateOrUpdateArticle {...props} />
+        </MemoryRouter>
+      </Provider>
+    );
 
     const component = CreateArticleWrapper.find('CreateOrUpdateArticle');
     component.instance().handleChange = jest.fn();
@@ -53,7 +72,11 @@ describe('Create and update  functionality', () => {
       article: { title: 'any title', body: 'any body', category: 'music' }
     };
     const CreateArticleWrapper = mount(
-      <CreateOrUpdateArticle store={mockStore({ state })} />
+      <Provider store={mockStore({ auth: { user: {} }, state })}>
+        <MemoryRouter>
+          <CreateOrUpdateArticle {...props} />
+        </MemoryRouter>
+      </Provider>
     );
 
     const component = CreateArticleWrapper.find('CreateOrUpdateArticle');
@@ -65,7 +88,7 @@ describe('Create and update  functionality', () => {
     const article = {
       title: 'My new article for testing purpose',
       body:
-        "<p class='ql-align-center'><strong><u>GFSJGFDHJVHJ…mbed/t6mc32DCXDY?showinfo=0'></iframe><p><br></p>'",
+        "<p>ARTICLE</p>",
       description: 'Educational'
     };
     button.simulate('click', article);
@@ -74,8 +97,9 @@ describe('Create and update  functionality', () => {
   });
   describe('Update  functionality', () => {
     const UpdateArticleWrapper = mount(
-      <CreateOrUpdateArticle
+      <Provider
         store={mockStore({
+          auth: { user: {} },
           article: {
             isArticleCreated: false,
             data: {
@@ -93,11 +117,15 @@ describe('Create and update  functionality', () => {
               }
             },
             isArticleRetrieved: true,
-            isArticleUpdated:true
+            isArticleUpdated: true
           }
         })}
         {...props}
-      />
+      >
+        <MemoryRouter>
+          <CreateOrUpdateArticle {...props} />
+        </MemoryRouter>
+      </Provider>
     );
     it('should input title on update', () => {
       const component = UpdateArticleWrapper.find('CreateOrUpdateArticle');
@@ -120,7 +148,7 @@ describe('Create and update  functionality', () => {
       const article = {
         title: 'My new article for testing purpose',
         body:
-          "<p class='ql-align-center'><strong><u>GFSJGFDHJVHJ…mbed/t6mc32DCXDY?showinfo=0'></iframe><p><br></p>'",
+          "<p>gjbnbn</p>'",
         description: 'Educational'
       };
       button.simulate('click', article);
