@@ -8,6 +8,7 @@ import articleReducer from './articleReducer';
 import commentReducer from './commentReducer';
 import userReducer from './userReducer';
 import articleReactReducer from './articleReactReducer';
+import rateReducer from './article/ratingReducer';
 
 export default combineReducers({
   registration: signupReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
   article: articleReducer,
   comment: commentReducer,
   userInfo: userReducer,
-  likeAndDislike: articleReactReducer
+  likeAndDislike: articleReactReducer,
+  rate: rateReducer
 });

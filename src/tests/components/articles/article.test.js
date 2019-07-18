@@ -16,7 +16,6 @@ const article = {
     }
   }
 };
-
 describe('article component', () => {
   it('should render without error', () => {
     const props = {

@@ -12,7 +12,8 @@ import ReadComment from '../comment/readComment';
 import { fetchComment, deleteComment } from '../../actions/comment';
 import Helpers from '../../helpers/helpers';
 import LikeAndDislike from './likeAndDislike';
-
+import { rateArticle, getAllRates } from '../../actions/article/ratingAction';
+import { Ratings } from '../common';
 import {
   getLikeAndDislikeCount,
   likeArticle,
@@ -24,7 +25,16 @@ export class OneStory extends Component {
     react: {
       liked: Helpers.didILikeIt(this.props.state.likeAndDislike),
       disliked: Helpers.didIDislikeIt(this.props.state.likeAndDislike)
-    }
+    },
+    limit: 5,
+    offset: 0,
+    rates: {
+      rate: 0,
+      actual: 0,
+      rounded: 0,
+      allRates: []
+    },
+    disable: true
   };
   componentDidMount() {
     const {
@@ -32,9 +42,12 @@ export class OneStory extends Component {
         params: { slug }
       }
     } = this.props;
+    const { limit, offset } = this.state;
     this.props.fetchOneStory(slug);
     this.props.fetchComment(slug);
     this.props.getLikeAndDislikeCount(slug);
+    const paginate = `limit=${limit}&offset=${offset}`;
+    this.props.getAllRates(slug, paginate);
   }
 
   componentDidUpdate(prevProps) {
@@ -52,16 +65,52 @@ export class OneStory extends Component {
       }
     }
   }
-
-  handleDelete = (id, slug) => {
-    this.props.deleteComment(id, slug);
-  };
   componentWillReceiveProps(nextProps) {
-    const {
-      match: {
-        params: { slug }
+    const { ratings, fetchSuccess, rateSuccess, newRate } = nextProps.rate;
+    const { user } = this.props.auth;
+    const rates = { ...this.state.rates };
+    if (fetchSuccess) {
+      const allRates = [...ratings.ratings];
+      let currentRate = 0;
+      let totalCount = 0;
+      if (allRates.length) {
+        const userRating = allRates.find(rate => rate.reviewerId === user.id);
+        currentRate = userRating ? userRating.rate : 0;
+        const totalRatesCount = allRates.reduce((prev, next) => ({
+          rate: prev.rate + next.rate
+        }));
+        totalCount = totalRatesCount.rate / allRates.length || 0;
       }
-    } = this.props;
+      rates.rate = currentRate;
+      rates.actual = totalCount;
+      rates.allRates = allRates;
+      rates.rounded = Math.round(totalCount);
+      this.setState({ rates });
+    }
+    if (rateSuccess) {
+      const { rating } = newRate.data;
+      const currentRate = rating[0] || rating;
+      const { allRates } = this.state.rates;
+      const userRateIndex = allRates.findIndex(
+        rate => rate.reviewerId === user.id
+      );
+      if (userRateIndex === -1) {
+        allRates.push(currentRate);
+      } else {
+        allRates[userRateIndex].rate = currentRate.rate;
+      }
+      const totalRatesCount = allRates.length
+        ? allRates.reduce((prev, next) => ({
+            rate: prev.rate + next.rate
+          }))
+        : {};
+      const totalCount = totalRatesCount.rate / allRates.length || 0;
+      rates.rate = currentRate.rate;
+      rates.actual = totalCount;
+      rates.allRates = allRates;
+      rates.rounded = Math.round(totalCount);
+      this.setState({ rates });
+    }
     if (nextProps.state.likeAndDislike) {
       const react = { ...this.state.react };
       const liked = Helpers.didILikeIt(this.props.state.likeAndDislike);
@@ -71,35 +120,42 @@ export class OneStory extends Component {
       this.setState({ react });
     }
   }
+  rateArticle = rate => {
+    const slug = this.props.match.params.slug;
+    this.props.rateArticle({ rate, slug });
+  };
+  handleDelete = (id, slug) => {
+    this.props.deleteComment(id, slug);
+  };
   handleLike = () => {
     const slug = this.props.match.params.slug;
     this.props.likeArticle(slug);
-    setTimeout(()=> window.location.reload(),10);
+    setTimeout(() => window.location.reload(), 10);
   };
   handleDislike = () => {
     const slug = this.props.match.params.slug;
     this.props.dislikeArticle(slug);
-    setTimeout(()=> window.location.reload(),10);
+    setTimeout(() => window.location.reload(), 10);
   };
 
   render() {
     const { slug } = this.props.match.params;
-    const { comments } = this.state;
+    const { comments, rate, rates } = this.state;
     const data = this.props.state.article.article;
     if (this.props.state.article.fetched === 'done') {
       return (
-        <div>
+        <div id='component-oneStory'>
           <NavBar />
           <ToastContainer />
-          <h2 className="article-title">{data.title}</h2>
+          <h2 className='article-title'>{data.title}</h2>
           <Author
             names={data.author.username}
             readingTime={data.readingTime}
             date={<Moment fromNow>{data.createdAt}</Moment>}
             slug={data.slug}
           />
-          <div className="story">
-            <div className="react">
+          <div className='story'>
+            <div className='react'>
               <LikeAndDislike
                 liked={this.state.react.liked}
                 disliked={this.state.react.disliked}
@@ -108,14 +164,19 @@ export class OneStory extends Component {
                 handleDislike={this.handleDislike}
               />
             </div>
-            <div
-              className="words"
-              dangerouslySetInnerHTML={{ __html: data.body }}
-            />
+            <div className='words'>
+              <div dangerouslySetInnerHTML={{ __html: data.body }} />
+              <Ratings
+                id='ratingArticle'
+                rate={rates.rate}
+                onChange={this.rateArticle}
+                rates={rates}
+              />
+            </div>
           </div>
-          <div className="container2">
-            <div className="related">
-              <div className="comments">
+          <div className='container2'>
+            <div className='related'>
+              <div className='comments'>
                 <h3>Comments</h3>
                 <WriteComment params={this.props.match.params} />
                 {comments.length < 1
@@ -147,9 +208,11 @@ export class OneStory extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { state };
-};
+const mapStateToProps = state => ({
+  state,
+  auth: state.auth,
+  rate: state.rate
+});
 
 OneStory.propTypes = {
   fetchOneStory: PropTypes.func,
@@ -161,18 +224,19 @@ OneStory.propTypes = {
   likeAndDislike: PropTypes.object,
   getLikeAndDislikeCount: PropTypes.func,
   likeArticle: PropTypes.func,
-  dislikeArticle: PropTypes.func
+  dislikeArticle: PropTypes.func,
+  rateArticle: PropTypes.func
 };
-
 export default connect(
   mapStateToProps,
-
   {
     fetchOneStory,
     fetchComment,
     deleteComment,
     getLikeAndDislikeCount,
     likeArticle,
-    dislikeArticle
+    dislikeArticle,
+    rateArticle,
+    getAllRates
   }
 )(OneStory);
