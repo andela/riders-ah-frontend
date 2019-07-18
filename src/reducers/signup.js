@@ -1,11 +1,12 @@
-import { REGISTER_USER } from "../actions/types";
-import { fulfilled, pending, rejected } from "../utils/actionUtil";
+import { REGISTER_USER } from '../actions/types';
+import { fulfilled, pending, rejected } from '../utils/actionUtil';
 
 const initialState = {
-  email: "",
-  username: "",
-  password: "",
-  message: ""
+  email: '',
+  username: '',
+  password: '',
+  message: '',
+  isSent: false
 };
 
 const signupReducer = (state = initialState, action) => {
@@ -14,7 +15,8 @@ const signupReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
-        message: "Email sent, Please check yout inbox for account activation!"
+        message: 'Email sent, Please check yout inbox for account activation!',
+        isSent: true
       };
     case pending(REGISTER_USER):
       return {
@@ -24,7 +26,8 @@ const signupReducer = (state = initialState, action) => {
     case rejected(REGISTER_USER):
       return {
         ...state,
-        user: action.payload
+        user: action.payload,
+        isSent: false
       };
     default:
       return state;

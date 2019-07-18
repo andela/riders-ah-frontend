@@ -20,10 +20,14 @@ class Helpers {
     return user;
   }
   static setAlertError(message) {
-    toast.error(message);
+    toast.error(message, {
+      toastId: 13
+    });
   }
   static setAlertInfo(message) {
-    toast.info(message);
+    toast.info(message, {
+      toastId: 13
+    });
   }
 
   static validate = (data, schema) => {

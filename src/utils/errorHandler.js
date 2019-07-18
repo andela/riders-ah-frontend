@@ -8,7 +8,12 @@ const errorHandler = () => {
 
     if (!action.meta || !action.meta.localError) {
       return next(action).catch(error => {
+        if(error.response.data.errors.body){
+          Notify.setAlertError(error.response.data.errors.body[0]);
+        }
+        else{
         Notify.setAlertError(error.message);
+        }
       });
     }
 
