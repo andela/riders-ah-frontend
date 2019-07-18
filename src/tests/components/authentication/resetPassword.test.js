@@ -1,7 +1,7 @@
 import React from 'react';
-import ResetPassword from '../../components/authentication/ResetPassword';
-import CompleteResetPassword from '../../components/authentication/CompleteResetPassword';
-import { store } from '../../../helpers/utils/testUtils';
+import ResetPassword from '../../../components/authentication/ResetPassword';
+import CompleteResetPassword from '../../../components/authentication/CompleteResetPassword';
+import { store } from '../../../../helpers/utils/testUtils';
 
 const props = {
   match: {

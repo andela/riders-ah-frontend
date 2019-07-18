@@ -38,12 +38,12 @@ const LocalLogin = ({
       <ErrorMessage message={isValidCredentials} />
       <br />
       <strong>
-        <a to='#p' className='link right'>
+        <a href='/signup' className='link right'>
           Create Account
         </a>
       </strong>
       <strong>
-        <a to='#p' className='link left'>
+        <a href='/reset' className='link left'>
           Forgot Password?
         </a>
       </strong>

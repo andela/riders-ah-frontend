@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import Joi from 'joi-browser';
 import { PropTypes } from 'prop-types';
+import Helpers from '../../helpers/helpers';
 class Form extends Component {
   state = {
     data: {},
@@ -8,7 +9,7 @@ class Form extends Component {
   };
   handleOnSubmit = e => {
     e.preventDefault();
-    const errors = this.validate();
+    const errors = Helpers.validate(this.state.data,this.schema);
     this.setState({ errors: errors || {} });
     if (errors) return;
     this.doAction();
@@ -27,18 +28,7 @@ class Form extends Component {
     data[e.target.name] = e.target.value || this.props.reset[e.target.name];
     this.setState({ data });
   };
-  validate = () => {
-    const { error } = Joi.validate(this.state.data, this.schema, {
-      abortEarly: false
-    });
-    if (!error) return null;
-    const errors = {};
-    for (let item of error.details) {
-      errors[item.path[0]] = item.message;
-    }
-    return errors;
-  };
-
+  
   validateInput = ({ name, value }) => {
     const obj = { [name]: value };
     const schema = { [name]: this.schema[name] };
