@@ -1,13 +1,101 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { PropTypes } from "prop-types";
+import NavBar from "../menu/navBar.jsx";
+import ArticleCard from "./articleCard.jsx";
+import { getArticles } from "../../actions/viewArticles";
 
-class ViewArticles extends Component {
+let articles;
+ class AllArticles extends Component {
+  componentDidMount() {
+    this.props.getArticles();
+  }
+
+  handleClick = slug => {
+    this.props.history.push(`/articles/${slug}`);
+  };
+
   render() {
-    return (
-      <div className="container" id="component-ViewArticles">
-        Articles here
-      </div>
-    );
+    const { fetched } = this.props.state.articles;
+    switch (fetched) {
+      case "":
+        return (
+          <div id="component-ViewArticles"> 
+            <NavBar />
+            <div className="masonry-container">
+              <div className="masonry">
+                <h2>loading...</h2>
+              </div>
+            </div>
+          </div>
+        );
+      case "pending":
+        return (
+          <div>
+            <NavBar />
+            <div className="masonry-container">
+              <div className="masonry">
+                <h2>loading...</h2>
+              </div>
+            </div>
+          </div>
+        );
+      case "done":
+        articles = this.props.state.articles.articles.data.articles;
+        if (articles.length === 0) {
+          return (
+            <div>
+              <NavBar />
+              <div className="masonry-container">
+                <div className="masonry">No articles Available</div>
+              </div>
+            </div>
+          );
+        }
+        return (
+          <div>
+            <NavBar />
+            <div className="masonry-container">
+              <div className="masonry">
+                {articles.map(article => {
+                  return (
+                    <ArticleCard
+                      key={article.slug}
+                      article={article}
+                      onClick={this.handleClick}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        );
+      default:
+        return (
+          <div>
+            <NavBar />
+            <div className="masonry-container">
+              <div className="masonry">
+                <h2>loading...</h2>
+              </div>
+            </div>
+          </div>
+        );
+    }
   }
 }
 
-export default ViewArticles;
+const mapStateToProps = state => {
+  return { state };
+};
+
+AllArticles.propTypes = {
+  getArticles: PropTypes.func,
+  state: PropTypes.object,
+  history: PropTypes.object
+};
+
+export default connect(
+  mapStateToProps,
+  { getArticles }
+)(AllArticles);

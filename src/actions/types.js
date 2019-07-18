@@ -16,4 +16,8 @@ export const SOCIAL_LOGIN_PASS = 'SOCIAL_LOGIN_PASS';
 export const CREATE_ARTICLE = 'CREATE_ARTICLE';
 export const UPDATE_ARTICLE = 'UPDATE_ARTICLE';
 export const FETCH_ARTICLE = 'FETCH_ARTICLE';
+export const TEST = 'TEST';
+export const GET_ARTICLES = 'GET_ARTICLES';
+export const ONE_STORY = 'ONE_STORY';
+export const DELETE_STORY = 'DELETE_STORY'
 

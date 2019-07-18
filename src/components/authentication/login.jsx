@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
+import queryString from 'query-string';
 import LocalLogin from './localLogin.jsx';
 import '../../assets/scss/main.scss';
 import twitterImage from '../../assets/images/twitter.png';
@@ -43,9 +44,13 @@ componentWillReceiveProps(nextProps){
     }
 }
 componentDidMount(){
-  const {auth} = this.props;
-  if(auth){
-    console.log(auth);
+  const { location } = this.props.history;
+  const { token, username, image } = queryString.parse(location.search);
+  if(token && username){
+    localStorage.token = token;
+    localStorage.username = username;
+    localStorage.image = image
+    window.location.replace('/articles');
   }
 }
   handleEmailInput = event => {
