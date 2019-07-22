@@ -6,12 +6,14 @@ import Pagination from '../common/pagination.jsx';
 import ArticleCard from './articleCard';
 import { getArticles } from '../../actions/viewArticles';
 import { paginate } from '../../utils/paginate';
+import Helpers from '../../helpers/helpers';
+import SearchContainer from '../articles/searchContainer';
 
-let articles;
+let allArticles, articles, search;
 class AllArticles extends Component {
   state = {
     currentPage: 1
-  }
+  };
   componentDidMount() {
     this.props.getArticles();
   }
@@ -20,7 +22,7 @@ class AllArticles extends Component {
   };
   render() {
     const { fetched } = this.props.state.articles;
-    const pageSize = 20
+    const pageSize = 20;
     const { currentPage } = this.state;
     let paginateArticles;
     switch (fetched) {
@@ -47,42 +49,57 @@ class AllArticles extends Component {
           </div>
         );
       case 'done':
+        search = this.props.state.articles.search;
         articles = this.props.state.articles.articles.data.articles;
-        paginateArticles = paginate(articles, currentPage, pageSize);
-        if (articles.length === 0) {
+        if (search) {
+          allArticles = this.props.state.articles.articles.data.articles;
+          articles = Helpers.searchArticles(allArticles, search);
+          return (
+            <div>
+              <NavBar />
+              <SearchContainer
+                articles={articles}
+                handleClick={this.handleClick}
+              />
+            </div>
+          );
+        } else {
+          paginateArticles = paginate(articles, currentPage, pageSize);
+          if (articles.length === 0) {
+            return (
+              <div>
+                <NavBar />
+                <div className='masonry-container'>
+                  <div className='masonry'>No articles Available</div>
+                </div>
+              </div>
+            );
+          }
           return (
             <div>
               <NavBar />
               <div className='masonry-container'>
-                <div className='masonry'>No articles Available</div>
+                <div className='masonry'>
+                  {paginateArticles.map(article => {
+                    return (
+                      <ArticleCard
+                        key={article.slug}
+                        article={article}
+                        onClick={this.handleClick}
+                      />
+                    );
+                  })}
+                </div>
               </div>
+              <Pagination
+                itemsCount={articles.length}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={this.handlePageChange}
+              />
             </div>
           );
         }
-        return (
-          <div>
-            <NavBar />
-            <div className='masonry-container'>
-              <div className='masonry'>
-                {paginateArticles.map(article => {
-                  return (
-                    <ArticleCard
-                      key={article.slug}
-                      article={article}
-                      onClick={this.handleClick}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-            <Pagination
-              itemsCount={articles.length}
-              pageSize={pageSize}
-              currentPage={currentPage}
-              onPageChange={this.handlePageChange}
-            />
-          </div>
-        );
       default:
         return (
           <div>

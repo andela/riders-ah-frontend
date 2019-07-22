@@ -1,9 +1,10 @@
-import { GET_ARTICLES } from "../actions/types";
+import { GET_ARTICLES, SEARCH } from "../actions/types";
 import { pending, fulfilled } from "../utils/actionUtil";
 
 const initialState = {
   fetched: "",
-  articles: {}
+  articles: {},
+  search:''
 };
 
 const getArticlesReducer = (state = initialState, action) => {
@@ -17,6 +18,11 @@ const getArticlesReducer = (state = initialState, action) => {
       return {
         fetched: "done",
         articles: { ...action.payload }
+      };
+      case SEARCH:
+      return {
+        ...state,
+        search: action.payload
       };
     default:
       return state;

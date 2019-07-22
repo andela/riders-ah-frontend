@@ -65,5 +65,30 @@ class Helpers {
     }
     return false;
   };
+
+  static searchArticles(allArticles, search) {
+    let findByTitle = [],
+      findByAuthor = [];
+    if (search) {
+      findByTitle = allArticles.filter(article =>
+        article.title.toLowerCase().startsWith(search.toLowerCase())
+      );
+      findByAuthor = allArticles.filter(article =>
+        article.author.username.toLowerCase().startsWith(search.toLowerCase())
+      );
+    }
+    const allSearches = [
+      {
+        title: 'Found by title',
+        values: findByTitle
+      },
+      {
+        title: 'Found by author',
+        values: findByAuthor
+      }
+    ];
+
+    return allSearches;
+  }
 }
 export default Helpers;
