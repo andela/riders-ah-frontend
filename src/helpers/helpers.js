@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 import Joi from 'joi-browser';
+import jwtDecode from 'jwt-decode';
 
 class Helpers {
   static setToken(token) {
@@ -8,6 +9,16 @@ class Helpers {
     }
     localStorage.setItem('token', token);
   }
+  static getUserInfoFromToken() {
+    let user = {};
+    const token = localStorage.token;
+    if (token) {
+      const decoded = jwtDecode(token);
+      const { id, username, firstName, lastName, email, image, bio } = decoded;
+      user = { id, username, firstName, lastName, email, image, bio };
+    }
+    return user;
+  }
   static setAlertError(message) {
     toast.error(message);
   }
@@ -15,7 +26,7 @@ class Helpers {
     toast.info(message);
   }
 
-  static validate = (data,schema) => {
+  static validate = (data, schema) => {
     const { error } = Joi.validate(data, schema, {
       abortEarly: false
     });

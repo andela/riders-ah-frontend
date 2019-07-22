@@ -20,7 +20,7 @@ Button.propTypes = {
   value: PropTypes.string,
   onClick: PropTypes.func,
   className: PropTypes.string,
-  onSubmit :PropTypes.string,
+  onSubmit: PropTypes.string,
   id: PropTypes.string
 };
 

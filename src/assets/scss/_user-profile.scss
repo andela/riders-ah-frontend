@@ -1,0 +1,128 @@
+.input-form {
+  width: 75%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid teal;
+  border-radius: 1px;
+  box-sizing: border-box;
+  font-size: 1.2em;
+}
+.buttons-group {
+  height: 4em;
+  width: 30%;
+  padding: 1.5em auto;
+  margin: 1em auto;
+}
+.button {
+  width: 30%;
+  height: 60%;
+  border-radius: 10px;
+  font-size: 1.2em;
+}
+
+.user-profile {
+  float: left;
+  margin: 0 auto;
+  height: 20em;
+  border-radius: 0.3em;
+
+  .username {
+    margin: auto;
+    margin-left: 0em;
+    color: #658585;
+    font-weight: bold;
+  }
+  .bio {
+    margin: 20px 0;
+    padding: 20px 0;
+    color: #747474;
+    font-size: 1.2em;
+  }
+  .user-info {
+    margin: 0 1% 0 0;
+    width: 79%;
+    height: auto;
+    display: inline-block;
+  }
+  .avatar {
+    margin: 0;
+    width: 18%;
+    padding: 0 1%;
+    height: auto;
+    float: left;
+  }
+  .avatar img {
+    margin: 0;
+    float: left;
+    width: 100%;
+    height: auto;
+    border-radius: 3px;
+  }
+}
+// .user-profile > .bio {
+//   margin: auto;
+//   background: red;
+//   color: #c0c5c5;
+// }
+
+.user-profile ul {
+  width: 100%;
+  margin: 8px 0;
+  padding: 0;
+  display: inline-block;
+  list-style: none;
+}
+.user-profile li {
+  float: left;
+  margin: 0;
+  padding: 17px 10px 17px 0;
+}
+
+.user-profile span {
+  color: #e3eeee;
+  white-space: nowrap;
+  font-size: 1.27em;
+  font-weight: bold;
+}
+.user-profile span:hover {
+  color: #daebea;
+}
+.clear {
+  clear: both;
+}
+.articles-list {
+  table {
+    .pull-left {
+      float: left;
+    }
+    td {
+      border-bottom: 1px solid #ccc;
+      width: 88%;
+      padding: 12px;
+    }
+  }
+}
+
+.profile-info {
+  input,
+  textarea {
+    width: 100%;
+  }
+  .button-profile {
+    width: 49%;
+    padding: 2%;
+    margin: 0.5%;
+    float: left;
+    border: none;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .button-edit {
+    background: teal;
+  }
+  .button-cancel {
+    background: #862a27;
+  }
+}
