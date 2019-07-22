@@ -9,6 +9,6 @@ describe('end-to-end sample test', () => {
       .type('password')
       .should('have.value', 'password');
     cy.get('.input').click();
-    cy.get('.errorMessage').contains('invalid credentials');
+    cy.get('.error-message').contains('invalid credentials');
   });
 });

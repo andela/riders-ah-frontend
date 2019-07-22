@@ -9,7 +9,7 @@ export default merge(baseConfig, {
       disableDotRule: true
     },
     writeToDisk: true,
-    port: process.env.PORT || 3002,
+    port: process.env.PORT || 3002
   },
   output: {
     publicPath: '/'

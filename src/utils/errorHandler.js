@@ -8,7 +8,6 @@ const errorHandler = () => {
 
     if (!action.meta || !action.meta.localError) {
       return next(action).catch(error => {
-        console.log(error.response);
         Notify.setAlertError(error.message);
       });
     }

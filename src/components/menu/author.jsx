@@ -9,8 +9,7 @@ class Author extends Component{
   }
   delete = (slug) => {
     alert('This article will be deleted.Are you willing to continue?')
-    this.props.deleteOneStory;
-    deleteOneStory(slug);
+    this.props.deleteOneStory(slug);
     window.location.replace('/articles');
   }
     render(){

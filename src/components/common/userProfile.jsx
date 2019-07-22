@@ -21,7 +21,7 @@ class UserProfile extends Component {
   };
   render() {
     const { image } = this.props.auth;
-    const profileImage = image ? image : {avatar};
+    const profileImage = image ? image : avatar;
     const { profile } = this.state;
     return (
       <div>
