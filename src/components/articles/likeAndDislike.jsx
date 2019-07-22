@@ -17,14 +17,14 @@ const LikeAndDislike = ({
           src={likeImage}
           onClick={handleLike}
         />
-        <h5>{info.likes && info.likes.count}</h5>
+        <h5>{(info.likes && info.likes.count) || 0}</h5>
         <img
           id='dislike'
           className={disliked ? 'react-active' : ''}
           src={dislikeImage}
           onClick={handleDislike}
         />{' '}
-        <h5>{info.dislikes && info.dislikes.count}</h5>
+        <h5>{(info.dislikes && info.dislikes.count)|| 0}</h5>
       </React.Fragment>
   );
 };

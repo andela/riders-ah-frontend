@@ -13,7 +13,7 @@
 
 .type-comment {
   grid-area: comment;
-  width: 55%;
+  width: 72%;
   padding: 16px;
   margin: 2% 0%;
   font-size: 17px;
@@ -46,12 +46,12 @@
 .comment {
   border: solid;
   border-radius: 10px;
-  width: 58%;
+  width: 75%;
   border-color: #4b4a54;
 }
 .user-comment {
   grid-area: comment;
-  width: 55%;
+  width: 72%;
   margin: 2% 0%;
   box-shadow: $boxShadow;
   z-index: 1;

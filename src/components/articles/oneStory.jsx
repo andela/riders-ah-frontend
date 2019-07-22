@@ -34,6 +34,7 @@ export class OneStory extends Component {
     } = this.props;
     this.props.fetchOneStory(slug);
     this.props.fetchComment(slug);
+    this.props.getLikeAndDislikeCount(slug);
   }
 
   componentDidUpdate(prevProps) {
@@ -56,6 +57,11 @@ export class OneStory extends Component {
     this.props.deleteComment(id, slug);
   };
   componentWillReceiveProps(nextProps) {
+    const {
+      match: {
+        params: { slug }
+      }
+    } = this.props;
     if (nextProps.state.likeAndDislike) {
       const react = { ...this.state.react };
       const liked = Helpers.didILikeIt(this.props.state.likeAndDislike);
@@ -68,12 +74,12 @@ export class OneStory extends Component {
   handleLike = () => {
     const slug = this.props.match.params.slug;
     this.props.likeArticle(slug);
-    this.props.getLikeAndDislikeCount(slug);
+    setTimeout(()=> window.location.reload(),10);
   };
   handleDislike = () => {
     const slug = this.props.match.params.slug;
     this.props.dislikeArticle(slug);
-    this.props.getLikeAndDislikeCount(slug);
+    setTimeout(()=> window.location.reload(),10);
   };
 
   render() {
@@ -85,15 +91,15 @@ export class OneStory extends Component {
         <div>
           <NavBar />
           <ToastContainer />
-          <h2 className='article-title'>{data.title}</h2>
+          <h2 className="article-title">{data.title}</h2>
           <Author
             names={data.author.username}
             readingTime={data.readingTime}
             date={<Moment fromNow>{data.createdAt}</Moment>}
             slug={data.slug}
           />
-          <div className='story'>
-          <div className="react">
+          <div className="story">
+            <div className="react">
               <LikeAndDislike
                 liked={this.state.react.liked}
                 disliked={this.state.react.disliked}
@@ -103,28 +109,30 @@ export class OneStory extends Component {
               />
             </div>
             <div
-              className='words'
+              className="words"
               dangerouslySetInnerHTML={{ __html: data.body }}
             />
           </div>
-          <div className='container2'>
-            <div className='comments'>
-              <h3>Comments</h3>
-              <WriteComment params={this.props.match.params} />
-              {comments.length < 1
-                ? ''
-                : comments.map(comment => {
-                    return (
-                      <ReadComment
-                        key={comment.id}
-                        comment={comment}
-                        params={this.props.match.params}
-                        onDelete={() => {
-                          this.handleDelete(comment.id, slug);
-                        }}
-                      />
-                    );
-                  })}
+          <div className="container2">
+            <div className="related">
+              <div className="comments">
+                <h3>Comments</h3>
+                <WriteComment params={this.props.match.params} />
+                {comments.length < 1
+                  ? ''
+                  : comments.map(comment => {
+                      return (
+                        <ReadComment
+                          key={comment.id}
+                          comment={comment}
+                          params={this.props.match.params}
+                          onDelete={() => {
+                            this.handleDelete(comment.id, slug);
+                          }}
+                        />
+                      );
+                    })}
+              </div>
             </div>
           </div>
         </div>
@@ -143,7 +151,6 @@ const mapStateToProps = state => {
   return { state };
 };
 
-
 OneStory.propTypes = {
   fetchOneStory: PropTypes.func,
   state: PropTypes.object,
@@ -160,5 +167,12 @@ OneStory.propTypes = {
 export default connect(
   mapStateToProps,
 
-  { fetchOneStory,fetchComment, deleteComment, getLikeAndDislikeCount, likeArticle, dislikeArticle }
+  {
+    fetchOneStory,
+    fetchComment,
+    deleteComment,
+    getLikeAndDislikeCount,
+    likeArticle,
+    dislikeArticle
+  }
 )(OneStory);

@@ -11,7 +11,6 @@ import {
     likes: {},
     isDisliked: false,
     isLiked:false
-
   };
   
   const articleReactReducer = (state = initialState, action) => {
@@ -30,18 +29,19 @@ import {
         return {
           ...state,
           isDisliked: false,
-          isLiked: true
+          isLiked: true,
+          likes: action.payload.data
+
         };
       case fulfilled(DISLIKE_ARTICLE):
         return {
           ...state,
           isLiked:false,
-          isDisliked: true
+          isDisliked: true,
+          dislikes: action.payload.data
         };
       default:
         return state;
     }
   };
-  
   export default articleReactReducer;
-  
