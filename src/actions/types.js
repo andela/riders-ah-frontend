@@ -30,3 +30,7 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const GET_FOLLOWERS = 'GET_FOLLOWERS';
 export const GET_FOLLOWING = 'GET_FOLLOWING';
 export const GET_USER_ARTICLES = 'GET_USER_ARTICLES';
+export const GET_LIKES= 'GET_LIKES';
+export const GET_DISLIKES = 'GET_DISLIKES';
+export const LIKE_ARTICLE = 'LIKE_ARTICLE';
+export const DISLIKE_ARTICLE = 'DISLIKE_ARTICLE';

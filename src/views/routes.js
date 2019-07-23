@@ -3,10 +3,10 @@ import { Route, Switch } from 'react-router-dom';
 import Login from '../components/authentication/login.jsx';
 import Signup from '../components/authentication/signup.jsx';
 import Verification from '../components/authentication/verification.jsx';
+import { Home } from './';
 import NotFound from './notFound.jsx';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { Home } from './';
 import ViewArticles from '../components/articles/viewArticles.jsx';
 import PrivateRoute from '../../helpers/privateRoute';
 import {
