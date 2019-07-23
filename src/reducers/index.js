@@ -7,6 +7,7 @@ import resetPasswordReducer from './resetPasswordReducer';
 import articleReducer from './articleReducer';
 import commentReducer from './commentReducer';
 import userReducer from './userReducer';
+import articleReactReducer from './articleReactReducer';
 
 export default combineReducers({
   registration: signupReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   reset: resetPasswordReducer,
   article: articleReducer,
   comment: commentReducer,
-  userInfo: userReducer
+  userInfo: userReducer,
+  likeAndDislike: articleReactReducer
 });

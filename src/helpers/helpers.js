@@ -37,5 +37,29 @@ class Helpers {
     }
     return errors;
   };
+  static didILikeIt = info => {
+    const allAuthor = info.likes.likes;
+    if (allAuthor) {
+      const user = Helpers.getUserInfoFromToken();
+      for (let i = 0; i < allAuthor.length; i++) {
+        if (user.username === allAuthor[i].author.username) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+  static didIDislikeIt = info => {
+    const allAuthor = info.dislikes.dislikes;
+    if (allAuthor) {
+      const user = Helpers.getUserInfoFromToken();
+      for (let i = 0; i < allAuthor.length; i++) {
+        if (user.username === allAuthor[i].author.username) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
 }
 export default Helpers;

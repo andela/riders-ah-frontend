@@ -17,6 +17,10 @@ const props = {
         createdAt: 'createdAt',
         slug: 'slug'
       }
+    },
+    likeAndDislike: {
+      likes: {},
+      dislikes: {}
     }
   },
   fetchOneStory: jest.fn(slug => slug),
@@ -28,7 +32,8 @@ const props = {
     params: {
       slug: ''
     }
-  }
+  },
+  getLikeAndDislikeCount: jest.fn()
 };
 
 const mockStore = configureStore([thunk, promise]);
