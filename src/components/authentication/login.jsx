@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import queryString from 'query-string';
 import LocalLogin from './localLogin.jsx';
+import SocialAuth from './socialAuth';
 import '../../assets/scss/main.scss';
-import twitterImage from '../../assets/images/twitter.png';
-import facebookImage from '../../assets/images/facebook.png';
-import googleImage from '../../assets/images/gmail.png';
 import {
   setEmail,
   setPassword,
@@ -17,7 +15,6 @@ import {
 import validateCredentials from '../../../helpers/credentialsValidation';
 import Helpers from '../../helpers/helpers';
 
-const { API_URL } = process.env;
 
 export class Login extends Component {
   constructor() {
@@ -25,17 +22,7 @@ export class Login extends Component {
     this.state = {
       errors: {}
     };
-    this.loginToFacebook = this.loginToFacebook.bind(this);
   }
-  loginToFacebook = () => {
-    window.location.replace(`${API_URL}/api/v1/login/facebook`);
-  };
-  loginToTwitter = () => {
-    window.location.replace(`${API_URL}/api/v1/login/twitter`);
-  };
-  loginToGoogle = () => {
-    window.location.replace(`${API_URL}/api/v1/login/google`);
-  };
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({
@@ -43,6 +30,7 @@ export class Login extends Component {
       });
     }
   }
+
   componentDidMount() {
     if (localStorage.token) {
       this.props.history.replace('/articles');
@@ -100,21 +88,7 @@ export class Login extends Component {
             onClick={() => this.handleClick(credentials)}
           />
           <p>Log In below using:</p>
-          <img
-            id='loginToFacebook'
-            onClick={this.loginToFacebook}
-            src={facebookImage}
-          />
-          <img
-            id='loginToTwitter'
-            src={twitterImage}
-            onClick={this.loginToTwitter}
-          />
-          <img
-            id='loginToGoogle'
-            src={googleImage}
-            onClick={this.loginToGoogle}
-          />
+          <SocialAuth />
         </form>
       </div>
     );

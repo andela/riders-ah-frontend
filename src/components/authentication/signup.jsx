@@ -7,6 +7,7 @@ import Input from '../common/input.jsx';
 import Button from '../common/button.jsx';
 import { signupUser } from '../../actions/signup';
 import Notify from '../../helpers/helpers';
+import SocialAuth from './socialAuth'
 class Signup extends Component {
   constructor() {
     super();
@@ -110,6 +111,7 @@ class Signup extends Component {
           onClick={this.onHandleSubmit}
         />
         <p>Sign up below using:</p>
+        <SocialAuth/>
       </div>
     );
   }

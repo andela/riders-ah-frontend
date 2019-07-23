@@ -1,8 +1,7 @@
 import { act } from 'react-dom/test-utils';
-import DefaultLogin,{Login} from '../../../components/authentication/login';
+import DefaultLogin from '../../../components/authentication/login';
 import { findTestByAttr, store } from '../../../../helpers/utils/testUtils';
 import React from 'react';
-import { shallow } from 'enzyme';
 
 
 const props = {
@@ -14,14 +13,6 @@ const props = {
 describe('app component', () => {
 
   const login = mount(<DefaultLogin {...props} store={store} />);
-  const wrapper =  shallow(<Login {...props} />)
-
-  it('Should call loginToFacebook method when image is clicked',  () => {
-    wrapper.find('#loginToFacebook').simulate('click')
-});
-it('Should call loginToGoogle method when image is clicked', () => {
-    wrapper.find('#loginToGoogle').simulate('click')
-});
 
   it('should render without error', () => {
     const loginComponent = findTestByAttr(login, 'component-Login');
