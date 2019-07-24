@@ -4,7 +4,8 @@ import {
   UPDATE_USER,
   GET_FOLLOWERS,
   GET_FOLLOWING,
-  GET_USER_ARTICLES
+  GET_USER_ARTICLES,
+  GET_NOTIFICATIONS
 } from '../actions/types';
 import { fulfilled } from '../utils/actionUtil';
 
@@ -16,7 +17,9 @@ const initialState = {
   username: '',
   message: '',
   updated: false,
-  error: false
+  error: false,
+  notifFetched: false,
+  notifications: []
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -49,6 +52,12 @@ const userReducer = (state = initialState, action) => {
         ...state,
         message: 'Success',
         articles: action.payload.data.articles
+      };
+    case fulfilled(GET_NOTIFICATIONS):
+      return {
+        ...state,
+        notifFetched: true,
+        notifications: action.payload.data.notification
       };
 
     case RESET_UPDATE_ACTION:
