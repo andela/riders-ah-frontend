@@ -1,5 +1,7 @@
 @mixin Transition($trans) {
+  font-family: Arial, Helvetica, sans-serif;
   box-shadow: $trans;
+  margin: 0;
   color: #fcf1ca;
 }
 @mixin layout($padding, $shadow) {
@@ -104,6 +106,12 @@
   }
 }
 
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+}
+
 .footer {
   text-align: center;
   margin-top: 10px;
@@ -166,6 +174,38 @@
   height: 100%;
   display: flex;
   flex-wrap: wrap;
+  .dropdown {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    cursor: pointer;
+    margin-left: 5%;
+    opacity: 0.7;
+    &:hover {
+      .dropdown-content {
+        display: block;
+      }
+    }
+    .avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
+      margin-left: 60px;
+    }
+    .dropdown-content {
+      display: none;
+      background-color: teal;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 2;
+      a {
+        color: #ffffff;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+    }
+  }
 }
 .content-user {
   width: 71%;

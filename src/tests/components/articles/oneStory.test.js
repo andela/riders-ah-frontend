@@ -28,6 +28,7 @@ const props = {
   deleteComment: jest.fn((id, slug) => {
     id, slug;
   }),
+  getAllRates: jest.fn(slug => slug),
   match: {
     params: {
       slug: ''

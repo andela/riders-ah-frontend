@@ -4,25 +4,24 @@ import { PropTypes } from 'prop-types';
 import { deleteOneStory } from '../../actions/viewArticles';
 import Button from '../common/button';
 import avatar from '../../assets/images/avatar.png';
-
 class Author extends Component {
   update = slug => {
     window.location.replace(`/articles/update/${slug}`);
-  }
-  delete = (slug) => {
-    alert('This article will be deleted.Are you willing to continue?')
+  };
+  delete = slug => {
+    alert('This article will be deleted.Are you willing to continue?');
     this.props.deleteOneStory(slug);
     window.location.replace('/articles');
   };
   render() {
     const { names, auth, date, readingTime, slug } = this.props;
-    const profileImage = auth.user.image  ? auth.user.image : avatar;
+    const profileImage = auth.user.image ? auth.user.image : avatar;
     return (
-      <div className="author">
-        <img src={profileImage} className="avatar" />
-        <div className="reading">
+      <div className='author'>
+        <img src={profileImage} className='avatar' />
+        <div className='reading'>
           {names}&nbsp;&nbsp;&nbsp;
-          <input type="button" value="follow" className="follow" />
+          <input type='button' value='follow' className='follow' />
           <br />
           <b>{date}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <i>{readingTime}</i> <br />
@@ -30,13 +29,13 @@ class Author extends Component {
             <Fragment>
               <Button
                 onClick={this.update.bind(this, slug)}
-                value="Update"
-                className="btn-update"
+                value='Update'
+                className='btn-update'
               />
               <Button
                 onClick={this.delete.bind(this, slug)}
-                value="Delete"
-                className="btn-delete"
+                value='Delete'
+                className='btn-delete'
               />
             </Fragment>
           ) : (

@@ -2,6 +2,7 @@ import Button from './button';
 import Input from './input';
 import NavBar from './navBar';
 import Modal from './modal';
-export * from './profileSideMenu';
+import Ratings from './rating';
 
-export { Button, Input, NavBar, Modal };
+export * from './profileSideMenu';
+export { Button, Input, NavBar, Modal, Ratings };
