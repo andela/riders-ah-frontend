@@ -2,12 +2,15 @@ import { CREATE_ARTICLE, FETCH_ARTICLE, UPDATE_ARTICLE, CREATE_TAG } from './typ
 import http from '../helpers/httpServices';
 
 export const createOrUpdateArticle = (slug = null, article) => dispatch => {
+  const tags = [];
+  tags.push(article.tag);
   const newArticle = {
     title: article.title,
     body: article.body,
     category: article.category,
     description: article.description,
-    image: article.image || 'null'
+    image: article.image || 'null',
+    tags
   };
 
   if (slug) {

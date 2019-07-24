@@ -182,13 +182,13 @@ class ViewProfile extends Component {
           numFollows: following
         }
       });
+    }
       if (nextProps.stats.isStatsFetched === 'done') {
         const { stats } = nextProps.stats;
         let Statistics = { ...this.state.statistics };
         Statistics = stats;
         this.setState({ statistics: Statistics });
       }
-    }
   }
 
   handleBookmark = slug => {

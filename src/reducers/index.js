@@ -13,6 +13,7 @@ import bookmarkReducer from './bookmarkReducer';
 import commentReactReducer from './commentReactReducer';
 import followReducer from './followReducer';
 import statsReducer from './statsReducer';
+import highlightReducer from './article/highlightReducer'
 
 export default combineReducers({
   registration: signupReducer,
@@ -28,5 +29,6 @@ export default combineReducers({
   bookmark: bookmarkReducer,
   likeComment: commentReactReducer,
   follow: followReducer,
-  stats: statsReducer
+  stats: statsReducer,
+  highlight: highlightReducer
 });
