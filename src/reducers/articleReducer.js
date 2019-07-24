@@ -35,15 +35,15 @@ const articleReducer = (state = initialState, action) => {
       };
     case pending(ONE_STORY):
       return {
-        ...state, 
+        ...state,
         fetched: 'pending'
       };
     case fulfilled(ONE_STORY):
       return {
         fetched: 'done',
         article: action.payload.data.article,
-        success:false,
-        isArticleRetrieved:true
+        success: false,
+        isArticleRetrieved: true
       };
     case fulfilled(GET_DISLIKES):
       return {

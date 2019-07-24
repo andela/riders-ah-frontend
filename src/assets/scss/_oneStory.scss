@@ -1,7 +1,7 @@
 .article-title {
   width: 100%;
-  text-align: center;
-  margin-top: 45px;
+  margin-top: 45px 0px 0px 0px;
+  margin: 45px 0px 0px 400px;
 }
 .story {
   margin-top: 3%;
@@ -48,6 +48,13 @@
       opacity: 1;
     }
   }
+  .ratings1 {
+    width: 12px;
+    height: 30px;
+    margin: 0 5px;
+    position: relative;
+    top: 3px;
+  }
 }
 .words {
   width: 60%;
@@ -64,21 +71,32 @@
 .author {
   width: 100%;
   display: flex;
-  justify-content: center;
-  flex-direction: row;
+  margin-left: 400px;
   margin-bottom: 10px;
   position: relative;
   top: 25px;
-  .avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 100%;
+  .user-article {
+    float: left;
+    line-height: 35px;
+    .avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
+      margin-top: 15px;
+    }
+  }
+}
+.featured-image{
+  margin: 40px 0px 0px 400px;
+  img{
+    width: 80%;
   }
 }
 
 .reading {
-  text-align: center;
-  width: 25%;
+  margin-left: 1px;
+  width: 42%;
+  padding: 6px;
   display: block;
   line-height: 28px;
   img {
@@ -88,7 +106,7 @@
 }
 
 .follow {
-  padding: 4px;
+  padding: 6px;
   width: 25%;
   font-size: 11px;
   border-radius: 10px;
@@ -99,6 +117,8 @@
   transition: all 0.5s ease-in;
   &:hover {
     box-shadow: 0px 1px 0px #324b4b;
+    background-color: teal;
+    color: #ffffff;
   }
 }
 
@@ -123,13 +143,17 @@
   border-radius: 5px;
   margin-right: 10px;
 }
+.upload-button {
+  background-color: teal;
+  width: 31px;
+  padding: 0px 60px;
+  border-radius: 5px;
+  margin-bottom: -10px;
+  cursor: pointer;
+}
 .react-active {
   border: 1px solid teal;
   border-radius: 5px;
-}
-.col-rate {
-  width: 50%;
-  display: inline-block;
 }
 .btn-rate {
   font-size: 1.3em;

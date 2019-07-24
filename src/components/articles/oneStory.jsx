@@ -142,7 +142,7 @@ export class OneStory extends Component {
     const { slug } = this.props.match.params;
     const { comments, rate, rates } = this.state;
     const data = this.props.state.article.article;
-    if (this.props.state.article.fetched === 'done') {
+;    if (this.props.state.article.fetched === 'done') {
       return (
         <div id='component-oneStory'>
           <NavBar />
@@ -151,9 +151,10 @@ export class OneStory extends Component {
           <Author
             names={data.author.username}
             readingTime={data.readingTime}
-            date={<Moment fromNow>{data.createdAt}</Moment>}
+            date={<Moment format="YYYY/MM/DD">{data.createdAt}</Moment>}
             slug={data.slug}
           />
+          <div className="featured-image"> <img src={data.image}  /></div>
           <div className='story'>
             <div className='react'>
               <LikeAndDislike

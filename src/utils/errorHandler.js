@@ -8,7 +8,7 @@ const errorHandler = () => {
 
     if (!action.meta || !action.meta.localError) {
       return next(action).catch(error => {
-        if(error.response.data.errors.body){
+        if(error.response.data.errors !== undefined){
           Notify.setAlertError(error.response.data.errors.body[0]);
         }
         else{
