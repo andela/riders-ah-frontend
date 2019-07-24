@@ -13,7 +13,8 @@ describe('Registed user Reducer', () => {
         password: 'Password@123',
         username: 'testusername'
       },
-      message: 'Email sent, Please check yout inbox for account activation!'
+      message: 'Email sent, Please check yout inbox for account activation!',
+      isSent: true
     };
     const newState = signupReducer(
       {},

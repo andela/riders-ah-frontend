@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import SimpleReactValidator from 'simple-react-validator';
 import { PropTypes } from 'prop-types';
 import { ToastContainer } from 'react-toastify';
 import Input from '../common/input.jsx';
@@ -8,28 +7,7 @@ import Button from '../common/button.jsx';
 import { signupUser } from '../../actions/signup';
 import Notify from '../../helpers/helpers';
 import SocialAuth from './socialAuth'
-class Signup extends Component {
-  constructor() {
-    super();
-    this.validator = new SimpleReactValidator({
-      autoForceUpdate: this,
-      validators: {
-        password: {
-          // name the rule
-          message:
-            'The :attribute should be at 8 charcters minimum , with one capital letter, one special character, and a number',
-          rule: (val, params, validator) => {
-            return (
-              validator.helpers.testRegex(
-                val,
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,20})/i
-              ) && params.indexOf(val) === -1
-            );
-          }
-        }
-      }
-    });
-  }
+export class Signup extends Component {
   state = {
     user: {
       email: '',
@@ -43,7 +21,6 @@ class Signup extends Component {
     this.setState({ user: data });
   };
   onHandleSubmit = () => {
-    this.validator.showMessages();
     this.props.signupUser(
       this.state.user.email,
       this.state.user.username,
@@ -51,15 +28,15 @@ class Signup extends Component {
     );
   };
   componentWillReceiveProps(nextProps) {
-    const { message } = nextProps.registration;
-    if (message) {
+    const { message, isSent } = nextProps.registration;
+    if (isSent) {
       Notify.setAlertInfo(message);
     }
   }
   render() {
     return (
       <div className="container" id="component-signup">
-        <ToastContainer />
+       <ToastContainer />
         <h1>Authors Haven - Signup</h1>
         <Input
           type="text"
@@ -69,11 +46,6 @@ class Signup extends Component {
           onChange={this.onChangeHandler}
           value={this.state.user.username}
           placeholder="Username"
-          validateMessage={this.validator.message(
-            'username',
-            this.state.user.username,
-            'required'
-          )}
         />
         <Input
           type="email"
@@ -83,11 +55,6 @@ class Signup extends Component {
           onChange={this.onChangeHandler}
           value={this.state.user.email}
           placeholder="E-mail"
-          validateMessage={this.validator.message(
-            'email',
-            this.state.user.email,
-            'required|email'
-          )}
         />
         <Input
           type="password"
@@ -97,11 +64,6 @@ class Signup extends Component {
           onChange={this.onChangeHandler}
           value={this.state.user.password}
           placeholder="Password"
-          validateMessage={this.validator.message(
-            'password',
-            this.state.user.password,
-            'required|password'
-          )}
         />
         <br />
         <br />
