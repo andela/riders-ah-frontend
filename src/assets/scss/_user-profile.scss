@@ -126,3 +126,47 @@
     background: #862a27;
   }
 }
+
+.bookmark {
+  width: 750px;
+  li {
+    list-style-type: none;
+    line-height: 0px;
+  }
+  .bookmarked-article {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid black;
+    width: 100%;
+    div {
+      display: flex;
+      flex-direction: column;
+      width: 70%;
+      margin-bottom: 20px;
+      .article-title {
+        cursor: pointer;
+      }
+      .article-date {
+        margin: -33px 0px 0px 195px;
+      }
+      .reading-time {
+        margin: -33px 0px 0px 300px;
+      }
+      .bookmarkImage {
+        @include layout(3px, 0px 0px 0px #afa8ba);
+        width: 30px;
+        margin: 10px;
+        cursor: pointer;
+        opacity: 0.7;
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+    img {
+      width: 30%;
+      margin-bottom: 20px;
+    }
+    display: flex;
+  }
+}

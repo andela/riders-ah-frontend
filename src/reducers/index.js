@@ -9,6 +9,7 @@ import commentReducer from './commentReducer';
 import userReducer from './userReducer';
 import articleReactReducer from './articleReactReducer';
 import rateReducer from './article/ratingReducer';
+import bookmarkReducer from './bookmarkReducer';
 
 export default combineReducers({
   registration: signupReducer,
@@ -20,5 +21,6 @@ export default combineReducers({
   comment: commentReducer,
   userInfo: userReducer,
   likeAndDislike: articleReactReducer,
-  rate: rateReducer
+  rate: rateReducer,
+  bookmark: bookmarkReducer
 });

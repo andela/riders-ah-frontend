@@ -23,7 +23,7 @@ export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const FETCH_COMMENT = 'FETCH_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const UPDATE_COMMENT = 'UPDATE_COMMENT';
-export const SEARCH = 'SEARCH'
+export const SEARCH = 'SEARCH';
 
 export const GET_USER_INFO = 'GET_USER_INFO';
 export const RESET_UPDATE_ACTION = 'RESET_UPDATE_ACTION';
@@ -38,3 +38,6 @@ export const DISLIKE_ARTICLE = 'DISLIKE_ARTICLE';
 
 export const RATE_ARTICLE = 'RATE_ARTICLE';
 export const GET_RATINGS = 'GET_RATINGS';
+
+export const BOOKMARK_ARTICLE = 'BOOKMARK_ARTICLE';
+export const FETCH_BOOKMARKS = 'FETCH_BOOKMARKS';

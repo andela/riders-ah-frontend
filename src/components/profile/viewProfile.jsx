@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { PropTypes } from 'prop-types';
+import Moment from 'react-moment';
 import { NavBar, Modal } from '../../components/common';
 import Helpers from '../../helpers/helpers';
 import { Button } from '../common';
+import Bookmark from '../articles/bookmark';
 import {
   getUserInfo,
   updateUser,
@@ -13,6 +15,7 @@ import {
   getArticles,
   getUserFollowing
 } from '../../actions/profile';
+import { bookmarkArticle, fetchBookmarks } from '../../actions/bookmarkAction';
 
 class ViewProfile extends Component {
   constructor() {
@@ -74,6 +77,9 @@ class ViewProfile extends Component {
     const userDispaly = profileDisplay !== 'none' ? 'none' : 'block';
     this.setState({ modalDisplay: display, profileDisplay: userDispaly });
   };
+  navigateBookmark = slug => {
+    this.props.history.push(`/articles/${slug}`);
+  };
   componentDidMount() {
     const user = Helpers.getUserInfoFromToken();
 
@@ -81,8 +87,10 @@ class ViewProfile extends Component {
     this.props.getUserFollowers(user.username);
     this.props.getUserFollowing(user.username);
     this.props.getArticles();
+    this.props.fetchBookmarks();
   }
   componentWillReceiveProps(nextProps) {
+    const { isBookmarked } = nextProps.bookmarks;
     const {
       error,
       message,
@@ -123,8 +131,18 @@ class ViewProfile extends Component {
       this.props.getUserInfo(profile.data.username);
       this.setModal();
     }
+    if (isBookmarked === 'done again') {
+      this.props.fetchBookmarks();
+    }
   }
+
+  handleBookmark = slug => {
+    this.props.bookmarkArticle(slug);
+  };
   render() {
+    const { bookmarks } = this.props;
+    const isBookmark = true;
+    const { isBookmarksFetched, Bookmarks } = bookmarks;
     const { modalDisplay, profileDisplay } = this.state;
     const {
       image,
@@ -221,6 +239,57 @@ class ViewProfile extends Component {
                     then type all required information
                   </div>
                 )}
+                <div className='bookmark'>
+                  <h1>Bookmarks</h1>
+                  {isBookmarksFetched === 'done' && Bookmarks.length > 0 ? (
+                    Bookmarks.map(bookmark => {
+                      return (
+                        <div className='bookmarked-article' key={bookmark.id}>
+                          <div>
+                            <li
+                              className='article-title'
+                              onClick={() =>
+                                this.navigateBookmark(bookmark.article.slug)
+                              }
+                            >
+                              <strong>{bookmark.article.title}</strong>
+                            </li>
+                            <br />
+                            <li>{bookmark.article.description}</li>
+                            <li className='author-name'>
+                              {bookmark.author.username}
+                            </li>
+                            <li className='article-date'>
+                              <Moment format='YYYY/MM/DD'>
+                                {bookmark.article.createdAt}
+                              </Moment>
+                            </li>
+                            <li className='reading-time'>
+                              {bookmark.article.readingTime}
+                            </li>
+                            <Bookmark
+                              handleBookmark={() =>
+                                this.handleBookmark(bookmark.article.slug)
+                              }
+                              isBookmark
+                              className='bookmarkImage'
+                            />
+                          </div>
+                          <img
+                            src={bookmark.article.image}
+                            className='avatar'
+                            style={{ cursor: 'pointer', borderRadius: '35%' }}
+                            onClick={() =>
+                              this.navigateBookmark(bookmark.article.slug)
+                            }
+                          />
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <h3>No Bookmarked articles</h3>
+                  )}
+                </div>
               </div>
             )}
           </div>
@@ -230,14 +299,20 @@ class ViewProfile extends Component {
   }
 }
 const mapStateToProps = state => ({
-  userInfo: state.userInfo
+  userInfo: state.userInfo,
+  bookmarks: state.bookmark
 });
 
 ViewProfile.propTypes = {
   getUserInfo: PropTypes.func,
   updateUser: PropTypes.func,
   resetUpdateAction: PropTypes.func,
-  getUserFollowers: PropTypes.func
+  getUserFollowers: PropTypes.func,
+  bookmarks: PropTypes.object,
+  Bookmarks: PropTypes.array,
+  history: PropTypes.object,
+  bookmarkArticle: PropTypes.func,
+  fetchBookmarks: PropTypes.func
 };
 export default connect(
   mapStateToProps,
@@ -247,6 +322,8 @@ export default connect(
     resetUpdateAction,
     getUserFollowers,
     getArticles,
-    getUserFollowing
+    getUserFollowing,
+    fetchBookmarks,
+    bookmarkArticle
   }
 )(ViewProfile);
