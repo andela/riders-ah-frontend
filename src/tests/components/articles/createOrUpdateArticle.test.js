@@ -16,6 +16,9 @@ const props = {
     params: {
       token: ''
     }
+  },
+  articles: {
+    query: ' '
   }
 };
 

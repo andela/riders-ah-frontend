@@ -1,15 +1,20 @@
+.search-data{
+  h2{
+    margin: 29px 0px 0px 82px;
+    color: teal;
+    border-bottom: 1px solid;
+  }
+}
 .masonry-container {
   display: flex;
   justify-content: center;
 }
 .masonry {
-  margin-top: 90px;
+  margin-top: 20px;
   width: 90%;
   column-count: 3;
   column-gap: 12px;
   padding: 12px;
-  border-top: 2px solid grey;
-  border-bottom: 2px solid grey;
   div {
     cursor: pointer;
     padding: 12px;

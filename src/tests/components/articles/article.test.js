@@ -2,8 +2,15 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import OneStory from '../../../components/articles/oneStory';
+import promise from 'redux-promise-middleware';
+import thunk from 'redux-thunk';
+import { UserProfile } from '../../../components/common/userProfile';
 import { store } from '../../../../helpers/utils/testUtils';
 import { mount, shallow } from 'enzyme';
+import Helpers from '../../../helpers/helpers';
+import configureStore from 'redux-mock-store';
+
+const mockStore = configureStore([thunk, promise]);
 
 const article = {
   article: {
@@ -82,4 +89,57 @@ describe('article component', () => {
     );
     expect(component.length).toEqual(1);
   });
+  it('it should call on change when searching', () => {
+    const props = {
+      state: {
+        articles: {
+          fetched: 'done'
+        }
+      },
+      articles: {
+        query: ' '
+      }
+    };
+    const UserProfileComponent = mount(
+      <Provider store={mockStore({ auth: { user: {} } })}>
+        <MemoryRouter>
+          <UserProfile {...props} />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const component = UserProfileComponent.find('UserProfile');
+    component.instance().handleSearch = jest.fn();
+    component.instance().forceUpdate();
+    component.update();
+    const inputs = component.find("input");
+    const usernameInput = inputs.find('[id="search"]');
+     const event = { target: { value: "search" } };
+    usernameInput.simulate("change", event);
+    expect(component.instance().handleSearch).toHaveBeenCalled();
+  });
+  it('should render without error', () => {
+    const search = 'new';
+    const allArticle = [
+      {
+        title: 'Article 1',
+        description: 'Educational',
+        author: {
+          username: 'sam'
+        }
+      },
+      {
+        title: 'Article 2',
+        description: 'Educational',
+        author: {
+          username: 'niyitanga'
+        }
+      }
+    ];
+    const response = [
+      { title: 'Found by title', values: [] },
+      { title: 'Found by author', values: [] }
+    ];
+    expect(Helpers.searchArticles(allArticle, search)).toEqual(response);
+});
 });
