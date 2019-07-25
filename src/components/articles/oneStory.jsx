@@ -14,6 +14,8 @@ import Helpers from '../../helpers/helpers';
 import LikeAndDislike from './likeAndDislike';
 import { rateArticle, getAllRates } from '../../actions/article/ratingAction';
 import { Ratings } from '../common';
+import ShareArticles from '../common/shareArticles';
+
 import {
   getLikeAndDislikeCount,
   likeArticle,
@@ -164,6 +166,7 @@ export class OneStory extends Component {
                 handleLike={this.handleLike}
                 handleDislike={this.handleDislike}
               />
+              <ShareArticles/>
             </div>
             <div className='words'>
               <div dangerouslySetInnerHTML={{ __html: data.body }} />
