@@ -14,8 +14,26 @@ class Helpers {
     const token = localStorage.token;
     if (token) {
       const decoded = jwtDecode(token);
-      const { id, username, firstName, lastName, email, image, bio } = decoded;
-      user = { id, username, firstName, lastName, email, image, bio };
+      const {
+        id,
+        username,
+        firstName,
+        lastName,
+        email,
+        image,
+        bio,
+        notificationSettings
+      } = decoded;
+      user = {
+        id,
+        username,
+        firstName,
+        lastName,
+        email,
+        image,
+        bio,
+        notificationSettings
+      };
     }
     return user;
   }
@@ -77,7 +95,12 @@ class Helpers {
     }
     return false;
   };
-
+  static arrayPopOrPush(array, element) {
+    const elIndex = array.indexOf(element);
+    if (elIndex === -1) array.push(element);
+    else array.splice(elIndex, 1);
+    return array;
+  }
   static searchArticles(allArticles, search) {
     let findByTitle = [],
       findByAuthor = [];

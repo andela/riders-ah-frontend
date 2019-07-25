@@ -15,7 +15,6 @@ import {
 import validateCredentials from '../../../helpers/credentialsValidation';
 import Helpers from '../../helpers/helpers';
 
-
 export class Login extends Component {
   constructor() {
     super();
@@ -38,6 +37,9 @@ export class Login extends Component {
     const { location } = this.props.history;
     const { token, username, image } = queryString.parse(location.search);
     if (token && username) {
+      const userInfo = Helpers.getUserInfoFromToken();
+      localStorage.setItem('user', JSON.stringify(userInfo));
+
       localStorage.token = token;
       localStorage.username = username;
       localStorage.image = image;
@@ -67,8 +69,10 @@ export class Login extends Component {
     const { isAuthanticated } = auth;
     if (isAuthanticated && token) {
       Helpers.setToken(token);
+      const userInfo = Helpers.getUserInfoFromToken();
+      localStorage.setItem('user', JSON.stringify(userInfo));
     }
-    isAuthanticated && this.props.history.replace('/articles');
+    isAuthanticated && window.location.replace('/articles');
   }
   render() {
     const { auth } = this.props;
