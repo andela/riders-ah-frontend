@@ -10,7 +10,7 @@ const ArticleCard = ({ article }) => {
   return (
     <div id={article.slug}>
       <a href={`/articles/${article.slug}`}>
-        <img src={ArticleImage} className='element' />
+        <img src={article.image !=='null'?article.image:ArticleImage} className='element' />
       </a>
       <ul>
         <li>

@@ -14,6 +14,7 @@ import { createOrUpdateArticle } from '../../actions/articleAction';
 import Joi from 'joi-browser';
 import Helpers from '../../helpers/helpers';
 import { modules, formats } from './editor';
+import uploadIcon from '../../assets/images/upload-icon.png';
 
 class CreateOrUpdateArticle extends Component {
   constructor(props) {
@@ -26,9 +27,27 @@ class CreateOrUpdateArticle extends Component {
       title: '',
       tag: '',
       category: '',
-      body: ''
+      description: '',
+      body: '',
+      image: ''
     },
-    errors: {}
+    errors: {},
+    profileWidget: cloudinary.createUploadWidget(
+      {
+        cloudName: 'dfjns5lny',
+        uploadPreset: 'nyxdcave',
+        multiple: false,
+        cropping: true,
+        croppingShowBackButton: true
+      },
+      (error, result) => {
+        if (!error && result && result.event === 'success') {
+          const article = { ...this.state.article };
+          article.image = result.info.secure_url;
+          this.setState({ article });
+        }
+      }
+    )
   };
   componentDidMount() {
     const slug = this.props.match.params.slug;
@@ -40,21 +59,20 @@ class CreateOrUpdateArticle extends Component {
     const slug = this.props.match.params.slug;
     if (slug) {
       if (nextProps.article.fetched === 'done') {
-        const {
-          title,
-          tag,
-          description,
-          body
-        } = nextProps.article.article;
+        const { title, tag, category,description, body } = nextProps.article.article;
         const retrievedArticle = { ...this.state.article };
         retrievedArticle.title = title;
         retrievedArticle.tag = tag;
         retrievedArticle.body = body;
-        retrievedArticle.category = description;
+        retrievedArticle.category = category;
+        retrievedArticle.description = description;
         this.setState({ article: retrievedArticle });
       }
     }
   }
+  showWidget = () => {
+    this.state.profileWidget.open();
+  };
   handleChange = event => {
     const article = { ...this.state.article };
     article[event.target.name] = event.target.value;
@@ -77,11 +95,13 @@ class CreateOrUpdateArticle extends Component {
       return;
     }
     const slug = this.props.match.params.slug;
-    const { title, body, category } = this.state.article;
+    const { title, body, category, description, image } = this.state.article;
     const article = {
       title,
       body,
-      category
+      category,
+      description,
+      image
     };
     this.props.createOrUpdateArticle(slug, article);
   };
@@ -110,31 +130,21 @@ class CreateOrUpdateArticle extends Component {
                 placeholder="title"
                 className="textForm titleText"
               />
+              <img
+                src={uploadIcon}
+                alt="upload"
+                onClick={this.showWidget}
+                className="upload-button"
+              />
               <Input
-                value={this.state.article.tag}
+                value={this.state.article.description}
                 type="text"
-                name="tag"
-                id="tag"
+                name="description"
+                id="description"
                 onChange={this.handleChange}
-                placeholder="tag"
+                placeholder="Description"
                 className="textForm"
               />
-              <select
-                name="category"
-                className="textForm category"
-                id="category"
-                onChange={this.handleChange}
-              >
-                <option value={this.state.article.category}>
-                  {this.state.article.category}
-                </option>
-                <option value="Technology">Technology</option>
-                <option value="Politics">Politics</option>
-                <option value="Health">Health</option>
-                <option value="Educational">Educational</option>
-                <option value="Economics">Economics</option>
-              </select>
-
               <ReactQuill
                 theme="snow"
                 onChange={this.handleBodyChange}
@@ -154,6 +164,32 @@ class CreateOrUpdateArticle extends Component {
               />
             </div>
           </div>
+          <div className="right-bar">
+            <Input
+              value={this.state.article.tag}
+              type="text"
+              name="tag"
+              id="tag"
+              onChange={this.handleChange}
+              placeholder="tag"
+              className="textForm multiple-input"
+            />
+            <select
+              name="category"
+              className="textForm category"
+              id="category"
+              onChange={this.handleChange}
+            >
+              <option value={this.state.article.category}>
+                {this.state.article.category}
+              </option>
+              <option value="Technology">Technology</option>
+              <option value="Politics">Politics</option>
+              <option value="Health">Health</option>
+              <option value="Educational">Educational</option>
+              <option value="Economics">Economics</option>
+            </select>
+          </div>
         </Fragment>
       );
     } else {
@@ -171,9 +207,14 @@ class CreateOrUpdateArticle extends Component {
     category: Joi.string()
       .required()
       .label('Category'),
+    description: Joi.string()
+      .required()
+      .label('Description'),
     body: Joi.string()
       .required()
-      .label('Article Body')
+      .label('Article Body'),
+    image: Joi.string().allow(null, '')
+      .label('Featured Image')
   };
 }
 

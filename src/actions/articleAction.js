@@ -5,7 +5,8 @@ export const createOrUpdateArticle = (slug = null, article) => dispatch => {
   const newArticle = {
     title: article.title,
     body: article.body,
-    description: article.category,
+    category: article.category,
+    description: article.description,
     image: article.image || 'null'
   };
   if (slug) {

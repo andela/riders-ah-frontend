@@ -1,7 +1,16 @@
 .write_content {
   width: 70%;
-  margin-left: 200px;
+  float: left;
   margin-top: 2%;
+  margin-left: 50px;
+}
+.right-bar {
+  width: 25%;
+  float: left;
+  margin-top: 2%;
+  .multiple-input {
+    width: 80%;
+  }
 }
 .saveContent {
   width: 100px;
@@ -20,21 +29,22 @@
   margin-left: 20px;
 }
 .titleText {
-  width: 83% !important;
+  width: 76% !important;
 }
 .textForm {
-  width: 83%;
+  width: 92%;
   height: 15px;
   font-size: 16px;
   padding: 8px;
   border: 1px solid;
   border-radius: 4px;
-  margin-top: 10px;
-  margin-right: 55px;
+  margin-top: 6px;
+  margin-right: 9px;
+  margin-bottom: 10px;
 }
 .category {
   height: 35px !important;
-  width: 85%;
+  width: 84%;
   margin-bottom: 10px;
 }
 .ql-toolbar.ql-snow {
