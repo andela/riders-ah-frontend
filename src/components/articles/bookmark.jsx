@@ -15,9 +15,13 @@ const Bookmark = ({
     <Fragment>
       <img
         src={
-          isBookmarked === '' || isBookmarked === 'done again' || !isBookmark
+          isBookmarked === '' && isBookmark
+            ? clickedBookmarkImage
+            : isBookmarked === '' && !isBookmark
             ? bookmarkImage
-            : clickedBookmarkImage
+            : isBookmarked === 'done' || isBookmark
+            ? clickedBookmarkImage
+            : bookmarkImage
         }
         onClick={handleBookmark}
         className={className ? className : ''}

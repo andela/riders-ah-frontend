@@ -16,7 +16,7 @@ import { rateArticle, getAllRates } from '../../actions/article/ratingAction';
 import { Ratings } from '../common';
 import ShareArticles from '../common/shareArticles';
 import Bookmark from './bookmark';
-import { fetchBookmarks } from '../../actions/bookmarkAction';
+import { bookmarkArticle, fetchBookmarks } from '../../actions/bookmarkAction';
 import { isBookmarking } from '../../helpers/bookmarkHelper';
 
 import {
@@ -144,12 +144,17 @@ export class OneStory extends Component {
     setTimeout(() => window.location.reload(), 10);
   };
 
+  handleBookmark = slug => {
+    this.props.bookmarkArticle(slug);
+  };
+
   render() {
     const { bookmark, article } = this.props.state;
     let isBookmark = isBookmarking(bookmark, article.article.title);
     const { slug } = this.props.match.params;
     const { comments, rate, rates } = this.state;
     const data = this.props.state.article.article;
+    const { isBookmarked } = this.props.state.bookmark;
     if (this.props.state.article.fetched === 'done') {
       return (
         <div id='component-oneStory'>
@@ -175,7 +180,12 @@ export class OneStory extends Component {
                 handleLike={this.handleLike}
                 handleDislike={this.handleDislike}
               />
-              <Bookmark isBookmark={isBookmark} id='bookmark' />
+              <Bookmark
+                handleBookmark={() => this.handleBookmark(data.slug)}
+                isBookmarked={isBookmarked}
+                isBookmark={isBookmark}
+                id='bookmark'
+              />
               <ShareArticles />
             </div>
             <div className='words'>
@@ -240,7 +250,8 @@ OneStory.propTypes = {
   likeArticle: PropTypes.func,
   dislikeArticle: PropTypes.func,
   rateArticle: PropTypes.func,
-  fetchBookmarks: PropTypes.func
+  fetchBookmarks: PropTypes.func,
+  bookmarkArticle: PropTypes.func
 };
 export default connect(
   mapStateToProps,
@@ -253,6 +264,7 @@ export default connect(
     dislikeArticle,
     rateArticle,
     getAllRates,
-    fetchBookmarks
+    fetchBookmarks,
+    bookmarkArticle
   }
 )(OneStory);
