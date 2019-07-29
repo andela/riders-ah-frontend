@@ -41,6 +41,18 @@ class Helpers {
     }
     return errors;
   };
+  static didILikeComment = info => {
+    const allAuthor = info;
+    if (allAuthor) {
+      const user = Helpers.getUserInfoFromToken();
+      for (let i = 0; i < allAuthor.length; i++) {
+        if (user.id === allAuthor[i].userId && allAuthor[i].feedback === 'like') {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
   static didILikeIt = info => {
     const allAuthor = info.likes.likes;
     if (allAuthor) {

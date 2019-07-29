@@ -30,8 +30,8 @@ export class Login extends Component {
       });
     }
   }
-
   componentDidMount() {
+    document.body.style.backgroundImage = "url('../../assets/images/auth-background.jpg')";
     if (localStorage.token) {
       this.props.history.replace('/articles');
     }
