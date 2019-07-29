@@ -3,7 +3,9 @@ import {
   CREATE_COMMENT,
   FETCH_COMMENT,
   DELETE_COMMENT,
-  UPDATE_COMMENT
+  UPDATE_COMMENT,
+  LIKE_COMMENT,
+  GET_COMMENT_LIKES
 } from './types';
 
 export const createComment = (comment, slug) => dispatch => {
@@ -33,5 +35,17 @@ export const updateComment = (comment, slug, id) => dispatch => {
     payload: http.put(`/api/v1/article/${slug}/comments/${id}`, {
       body: comment
     })
+  });
+};
+export const likeArticleComment = id => dispatch => {
+  dispatch({
+    type: LIKE_COMMENT,
+    payload: http.post(`/api/v1/comments/${id}/feedback/like`)
+  });
+};
+export const getLikeArticleComment = id => dispatch => {
+  dispatch({
+    type: GET_COMMENT_LIKES,
+    payload: http.get(`/api/v1/comments/${id}/likes`)
   });
 };
