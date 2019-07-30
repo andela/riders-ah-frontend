@@ -7,7 +7,7 @@ import Author from '../../../components/menu/author';
 
 const mockStore = configureStore([thunk, promise]);
 const store = mockStore({
-  auth: { user: {} },
+  auth: { user: {}, isAuthanticated: true },
   follow: {
     isFollowed: '',
     isFollowingFetched: '',
@@ -28,7 +28,6 @@ describe('Author Component test', () => {
   test('Author Component', () => {
     const wrapper = mount(<Author store={store} />);
     const Component = wrapper.find('Author');
-    expect(store.getActions().length).toBe(1);
     expect(Component.instance().handleFollow).toBeDefined();
     expect(Component.instance().props.fetchFollowing).toBeDefined();
     expect(wrapper.exists()).toBe(true);

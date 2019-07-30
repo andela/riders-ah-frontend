@@ -4,7 +4,7 @@ import { Ratings } from '../../../components/common';
 const props = {
   rate: 0,
   onChange: jest.fn(),
-  rates: { allRates: [{ rate: 2 }, { rate: 3 }] }
+  rates: { actual: 2 }
 };
 const ratingComponent = shallow(<Ratings {...props} />);
 

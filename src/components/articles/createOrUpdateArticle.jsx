@@ -4,7 +4,7 @@ import { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import Input from '../common/input';
 import Button from '../common/button';
-import Loader from '../common/loader';
+import { Loader } from '../common/loader';
 import NavBar from '../common/navBar';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -13,7 +13,8 @@ import { ToastContainer } from 'react-toastify';
 import { fetchOneStory } from '../../actions/oneStory';
 import {
   createOrUpdateArticle,
-  fetchArticle,createTag
+  fetchArticle,
+  createTag
 } from '../../actions/articleAction';
 import Joi from 'joi-browser';
 import Helpers from '../../helpers/helpers';
@@ -67,8 +68,8 @@ class CreateOrUpdateArticle extends Component {
           title,
           category,
           description,
-          body,
-        } = nextProps.article.article ;
+          body
+        } = nextProps.article.article;
         const retrievedArticle = { ...this.state.article };
         retrievedArticle.title = title;
         retrievedArticle.body = body;
@@ -102,7 +103,14 @@ class CreateOrUpdateArticle extends Component {
       return;
     }
     const slug = this.props.match.params.slug;
-    const { title, body, category, description, image, tag } = this.state.article;
+    const {
+      title,
+      body,
+      category,
+      description,
+      image,
+      tag
+    } = this.state.article;
     const article = {
       title,
       body,
@@ -112,8 +120,8 @@ class CreateOrUpdateArticle extends Component {
       tag
     };
     this.props.createOrUpdateArticle(slug, article);
-    if(slug){
-    this.props.createTag(slug, tag) 
+    if (slug) {
+      this.props.createTag(slug, tag);
     }
   };
   render() {
@@ -130,75 +138,75 @@ class CreateOrUpdateArticle extends Component {
         <Fragment>
           <ToastContainer />
           <NavBar />
-          <div className="write_content">
-            <div className="title">
+          <div className='write_content'>
+            <div className='title'>
               <Input
                 value={this.state.article.title}
-                type="text"
-                name="title"
-                id="title"
+                type='text'
+                name='title'
+                id='title'
                 onChange={this.handleChange}
-                placeholder="title"
-                className="textForm titleText"
+                placeholder='title'
+                className='textForm titleText'
               />
               <img
                 src={uploadIcon}
-                alt="upload"
+                alt='upload'
                 onClick={this.showWidget}
-                className="upload-button"
+                className='upload-button'
               />
               <Input
                 value={this.state.article.description}
-                type="text"
-                name="description"
-                id="description"
+                type='text'
+                name='description'
+                id='description'
                 onChange={this.handleChange}
-                placeholder="Description"
-                className="textForm"
+                placeholder='Description'
+                className='textForm'
               />
               <ReactQuill
-                theme="snow"
+                theme='snow'
                 onChange={this.handleBodyChange}
                 value={this.state.article.body}
                 modules={this.modules}
                 formats={this.formats}
-                name="body"
-                id="body"
-                placeholder="Write your Article"
+                name='body'
+                id='body'
+                placeholder='Write your Article'
                 autofocus
               />
               <Button
                 onClick={this.handleSubmit}
                 value={this.props.match.params.slug ? 'Update' : 'Publish'}
-                name="saveContent"
-                className="saveContent"
+                name='saveContent'
+                className='saveContent'
               />
             </div>
           </div>
-          <div className="right-bar">
+          <div className='right-bar'>
             <Input
               value={this.state.article.tag}
-              type="text"
-              name="tag"
-              id="tag"
+              type='text'
+              name='tag'
+              id='tag'
               onChange={this.handleChange}
-              placeholder="tag"
-              className="textForm multiple-input"
+              placeholder='tag'
+              className='textForm multiple-input'
             />
             <select
-              name="category"
-              className="textForm category"
-              id="category"
+              name='category'
+              className='textForm category'
+              id='category'
               onChange={this.handleChange}
             >
               <option value={this.state.article.category}>
                 {this.state.article.category}
               </option>
-              <option value="Technology">Technology</option>
-              <option value="Politics">Politics</option>
-              <option value="Health">Health</option>
-              <option value="Educational">Educational</option>
-              <option value="Economics">Economics</option>
+              <option value='Technology'>Technology</option>
+              <option value='Politics'>Politics</option>
+              <option value='Health'>Health</option>
+              <option value='Educational'>Educational</option>
+              <option value='Economics'>Economics</option>
             </select>
           </div>
         </Fragment>
@@ -216,7 +224,7 @@ class CreateOrUpdateArticle extends Component {
     title: Joi.string()
       .required()
       .label('Title'),
-      tag: Joi.string()
+    tag: Joi.string()
       .required()
       .label('tag'),
     category: Joi.string()
@@ -228,7 +236,8 @@ class CreateOrUpdateArticle extends Component {
     body: Joi.string()
       .required()
       .label('Article Body'),
-    image: Joi.string().allow(null, '')
+    image: Joi.string()
+      .allow(null, '')
       .label('Featured Image')
   };
 }
@@ -254,5 +263,5 @@ CreateOrUpdateArticle.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { createOrUpdateArticle, fetchArticle, createTag , fetchOneStory}
+  { createOrUpdateArticle, fetchArticle, createTag, fetchOneStory }
 )(CreateOrUpdateArticle);

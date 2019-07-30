@@ -22,7 +22,7 @@ class AllArticles extends Component {
   };
   render() {
     const { fetched } = this.props.state.articles;
-    const pageSize = 20;
+    const pageSize = 21;
     const { currentPage } = this.state;
     let paginateArticles;
     switch (fetched) {

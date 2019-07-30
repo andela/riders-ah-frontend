@@ -21,7 +21,7 @@ export const ONE_STORY = 'ONE_STORY';
 export const DELETE_STORY = 'DELETE_STORY';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const FETCH_COMMENT = 'FETCH_COMMENT';
-export const FETCH_ONE_COMMENT = 'FETCH_ONE_COMMENT'
+export const FETCH_ONE_COMMENT = 'FETCH_ONE_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 export const SEARCH = 'SEARCH';
@@ -54,3 +54,5 @@ export const READ_STATS = 'READ_STATS';
 export const HIGHLIGHT_TEXT = 'HIGHLIGHT_TEXT';
 export const GET_HIGHLIGHT = 'GET_HIGHLIGHT';
 export const GET_MESSAGES = 'GET_MESSAGES';
+
+export const REPORT_ARTICLE = 'REPORT_ARTICLE';

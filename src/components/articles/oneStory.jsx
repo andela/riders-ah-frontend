@@ -1,4 +1,4 @@
-import React, { Component , Fragment} from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { ToastContainer } from 'react-toastify';
@@ -10,11 +10,15 @@ import { Tags } from '../common/tag';
 import Moment from 'react-moment';
 import WriteComment from '../comment/writeComment';
 import ReadComment from '../comment/readComment';
-import { fetchComment, deleteComment, fetchOneComment } from '../../actions/comment';
+import {
+  fetchComment,
+  deleteComment,
+  fetchOneComment
+} from '../../actions/comment';
 import Helpers from '../../helpers/helpers';
 import LikeAndDislike from './likeAndDislike';
 import { rateArticle, getAllRates } from '../../actions/article/ratingAction';
-import { Ratings } from '../common';
+import { Ratings, Button, ReportArticle } from '../common';
 import ShareArticles from '../common/shareArticles';
 import Bookmark from './bookmark';
 import { bookmarkArticle, fetchBookmarks } from '../../actions/bookmarkAction';
@@ -24,12 +28,15 @@ import { getHighlight } from '../../actions/article/highlight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 
-import  CommentEditHistory  from '../comment/editHistory'
+import CommentEditHistory from '../comment/editHistory';
 import {
   getLikeAndDislikeCount,
   likeArticle,
   dislikeArticle
 } from '../../actions/articles';
+import { reportArticle } from '../../actions/articleAction';
+import defaultStoryImg from '../../assets/images/default-story-img.png';
+
 export class OneStory extends Component {
   state = {
     comments: [],
@@ -55,17 +62,22 @@ export class OneStory extends Component {
     stopIndex: 0,
     highlight: {},
     highlightDetails: {},
-    highlightDetailsModal: false
+    highlightDetailsModal: false,
+    reportModalDisplay: 'none',
+    articleReport: {
+      type: '',
+      reason: ''
+    }
   };
   toggleModal = (id, slug) => {
     this.setState({
-        commentSlug: slug,
-        editHistory: !this.state.editHistory,
-        commentId: id,
+      commentSlug: slug,
+      editHistory: !this.state.editHistory,
+      commentId: id
     });
     return slug && id && this.props.fetchOneComment(slug, id);
-  }
- 
+  };
+
   closeHighlightDetailsModal() {
     this.setState(prevState => ({
       ...prevState,
@@ -84,18 +96,17 @@ export class OneStory extends Component {
 
     if (isAuthanticated) {
       this.props.fetchBookmarks();
+      this.props.getHighlight(slug);
     }
     const { limit, offset } = this.state;
     this.props.fetchOneStory(slug);
     this.props.fetchComment(slug);
     this.props.getLikeAndDislikeCount(slug);
-    this.props.getHighlight(slug);
     const paginate = `limit=${limit}&offset=${offset}`;
     this.props.getAllRates(slug, paginate);
   }
 
-  displayComments = () => {
-  };
+  displayComments = () => {};
 
   componentDidUpdate(prevProps) {
     const { highlightDetailsModal } = this.state;
@@ -135,6 +146,7 @@ export class OneStory extends Component {
   }
   componentWillReceiveProps(nextProps) {
     const { ratings, fetchSuccess, rateSuccess, newRate } = nextProps.rate;
+    const { isReportSuccess } = nextProps.state.article;
     const { user } = this.props.auth;
     const rates = { ...this.state.rates };
     if (fetchSuccess) {
@@ -186,6 +198,10 @@ export class OneStory extends Component {
       react.liked = liked;
       react.disliked = disliked;
       this.setState({ react });
+    }
+    if (isReportSuccess) {
+      Helpers.setAlertInfo('Successfully reported');
+      this.setReportModal();
     }
   }
   rateArticle = rate => {
@@ -277,30 +293,55 @@ export class OneStory extends Component {
       Helpers.setAlertError('Login first');
     }
   };
-
+  reportArticle = () => {
+    const slug = this.props.match.params.slug;
+    const { type, reason } = this.state.articleReport;
+    if (type && reason) {
+      this.props.reportArticle(slug, reason, type);
+    }
+  };
+  setReportModal = () => {
+    const { isAuthanticated } = this.state;
+    if (isAuthanticated) {
+      const { reportModalDisplay } = this.state;
+      const display = reportModalDisplay !== 'none' ? 'none' : 'block';
+      this.setState({ reportModalDisplay: display });
+    } else {
+      Helpers.setAlertError('Login first');
+    }
+  };
+  changeInput = e => {
+    e.preventDefault();
+    const articleReport = { ...this.state.articleReport };
+    articleReport[e.currentTarget.name] = e.currentTarget.value;
+    this.setState({ articleReport });
+  };
   render() {
     const { bookmark, article } = this.props.state;
     let isBookmark = isBookmarking(bookmark, article.article.title);
     const { isBookmarked } = this.props.state.bookmark;
     const { editHistory, commentId, commentSlug } = this.state;
     const { slug } = this.props.match.params;
+    const reportTypes = ['plagiarism', 'spam', 'harassment', 'others'];
     const {
       comments,
       rate,
       rates,
       highlightDetails,
-      highlightDetailsModal
+      highlightDetailsModal,
+      reportModalDisplay,
+      articleReport
     } = this.state;
     const data = this.props.state.article.article;
     if (this.props.state.article.fetched === 'done') {
       return (
-      <Fragment>
+        <Fragment>
           {/* Highlight details Model */}
 
           {highlightDetailsModal ? (
-            <div className="wrap-follow-model">
-              <div className="follow-model">
-                <div className="follow-model-menu">
+            <div className='wrap-follow-model'>
+              <div className='follow-model'>
+                <div className='follow-model-menu'>
                   <strong>
                     Highlight Details &nbsp;&nbsp;&nbsp;&nbsp;
                     <FontAwesomeIcon
@@ -310,11 +351,11 @@ export class OneStory extends Component {
                     />
                   </strong>
                 </div>
-                <span className="highlight-date">
+                <span className='highlight-date'>
                   <i>
                     Date:{' '}
                     {
-                      <Moment format="YYYY/MM/DD">
+                      <Moment format='YYYY/MM/DD'>
                         {highlightDetails.createdAt}
                       </Moment>
                     }{' '}
@@ -322,22 +363,22 @@ export class OneStory extends Component {
                 </span>
                 <br />
                 <br />
-                <span className="highlight-owner">
+                <span className='highlight-owner'>
                   <b> Highlighted By: {highlightDetails.author.username} </b>
                 </span>
                 <br />
                 <br />
                 {highlightDetails.HighlightComments.length > 0 ? (
                   <React.Fragment>
-                    <span className="highlight-comment-title">
+                    <span className='highlight-comment-title'>
                       <b>Comments</b>
                     </span>
                     <br />
                     {highlightDetails.HighlightComments.map((comment, key) => {
                       return (
                         <span key={key}>
-                          <p id="body">{comment.comment}</p>
-                          <p id="time">
+                          <p id='body'>{comment.comment}</p>
+                          <p id='time'>
                             <Moment fromNow ago>
                               {comment.createdAt}
                             </Moment>
@@ -356,82 +397,103 @@ export class OneStory extends Component {
           )}
           <ToastContainer />
           <Highlight {...this.props} />
-      <CommentEditHistory display={editHistory} onClose={this.toggleModal} id={commentId} slug={commentSlug} />
-        <div id='component-oneStory'>
-          <NavBar />
-          {localStorage.token === undefined ? '' : <ToastContainer />}
-          <h2 className='article-title'>{data.title}</h2>
-          <Author
-            names={data.author.username}
-            readingTime={data.readingTime}
-            date={<Moment format="YYYY/MM/DD">{data.createdAt}</Moment>}
-            slug={data.slug}
+          <CommentEditHistory
+            display={editHistory}
+            onClose={this.toggleModal}
+            id={commentId}
+            slug={commentSlug}
           />
-          <div className="featured-image">
-            {' '}
-            <img src={data.image} />
-          </div>
-          <div className="story">
-            <div className="react">
-              <LikeAndDislike
-                liked={this.state.react.liked}
-                disliked={this.state.react.disliked}
-                info={this.props.state.likeAndDislike}
-                handleLike={this.handleLike}
-                handleDislike={this.handleDislike}
-              />
-              <Bookmark
-                handleBookmark={() => this.handleBookmark(data.slug)}
-                isBookmarked={isBookmarked}
-                isBookmark={isBookmark}
-                id="bookmark"
-              />
-              <ShareArticles />
+          <div id='component-oneStory'>
+            <NavBar />
+            <ToastContainer />
+            <h2 className='article-title'>{data.title}</h2>
+            <Author
+              names={data.author.username}
+              readingTime={data.readingTime}
+              date={<Moment format='YYYY/MM/DD'>{data.createdAt}</Moment>}
+              slug={data.slug}
+            />
+            <div className='featured-image'>
+              <img src={data.image} />
             </div>
-            <div className="words">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: this.mapIdToTag(data.body)
-                }}
-              />
-              <Highlight article={data.body} />
-              <Ratings
-                id="ratingArticle"
-                rate={rates.rate}
-                onChange={this.rateArticle}
-                rates={rates}
+            <div className='story'>
+              <div className='react'>
+                <LikeAndDislike
+                  liked={this.state.react.liked}
+                  disliked={this.state.react.disliked}
+                  info={this.props.state.likeAndDislike}
+                  handleLike={this.handleLike}
+                  handleDislike={this.handleDislike}
+                />
+                <Bookmark
+                  handleBookmark={() => this.handleBookmark(data.slug)}
+                  isBookmarked={isBookmarked}
+                  isBookmark={isBookmark}
+                  id='bookmark'
+                />
+                <ShareArticles />
+              </div>
+              <div className='words'>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: this.mapIdToTag(data.body)
+                  }}
+                />
+                <Highlight article={data.body} />
+                <div className='div'>
+                  <Ratings
+                    id='ratingArticle'
+                    rate={rates.rate}
+                    onChange={this.rateArticle}
+                    rates={rates}
+                  />
+                  <Button
+                    value='Report this article'
+                    className='report-btn'
+                    onClick={this.setReportModal}
+                  />
+                </div>
+              </div>
+              <ReportArticle
+                title={data.title}
+                reason={articleReport.reason}
+                type={articleReport.type}
+                setModal={this.setReportModal}
+                onSave={this.reportArticle}
+                changeInput={this.changeInput}
+                display={reportModalDisplay}
+                types={reportTypes}
               />
             </div>
-          </div>
-          <div className='container3'>
-            <Tags tags={data.tagList} />
-          </div>
+            <div className='container3'>
+              <Tags tags={data.tagList} />
+            </div>
 
-          <div className='container2'>
-            <div className='related'>
-              <div className='comments'>
-                <h3>Comments</h3>
-                <WriteComment params={this.props.match.params} />
-                {comments.length < 1
-                  ? ''
-                  : comments.map(comment => {
-                      return (
-                        <ReadComment
-                          key={comment.id}
-                          comment={comment}
-                          params={this.props.match.params}
-                          onDelete={() => {
-                            this.handleDelete(comment.id, slug);
-                          }}
-                          articleSlug={slug}
-                          onOpenModal={this.toggleModal}
-                        />
-                      );
-                    })}
+            <div className='container2'>
+              <div className='related'>
+                <div className='comments'>
+                  <h3>Comments</h3>
+                  <WriteComment params={this.props.match.params} />
+                  {comments.length < 1
+                    ? ''
+                    : comments.map(comment => {
+                        return (
+                          <ReadComment
+                            key={comment.id}
+                            comment={comment}
+                            params={this.props.match.params}
+                            onDelete={() => {
+                              this.handleDelete(comment.id, slug);
+                            }}
+                            articleSlug={slug}
+                            onOpenModal={this.toggleModal}
+                          />
+                        );
+                      })}
+                </div>
               </div>
             </div>
           </div>
-        </div>
         </Fragment>
       );
     } else {
@@ -464,7 +526,8 @@ OneStory.propTypes = {
   rateArticle: PropTypes.func,
   fetchBookmarks: PropTypes.func,
   bookmarkArticle: PropTypes.func,
-  getHighlight: PropTypes.func
+  getHighlight: PropTypes.func,
+  reportArticle: PropTypes.func
 };
 export default connect(
   mapStateToProps,
@@ -480,6 +543,7 @@ export default connect(
     fetchBookmarks,
     bookmarkArticle,
     fetchOneComment,
-    getHighlight
+    getHighlight,
+    reportArticle
   }
 )(OneStory);
