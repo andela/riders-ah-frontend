@@ -6,6 +6,7 @@ import Author from '../menu/author';
 import NavBar from '../common/navBar';
 import { fetchOneStory } from '../../actions/oneStory';
 import { Loader } from '../common/loader';
+import { Tags } from '../common/tag'
 import Moment from 'react-moment';
 import WriteComment from '../comment/writeComment';
 import ReadComment from '../comment/readComment';
@@ -198,9 +199,13 @@ export class OneStory extends Component {
               />
             </div>
           </div>
-          <div className='container2'>
-            <div className='related'>
-              <div className='comments'>
+          <div className="container3">
+            <Tags tags={data.tagList}/>
+          </div>
+
+          <div className="container2">
+            <div className="related">
+              <div className="comments">
                 <h3>Comments</h3>
                 <WriteComment params={this.props.match.params} />
                 {comments.length < 1

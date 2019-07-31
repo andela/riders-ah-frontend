@@ -18,6 +18,7 @@
   div {
     cursor: pointer;
     padding: 12px;
+    -webkit-column-break-inside: avoid;
     ul {
       list-style-type: none;
       padding: 0px;

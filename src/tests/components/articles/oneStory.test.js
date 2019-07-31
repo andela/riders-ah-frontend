@@ -18,7 +18,8 @@ const props = {
         author: { username: 'username' },
         readingTime: 'readingTime',
         createdAt: 'createdAt',
-        slug: 'slug'
+        slug: 'slug',
+        tagList:['amandazi', 'aaa']
       }
     },
     likeAndDislike: {

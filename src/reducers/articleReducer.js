@@ -5,7 +5,8 @@ import {
   GET_LIKES,
   GET_DISLIKES,
   LIKE_ARTICLE,
-  DISLIKE_ARTICLE
+  DISLIKE_ARTICLE,
+  CREATE_TAG,
 } from '../actions/types';
 import { pending, fulfilled } from '../utils/actionUtil';
 
@@ -65,6 +66,11 @@ const articleReducer = (state = initialState, action) => {
         ...state,
         message: 'Article Disliked'
       };
+      case fulfilled(CREATE_TAG):
+        return {
+          fetched: 'done',
+          article: action.payload.data
+        };
     default:
       return state;
   }
