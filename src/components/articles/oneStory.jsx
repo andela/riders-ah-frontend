@@ -15,6 +15,9 @@ import LikeAndDislike from './likeAndDislike';
 import { rateArticle, getAllRates } from '../../actions/article/ratingAction';
 import { Ratings } from '../common';
 import ShareArticles from '../common/shareArticles';
+import Bookmark from './bookmark';
+import { fetchBookmarks } from '../../actions/bookmarkAction';
+import { isBookmarking } from '../../helpers/bookmarkHelper';
 
 import {
   getLikeAndDislikeCount,
@@ -50,6 +53,7 @@ export class OneStory extends Component {
     this.props.getLikeAndDislikeCount(slug);
     const paginate = `limit=${limit}&offset=${offset}`;
     this.props.getAllRates(slug, paginate);
+    this.props.fetchBookmarks();
   }
 
   componentDidUpdate(prevProps) {
@@ -141,10 +145,12 @@ export class OneStory extends Component {
   };
 
   render() {
+    const { bookmark, article } = this.props.state;
+    let isBookmark = isBookmarking(bookmark, article.article.title);
     const { slug } = this.props.match.params;
     const { comments, rate, rates } = this.state;
     const data = this.props.state.article.article;
-;    if (this.props.state.article.fetched === 'done') {
+    if (this.props.state.article.fetched === 'done') {
       return (
         <div id='component-oneStory'>
           <NavBar />
@@ -153,10 +159,13 @@ export class OneStory extends Component {
           <Author
             names={data.author.username}
             readingTime={data.readingTime}
-            date={<Moment format="YYYY/MM/DD">{data.createdAt}</Moment>}
+            date={<Moment format='YYYY/MM/DD'>{data.createdAt}</Moment>}
             slug={data.slug}
           />
-          <div className="featured-image"> <img src={data.image}  /></div>
+          <div className='featured-image'>
+            {' '}
+            <img src={data.image} />
+          </div>
           <div className='story'>
             <div className='react'>
               <LikeAndDislike
@@ -166,7 +175,8 @@ export class OneStory extends Component {
                 handleLike={this.handleLike}
                 handleDislike={this.handleDislike}
               />
-              <ShareArticles/>
+              <Bookmark isBookmark={isBookmark} id='bookmark' />
+              <ShareArticles />
             </div>
             <div className='words'>
               <div dangerouslySetInnerHTML={{ __html: data.body }} />
@@ -229,7 +239,8 @@ OneStory.propTypes = {
   getLikeAndDislikeCount: PropTypes.func,
   likeArticle: PropTypes.func,
   dislikeArticle: PropTypes.func,
-  rateArticle: PropTypes.func
+  rateArticle: PropTypes.func,
+  fetchBookmarks: PropTypes.func
 };
 export default connect(
   mapStateToProps,
@@ -241,6 +252,7 @@ export default connect(
     likeArticle,
     dislikeArticle,
     rateArticle,
-    getAllRates
+    getAllRates,
+    fetchBookmarks
   }
 )(OneStory);

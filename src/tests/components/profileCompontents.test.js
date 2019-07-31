@@ -47,7 +47,8 @@ const nextProps = {
     followers: 0,
     follows: 0,
     articles: [{ title: 'title', author: { username: 'test' } }]
-  }
+  },
+  bookmarks: { isBookmarked: '', isBookmarksFetched: 'done', Bookmarks: [] }
 };
 let buttons = null;
 let inputs = null;

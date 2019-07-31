@@ -8,8 +8,8 @@ import { OneStory as OneStoryComponent } from '../../../components/articles/oneS
 
 const props = {
   state: {
-    fetched: 'done',
     article: {
+      fetched: 'done',
       article: {
         title: 'title',
         author: { username: 'username' },
@@ -21,7 +21,8 @@ const props = {
     likeAndDislike: {
       likes: {},
       dislikes: {}
-    }
+    },
+    bookmark: { isBookmarked: '', isBookmarksFetched: 'done', Bookmarks: [] }
   },
   fetchOneStory: jest.fn(slug => slug),
   fetchComment: jest.fn(slug => slug),
@@ -29,6 +30,7 @@ const props = {
     id, slug;
   }),
   getAllRates: jest.fn(slug => slug),
+  fetchBookmarks: jest.fn(),
   match: {
     params: {
       slug: ''
