@@ -160,7 +160,7 @@ export class OneStory extends Component {
       return (
         <div id='component-oneStory'>
           <NavBar />
-          <ToastContainer />
+          {localStorage.token === undefined ? '' : <ToastContainer />}
           <h2 className='article-title'>{data.title}</h2>
           <Author
             names={data.author.username}

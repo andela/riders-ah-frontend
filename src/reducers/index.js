@@ -11,6 +11,7 @@ import articleReactReducer from './articleReactReducer';
 import rateReducer from './article/ratingReducer';
 import bookmarkReducer from './bookmarkReducer';
 import commentReactReducer from './commentReactReducer';
+import followReducer from './followReducer';
 
 export default combineReducers({
   registration: signupReducer,
@@ -25,4 +26,5 @@ export default combineReducers({
   rate: rateReducer,
   bookmark: bookmarkReducer,
   likeComment: commentReactReducer,
+  follow: followReducer
 });
