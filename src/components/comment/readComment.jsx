@@ -10,6 +10,8 @@ import Delete from '../../assets/images/delete.png';
 import Update from '../../assets/images/update.png';
 import LikeComment from '../comment/likeComment';
 import Helpers from '../../helpers/helpers';
+import like from '../../assets/images/thumbs-up-hand-symbol.png';
+import Button from '../common/button'
 class ReadComment extends Component {
   state = {
     updatedComment: this.props.comment.body,
@@ -48,7 +50,7 @@ class ReadComment extends Component {
     }
   }
   render() {
-    const { comment, onDelete, auth } = this.props;
+    const { comment, onDelete, auth, articleSlug  } = this.props;
     let id = comment.createdAt;
     return (
       <div className='overlap'>
@@ -86,6 +88,8 @@ class ReadComment extends Component {
           />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Moment fromNow>{comment.createdAt}</Moment>
+          {(comment.histories) ? <Button value="View edit history" className="edit-history" onClick={() => this.props.onOpenModal(comment.id, articleSlug)}/> : ''}
+
         </div>
         <div className='comment' id={id} style={{ display: 'none' }}>
           <p className='name'>
@@ -133,7 +137,9 @@ ReadComment.propTypes = {
   updateComment: PropTypes.func,
   likeArticleComment: PropTypes.func,
   getLikeArticleComment: PropTypes.func,
-  likeComment: PropTypes.object
+  likeComment: PropTypes.object,
+  onOpenModal: PropTypes.func,
+  articleSlug:PropTypes.string
 };
 
 export default connect(

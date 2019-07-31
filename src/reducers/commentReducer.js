@@ -3,7 +3,8 @@ import {
   CREATE_COMMENT,
   FETCH_COMMENT,
   DELETE_COMMENT,
-  UPDATE_COMMENT
+  UPDATE_COMMENT,
+  FETCH_ONE_COMMENT
 } from '../actions/types';
 import { pending, fulfilled } from '../utils/actionUtil';
 
@@ -79,6 +80,12 @@ const commentReducer = (state = initialState, action) => {
         isCommentUpdated: 'done',
         comments: [...action.payload.data.comments]
       };
+      case fulfilled( FETCH_ONE_COMMENT ):
+      return {
+        ...state,
+        isCommentFetched: 'done',
+        history: action.payload.data.comment.histories.rows
+      }
     default:
       return state;
   }
