@@ -22,7 +22,7 @@ describe('login actions', () => {
   });
    
   it('should be able to like an article',  () => {
-   store.dispatch( getLikeArticleComment('1'));
-  expect(store.getActions().length).toBe(1);
+     store.dispatch( getLikeArticleComment('1'));
+     expect(store.getActions().length).toBe(1);
   });
 });
