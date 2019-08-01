@@ -5,7 +5,8 @@ import {
   GET_FOLLOWERS,
   GET_FOLLOWING,
   GET_USER_ARTICLES,
-  GET_NOTIFICATIONS
+  GET_NOTIFICATIONS,
+  SWITCH_NOTIFICATIONS
 } from '../actions/types';
 import { fulfilled } from '../utils/actionUtil';
 
@@ -19,7 +20,8 @@ const initialState = {
   updated: false,
   error: false,
   notifFetched: false,
-  notifications: []
+  notifications: [],
+  switchDone: false
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -66,6 +68,11 @@ const userReducer = (state = initialState, action) => {
         error: false,
         updated: false,
         message: ''
+      };
+    case fulfilled(SWITCH_NOTIFICATIONS):
+      return {
+        ...state,
+        switchDone: true
       };
     default:
       return state;
