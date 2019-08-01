@@ -38,11 +38,47 @@
       font-size: 14px;
     }
     .notification-bar {
-      width: 5%;
+      width: 14%;
       float: right;
+      display: inline-block;
       .icon {
         width: 30px;
         padding: 10px;
+      }
+      .notification-content {
+        display: none;
+        position: absolute;
+        background-color: #edf2fa;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        top: 68px;
+        width: 24%;
+        .notification-list {
+          padding: 0px 11px 0px;
+          text-decoration: none;
+          display: block;
+          &:hover,
+          h4 {
+            color: black;
+            border-bottom-left-radius: 10px;
+            border-top-left-radius: 10px;
+          }
+          h4 {
+            float: left;
+          }
+        }
+      }
+      .badge {
+        position: absolute;
+        top: 23px;
+        right: 201px;
+        padding: 5px 10px;
+        border-radius: 50%;
+        background: red;
+        color: white;
+      }
+      .show {
+        display: block;
       }
     }
     .dropdown {
@@ -51,9 +87,10 @@
       border-radius: 100%;
       cursor: pointer;
       float: right;
-      .avatar {
-        width: 50px;
-        height: 50px;
+      img {
+        margin: 16px 16px;
+        width: 37px;
+        height: 37px;
         border-radius: 100%;
       }
       .dropdown-content {

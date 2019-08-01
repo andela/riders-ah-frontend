@@ -63,9 +63,6 @@ describe('<viewProfile/>', () => {
   beforeEach(() => {
     buttons = viewProfile.find('button');
     inputs = viewProfile.find('input');
-
-    buttons.map(btn => btn.simulate('click', {}));
-    expect(viewProfile).toHaveLength(1);
   });
   it('should render without error', () => {
     const viewProfileComponent = findTestByAttr(
@@ -73,6 +70,7 @@ describe('<viewProfile/>', () => {
       'profile-component'
     );
     expect(viewProfileComponent.length).toEqual(1);
+    expect(viewProfile).toHaveLength(1);
   });
 
   it('componentWillReceiveProps', () => {
@@ -94,6 +92,7 @@ describe('<viewProfile/>', () => {
       })
     );
     saveButtons.map(btn => btn.simulate('click', {}));
+    buttons.map(btn => btn.simulate('click', {}));
     expect(component.props().updateUser).toBeDefined();
   });
 });

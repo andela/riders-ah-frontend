@@ -31,7 +31,7 @@ class Home extends Component {
                   </Link>
                 </li>
                 <li>
-                  <Link to='/' id='home'>
+                  <Link to='/articles' id='home'>
                     Home
                   </Link>
                 </li>

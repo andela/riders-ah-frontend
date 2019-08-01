@@ -181,117 +181,121 @@ class ViewProfile extends Component {
             {!username ? (
               <h2>Your profile will be displayed in a moment</h2>
             ) : (
-              <div className='user-profile' style={userStyle}>
-                <div className='avatar'>
-                  <img src={image} alt={username} />
-                </div>
-                <div className='user-info'>
-                  <div className='username'>{`${firstName} ${lastName}`}</div>
-                  <ul className='info'>
-                    <li>{numArticles} article(s)</li>
-                    <li>{numFollows} following</li>
-                    <li>{numFollowers} followers)</li>
-                  </ul>
-                  <div className='clear' />
-                  <Button
-                    name='edit'
-                    id='editButton'
-                    value='Edit'
-                    className='btn btn-edit'
-                    onClick={this.setModal}
-                  />
-                  <div className='bio'>{bio}</div>
-                </div>
-                <div className='articles-list'>
-                  {articles.length ? (
-                    <table>
-                      <tr>
-                        <th className='pull-left'>
-                          <h4>Title</h4>
-                        </th>
-                        <th>
-                          <h4>Reading time</h4>
-                        </th>
-                      </tr>
-                      {articles.map((article, i) => (
-                        <tr key={i}>
-                          <td>
-                            <b>{article.title}</b>
-                          </td>
-                          <td>
-                            <i>{article.readingTime}</i>
-                          </td>
-                        </tr>
-                      ))}
-                    </table>
-                  ) : (
-                    <h4>Published articles will appear here</h4>
-                  )}
-                </div>
-                {firstName || lastName ? (
-                  <span />
-                ) : (
-                  <div className='bio'>
-                    Update your profile: Click on the{' '}
-                    <i>
-                      <b>Edit button</b>
-                    </i>{' '}
-                    then type all required information
+                <div className='user-profile' style={userStyle}>
+                  <div className='avatar'>
+                    <img src={image} alt={username} />
                   </div>
-                )}
-                <div className='bookmark'>
-                  <h1>Bookmarks</h1>
-                  {isBookmarksFetched === 'done' && Bookmarks.length > 0 ? (
-                    Bookmarks.map(bookmark => {
-                      return (
-                        <div className='bookmarked-article' key={bookmark.id}>
-                          <div>
-                            <li
-                              className='article-title'
+                  <div className='user-info'>
+                    <div className='username'>{`${firstName} ${lastName}`}</div>
+                    <ul className='info'>
+                      <li>{numArticles} article(s)</li>
+                      <li>{numFollows} following</li>
+                      <li>{numFollowers} followers)</li>
+                    </ul>
+                    <div className='clear' />
+                    <Button
+                      name='edit'
+                      id='editButton'
+                      value='Edit'
+                      className='btn btn-edit'
+                      onClick={this.setModal}
+                    />
+                    <div className='bio'>{bio}</div>
+                  </div>
+                  {firstName || lastName ? (
+                    <span />
+                  ) : (
+                      <div className='bio'>
+                        Update your profile: Click on the&nbsp;
+                    <i>
+                          <b>Edit button</b>
+                        </i>
+                        &nbsp; then type all required information
+                  </div>
+                    )}
+                  <div className='articles-list'>
+                    {articles.length ? (
+                      <table>
+                        <thead>
+                          <tr>
+                            <th className='pull-left'>
+                              <h4>Title</h4>
+                            </th>
+                            <th>
+                              <h4>Reading time</h4>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {articles.map((article, i) => (
+                            <tr key={i}>
+                              <td>
+                                <b>{article.title}</b>
+                              </td>
+                              <td>
+                                <i>{article.readingTime}</i>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    ) : (
+                        <h4>Published articles will appear here</h4>
+                      )}
+                  </div>
+                  <div className='bookmark'>
+                    <h1>Bookmarks</h1>
+                    {isBookmarksFetched === 'done' && Bookmarks.length > 0 ? (
+                      Bookmarks.map(bookmark => {
+                        return (
+                          <div className='bookmarked-article' key={bookmark.id}>
+                            <div>
+                              <li
+                                className='article-title'
+                                onClick={() =>
+                                  this.navigateBookmark(bookmark.article.slug)
+                                }
+                              >
+                                <strong>{bookmark.article.title}</strong>
+                              </li>
+                              <br />
+                              <li>{bookmark.article.description}</li>
+                              <li className='author-name'>
+                                {bookmark.author.username}
+                              </li>
+                              <li className='article-date'>
+                                <Moment format='YYYY/MM/DD'>
+                                  {bookmark.article.createdAt}
+                                </Moment>
+                              </li>
+                              <li className='reading-time'>
+                                {bookmark.article.readingTime}
+                              </li>
+                              <Bookmark
+                                handleBookmark={() =>
+                                  this.handleBookmark(bookmark.article.slug)
+                                }
+                                isBookmark
+                                className='bookmarkImage'
+                              />
+                            </div>
+                            <img
+                              src={bookmark.article.image}
+                              className='avatar'
+                              style={{ cursor: 'pointer', borderRadius: '35%' }}
                               onClick={() =>
                                 this.navigateBookmark(bookmark.article.slug)
                               }
-                            >
-                              <strong>{bookmark.article.title}</strong>
-                            </li>
-                            <br />
-                            <li>{bookmark.article.description}</li>
-                            <li className='author-name'>
-                              {bookmark.author.username}
-                            </li>
-                            <li className='article-date'>
-                              <Moment format='YYYY/MM/DD'>
-                                {bookmark.article.createdAt}
-                              </Moment>
-                            </li>
-                            <li className='reading-time'>
-                              {bookmark.article.readingTime}
-                            </li>
-                            <Bookmark
-                              handleBookmark={() =>
-                                this.handleBookmark(bookmark.article.slug)
-                              }
-                              isBookmark
-                              className='bookmarkImage'
                             />
                           </div>
-                          <img
-                            src={bookmark.article.image}
-                            className='avatar'
-                            style={{ cursor: 'pointer', borderRadius: '35%' }}
-                            onClick={() =>
-                              this.navigateBookmark(bookmark.article.slug)
-                            }
-                          />
-                        </div>
-                      );
-                    })
-                  ) : (
-                    <h3>No Bookmarked articles</h3>
-                  )}
+                        );
+                      })
+                    ) : (
+                        <h3>No Bookmarked articles</h3>
+                      )}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
           </div>
         </div>
       </div>
