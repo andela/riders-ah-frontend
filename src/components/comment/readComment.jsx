@@ -3,17 +3,24 @@ import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import Moment from 'react-moment';
 
-import { updateComment } from '../../actions/comment';
+import { updateComment, likeArticleComment, getLikeArticleComment } from '../../actions/comment';
 import Comment from '../../../helpers/commentToggle';
 import Avatar from '../../assets/images/avatar.png';
 import Delete from '../../assets/images/delete.png';
 import Update from '../../assets/images/update.png';
-import like from '../../assets/images/thumbs-up-hand-symbol.png';
+import LikeComment from '../comment/likeComment';
+import Helpers from '../../helpers/helpers';
 class ReadComment extends Component {
   state = {
-    updatedComment: this.props.comment.body
+    updatedComment: this.props.comment.body,
+    react:{
+    liked: Helpers.didILikeComment(this.props.likeComment.likes)
+    }
   };
-
+  componentDidMount() {
+    const { id } = this.props.comment;
+    this.props.getLikeArticleComment(id); 
+  }
   handleChange = event => {
     const data = { ...this.state };
     let newComment = data.updatedComment;
@@ -27,6 +34,19 @@ class ReadComment extends Component {
     this.props.updateComment(updatedComment, slug, commentId);
     Comment(commentId, id);
   };
+  handleLike = () => {
+    const { id } = this.props.comment;
+    this.props.likeArticleComment(id);
+    setTimeout(() => window.location.reload(), 10);
+  };
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.likeComment.fetchLikes) {
+      const react = { ...this.state.react.liked };
+      const liked = Helpers.didILikeComment(nextProps.comment.like);
+      react.liked = liked;
+      this.setState({ react });
+    }
+  }
   render() {
     const { comment, onDelete, auth } = this.props;
     let id = comment.createdAt;
@@ -59,8 +79,11 @@ class ReadComment extends Component {
             )}
           </p>
           <p>{comment.body}</p>
-          <img id='like' src={like} />
-          <span>{comment.like ? comment.like.length : 0}</span>
+          <LikeComment
+              liked={this.state.react.liked}
+              info={this.props.likeComment.likes}
+              handleLike={this.handleLike}
+          />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <Moment fromNow>{comment.createdAt}</Moment>
         </div>
@@ -96,19 +119,24 @@ class ReadComment extends Component {
   }
 }
 
-const mapStateToProps = ({ auth }) => {
-  return { auth };
-};
+const mapStateToProps = state => ({
+  auth: state.auth,
+  likeComment: state.likeComment
+});
+
 
 ReadComment.propTypes = {
   auth: PropTypes.object,
   comment: PropTypes.object,
   params: PropTypes.object,
   onDelete: PropTypes.func,
-  updateComment: PropTypes.func
+  updateComment: PropTypes.func,
+  likeArticleComment: PropTypes.func,
+  getLikeArticleComment: PropTypes.func,
+  likeComment: PropTypes.object
 };
 
 export default connect(
   mapStateToProps,
-  { updateComment }
+  { updateComment, likeArticleComment, getLikeArticleComment }
 )(ReadComment);

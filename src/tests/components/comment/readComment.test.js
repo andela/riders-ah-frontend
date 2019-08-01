@@ -41,7 +41,12 @@ describe('readComment feature test', () => {
   });
   const ReadCommentWrapper = mount(
     <ReadComment
-      store={mockStore({ auth: { user: { username: 'user' } } })}
+      store={mockStore({ auth: { user: { username: 'user' } },  likeComment: {
+        likes: {
+          count: 0,
+          likes: []
+        }
+      } })}
       {...props}
     />
   );

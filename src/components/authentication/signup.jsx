@@ -15,6 +15,9 @@ export class Signup extends Component {
       username: ''
     }
   };
+  componentDidMount() {
+    document.body.style.backgroundImage = "url('../../assets/images/auth-background.jpg')";
+  }
   onChangeHandler = event => {
     const data = { ...this.state.user };
     data[event.target.name] = event.target.value;
