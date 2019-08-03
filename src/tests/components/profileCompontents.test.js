@@ -55,7 +55,8 @@ const nextProps = {
     isFollowersFetched: '',
     following: [],
     follower: []
-  }
+  },
+  stats: { isStatsFetched: 'done', stats: [] }
 };
 let buttons = null;
 let inputs = null;

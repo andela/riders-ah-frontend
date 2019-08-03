@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import ViewArticles from '../components/articles/viewArticles.jsx';
 import PrivateRoute from '../../helpers/privateRoute';
+import ReadStats from '../components/profile/readStats';
 import {
   Reset,
   CompletReset,
@@ -56,12 +57,7 @@ const Routes = props => {
         path='/articles'
         render={props => <ViewArticles {...props} />}
       />
-      <PrivateRoute
-        path='/follow'
-        exact
-        component={Follow}
-        isAuthanticated={props.auth.isAuthanticated}
-      />
+      <Route exact path='/stats' component={ReadStats} />
       <Route exact path='/' render={props => <Home {...props} />} />
       <Route render={props => <NotFound {...props} />} />
     </Switch>
