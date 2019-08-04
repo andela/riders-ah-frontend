@@ -1,0 +1,62 @@
+.chat-container {
+  @include layout(20px, 0 4px 8px 0 rgba(0, 0, 0, 0.38));
+  width: 60%;
+  margin: 2% 25% 0% 18%;
+  background-color: white;
+  border-radius: 5px;
+  .message-list {
+    overflow: scroll;
+    height: 465px;
+  }
+  .chat-card {
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 4px 11px 4px 11px;
+    margin: 10px 0;
+    width: 50%;
+    caption {
+      margin: 0px 0px 6px 0px;
+      font-size: 10px;
+    }
+    img {
+      float: left;
+      max-width: 60px;
+      width: 100%;
+      margin-right: 20px;
+      border-radius: 50%;
+      .right {
+        float: right;
+        margin-left: 20px;
+        margin-right: 0;
+      }
+    }
+  }
+  .left-card {
+    float: left;
+    p {
+      color: #404a3c;
+    }
+  }
+  .darker {
+    background-color: #008080db;
+    float: right;
+    color: #ffffff;
+  }
+}
+
+.chat-container::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+
+.time-right {
+  padding-top: 10px;
+  float: right;
+  font-size: 10px;
+}
+.time-left {
+  padding-top: 10px;
+  float: left;
+  font-size: 10px;
+}

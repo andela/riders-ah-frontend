@@ -14,6 +14,7 @@ import commentReactReducer from './commentReactReducer';
 import followReducer from './followReducer';
 import statsReducer from './statsReducer';
 import highlightReducer from './article/highlightReducer'
+import chatReducer from './chatReducer';
 
 export default combineReducers({
   registration: signupReducer,
@@ -30,5 +31,6 @@ export default combineReducers({
   likeComment: commentReactReducer,
   follow: followReducer,
   stats: statsReducer,
-  highlight: highlightReducer
+  highlight: highlightReducer,
+  chat: chatReducer
 });

@@ -109,6 +109,7 @@ class UserProfile extends Component {
           <div className={`dropdown-content ${profileDiv}`}>
             <Link to='/profile'>Profile</Link>
             <Link to='/articles/create'>New story</Link>
+            <Link to='/chatroom'>Chat & Support</Link>
             <Link to='/login' onClick={this.handleLogout}>
               Sign out
             </Link>

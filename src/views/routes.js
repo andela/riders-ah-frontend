@@ -8,6 +8,7 @@ import NotFound from './notFound.jsx';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import ViewArticles from '../components/articles/viewArticles.jsx';
+import ChatRoom from '../components/chat/chat.jsx';
 import PrivateRoute from '../../helpers/privateRoute';
 import ReadStats from '../components/profile/readStats';
 import {
@@ -52,6 +53,12 @@ const Routes = props => {
         path='/profile'
         exact
         component={ViewProfile}
+        isAuthanticated={props.auth.isAuthanticated}
+      />
+      <PrivateRoute
+        path='/chatroom'
+        exact
+        component={ChatRoom}
         isAuthanticated={props.auth.isAuthanticated}
       />
       <Route
