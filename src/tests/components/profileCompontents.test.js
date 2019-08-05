@@ -48,7 +48,14 @@ const nextProps = {
     follows: 0,
     articles: [{ title: 'title', author: { username: 'test' } }]
   },
-  bookmarks: { isBookmarked: '', isBookmarksFetched: 'done', Bookmarks: [] }
+  bookmarks: { isBookmarked: '', isBookmarksFetched: 'done', Bookmarks: [] },
+  follow: {
+    isFollowed: '',
+    isFollowingFetched: '',
+    isFollowersFetched: '',
+    following: [],
+    follower: []
+  }
 };
 let buttons = null;
 let inputs = null;

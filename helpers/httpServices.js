@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-const token = localStorage.getItem("token");
+const token = localStorage.getItem('token');
 export default axios.create({
   baseURL: `${process.env.API_URL}`,
   headers: {

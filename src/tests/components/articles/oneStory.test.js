@@ -77,21 +77,4 @@ describe('oneStory component tests', () => {
     OneStoryWrapper.update();
     expect(OneStoryWrapper.instance().props.deleteComment).toBeDefined();
   });
-  it('should call handleBookmark function', () => {
-    const OneStoryWrapper = mount(
-      <Provider store={Store}>
-        <MemoryRouter>
-          <OneStoryComponent {...props} />
-        </MemoryRouter>
-      </Provider>
-    );
-    const component = OneStoryWrapper.find('OneStory');
-    component.instance().handleBookmark = jest.fn();
-    // console.log(component.props().bookmarkArticle);
-    const bookmark = findTestByAttr(OneStoryWrapper, 'bookmark');
-    const bookmarkImage = bookmark.find('img');
-    bookmarkImage.simulate('click');
-    expect(component.instance().handleBookmark).toHaveBeenCalled();
-    expect(component.props().bookmarkArticle).toBeDefined();
-  });
 });

@@ -14,7 +14,8 @@ import {
   CompletReset,
   CreateOrUpdateArticle,
   ViewProfile,
-  OneStory
+  OneStory,
+  Follow
 } from '../components';
 
 const Routes = props => {
@@ -50,9 +51,19 @@ const Routes = props => {
         component={ViewProfile}
         isAuthanticated={props.auth.isAuthanticated}
       />
-      <Route exact path="/articles" render={props => <ViewArticles {...props} />} />
-      <Route exact path="/" render={props=> <Home {...props} />} /> 
-      <Route render={props=> <NotFound {...props} />} />
+      <Route
+        exact
+        path='/articles'
+        render={props => <ViewArticles {...props} />}
+      />
+      <PrivateRoute
+        path='/follow'
+        exact
+        component={Follow}
+        isAuthanticated={props.auth.isAuthanticated}
+      />
+      <Route exact path='/' render={props => <Home {...props} />} />
+      <Route render={props => <NotFound {...props} />} />
     </Switch>
   );
 };
