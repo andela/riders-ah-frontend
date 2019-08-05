@@ -9,6 +9,7 @@ import Search from '../articles/search';
 import { query } from '../../actions/viewArticles';
 import { PropTypes } from 'prop-types';
 import { getNotifications, switchNotifications, getUserInfo } from '../../actions/profile';
+import { logoutUser } from '../../actions/logout';
 import Helpers from '../../helpers/helpers';
 
 class UserProfile extends Component {
@@ -76,6 +77,10 @@ class UserProfile extends Component {
   handleSearch = search => {
     this.props.query(search);
   };
+  handleLogout = () => {
+    const { token } = localStorage;
+    this.props.logoutUser(token);
+  };
   render() {
     const { image } = this.props.auth;
     const profileImage = image ? image : { avatar };
@@ -93,7 +98,7 @@ class UserProfile extends Component {
           <div className={`dropdown-content ${profileDiv}`}>
             <Link to='/profile'>Profile</Link>
             <Link to='/articles/create'>New story</Link>
-            <Link to='/login'>Sign out</Link>
+            <Link to='/login' onClick={this.handleLogout}>Sign out</Link>
           </div>
         </div>
         <div
@@ -154,7 +159,8 @@ UserProfile.propTypes = {
   articles: PropTypes.object,
   query: PropTypes.func,
   switchNotifications: PropTypes.func,
-  getUserInfo: PropTypes.func
+  getUserInfo: PropTypes.func,
+  logoutUser:PropTypes.func
 };
 const mapStateToProps = state => ({
   auth: state.auth.user,
@@ -164,6 +170,6 @@ const mapStateToProps = state => ({
 
 const connectedUserProfile = connect(
   mapStateToProps,
-  { query, getNotifications, switchNotifications, getUserInfo }
+  { query, getNotifications, switchNotifications, getUserInfo, logoutUser }
 )(UserProfile);
 export { connectedUserProfile as UserProfile };
