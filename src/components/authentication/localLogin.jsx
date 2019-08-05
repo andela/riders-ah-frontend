@@ -3,7 +3,6 @@ import { PropTypes } from 'prop-types';
 
 import Input from '../common/input.jsx';
 import Button from '../common/button.jsx';
-import ErrorMessage from '../common/errorMessage.jsx';
 const LocalLogin = ({
   onEmailChange,
   onPasswordChange,
@@ -34,8 +33,6 @@ const LocalLogin = ({
         onClick={onClick}
         className='input btn-blue'
       />
-      <br />
-      <ErrorMessage message={isValidCredentials} />
       <br />
       <strong>
         <a href='/signup' className='link right'>

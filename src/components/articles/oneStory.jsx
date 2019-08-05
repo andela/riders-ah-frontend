@@ -6,7 +6,7 @@ import Author from '../menu/author';
 import NavBar from '../common/navBar';
 import { fetchOneStory } from '../../actions/oneStory';
 import { Loader } from '../common/loader';
-import { Tags } from '../common/tag'
+import { Tags } from '../common/tag';
 import Moment from 'react-moment';
 import WriteComment from '../comment/writeComment';
 import ReadComment from '../comment/readComment';
@@ -40,7 +40,8 @@ export class OneStory extends Component {
       rounded: 0,
       allRates: []
     },
-    disable: true
+    disable: true,
+    isAuthanticated: false
   };
   componentDidMount() {
     const {
@@ -48,13 +49,18 @@ export class OneStory extends Component {
         params: { slug }
       }
     } = this.props;
+    const { isAuthanticated } = this.props.auth;
+    this.setState({ isAuthanticated });
+
+    if (isAuthanticated) {
+      this.props.fetchBookmarks();
+    }
     const { limit, offset } = this.state;
     this.props.fetchOneStory(slug);
     this.props.fetchComment(slug);
     this.props.getLikeAndDislikeCount(slug);
     const paginate = `limit=${limit}&offset=${offset}`;
     this.props.getAllRates(slug, paginate);
-    this.props.fetchBookmarks();
   }
 
   componentDidUpdate(prevProps) {
@@ -128,25 +134,50 @@ export class OneStory extends Component {
     }
   }
   rateArticle = rate => {
+    const { isAuthanticated } = this.state;
     const slug = this.props.match.params.slug;
-    this.props.rateArticle({ rate, slug });
+    if (isAuthanticated) {
+      this.props.rateArticle({ rate, slug });
+    } else {
+      Helpers.setAlertError('Login first');
+    }
   };
   handleDelete = (id, slug) => {
-    this.props.deleteComment(id, slug);
+    const { isAuthanticated } = this.state;
+    if (isAuthanticated) {
+      this.props.deleteComment(id, slug);
+    } else {
+      Helpers.setAlertError('Login first');
+    }
   };
   handleLike = () => {
     const slug = this.props.match.params.slug;
-    this.props.likeArticle(slug);
-    setTimeout(() => window.location.reload(), 10);
+    const { isAuthanticated } = this.state;
+    if (isAuthanticated) {
+      this.props.likeArticle(slug);
+      setTimeout(() => window.location.reload(), 10);
+    } else {
+      Helpers.setAlertError('Login first');
+    }
   };
   handleDislike = () => {
     const slug = this.props.match.params.slug;
-    this.props.dislikeArticle(slug);
-    setTimeout(() => window.location.reload(), 10);
+    const { isAuthanticated } = this.state;
+    if (isAuthanticated) {
+      this.props.dislikeArticle(slug);
+      setTimeout(() => window.location.reload(), 10);
+    } else {
+      Helpers.setAlertError('Login first');
+    }
   };
 
   handleBookmark = slug => {
-    this.props.bookmarkArticle(slug);
+    const { isAuthanticated } = this.state;
+    if (isAuthanticated) {
+      this.props.bookmarkArticle(slug);
+    } else {
+      Helpers.setAlertError('Login first');
+    }
   };
 
   render() {
@@ -199,13 +230,13 @@ export class OneStory extends Component {
               />
             </div>
           </div>
-          <div className="container3">
-            <Tags tags={data.tagList}/>
+          <div className='container3'>
+            <Tags tags={data.tagList} />
           </div>
 
-          <div className="container2">
-            <div className="related">
-              <div className="comments">
+          <div className='container2'>
+            <div className='related'>
+              <div className='comments'>
                 <h3>Comments</h3>
                 <WriteComment params={this.props.match.params} />
                 {comments.length < 1

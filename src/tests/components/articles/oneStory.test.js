@@ -19,14 +19,15 @@ const props = {
         readingTime: 'readingTime',
         createdAt: 'createdAt',
         slug: 'slug',
-        tagList:['amandazi', 'aaa']
+        tagList: ['amandazi', 'aaa']
       }
     },
     likeAndDislike: {
       likes: {},
       dislikes: {}
     },
-    bookmark: { isBookmarked: '', isBookmarksFetched: 'done', Bookmarks: [] }
+    bookmark: { isBookmarked: '', isBookmarksFetched: 'done', Bookmarks: [] },
+    comment: { isCommentFetched: true }
   },
   fetchOneStory: jest.fn(slug => slug),
   fetchComment: jest.fn(slug => slug),
@@ -41,7 +42,8 @@ const props = {
     }
   },
   getLikeAndDislikeCount: jest.fn(),
-  bookmarkArticle: jest.fn(slug => slug)
+  bookmarkArticle: jest.fn(slug => slug),
+  auth: { user: {}, isAuthanticated: true }
 };
 
 const mockStore = configureStore([thunk, promise]);
@@ -54,7 +56,7 @@ describe('oneStory component tests', () => {
     moxios.uninstall(http);
   });
   const store = mockStore({});
-  const Store = mockStore({ auth: { user: {} } });
+  const Store = mockStore({ auth: { user: {}, isAuthanticated: true } });
   it('should render oneStory component without errror', () => {
     const OneStoryWrapper = shallow(
       <OneStoryComponent store={store} {...props} />

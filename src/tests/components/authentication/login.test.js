@@ -3,15 +3,16 @@ import DefaultLogin from '../../../components/authentication/login';
 import { findTestByAttr, store } from '../../../../helpers/utils/testUtils';
 import React from 'react';
 
-
 const props = {
-    loginUser: jest.fn(),
-    errors: {},
-    auth: { credentials: {isValid: true}},
-    history:{location:{search:`?token=token&username=username`}, replace: jest.fn()}
-}
+  loginUser: jest.fn(),
+  errors: {},
+  auth: { credentials: { isValid: true } },
+  history: {
+    location: { search: `?token&username=username` },
+    replace: jest.fn()
+  }
+};
 describe('app component', () => {
-
   const login = mount(<DefaultLogin {...props} store={store} />);
 
   it('should render without error', () => {
@@ -65,4 +66,3 @@ describe('app component', () => {
     expect(spy).toHaveBeenCalled();
   });
 });
-
