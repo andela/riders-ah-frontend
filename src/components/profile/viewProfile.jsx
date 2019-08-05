@@ -8,6 +8,7 @@ import Helpers from '../../helpers/helpers';
 import { Button } from '../common';
 import Bookmark from '../articles/bookmark';
 import FollowModal from '../follow/followModal';
+import ReadStats from './readStats';
 import {
   getUserInfo,
   updateUser,
@@ -24,6 +25,7 @@ import {
   fetchFollowers
 } from '../../actions/followAction';
 
+import { readStats } from '../../actions/statsAction';
 class ViewProfile extends Component {
   constructor() {
     super();
@@ -41,9 +43,11 @@ class ViewProfile extends Component {
         articles: []
       },
       modalDisplay: 'none',
+      statsModalDisplay: 'none',
       profileDisplay: 'block',
       followModalDisplay: false,
       followModalOption: '',
+      statistics: [],
       profileWidget: cloudinary.createUploadWidget(
         {
           cloudName: 'dfjns5lny',
@@ -86,6 +90,12 @@ class ViewProfile extends Component {
     const userDispaly = profileDisplay !== 'none' ? 'none' : 'block';
     this.setState({ modalDisplay: display, profileDisplay: userDispaly });
   };
+  setStatsModal = () => {
+    const { statsModalDisplay, profileDisplay } = this.state;
+    const display = statsModalDisplay !== 'none' ? 'none' : 'block';
+    const userDispaly = profileDisplay !== 'none' ? 'none' : 'block';
+    this.setState({ statsModalDisplay: display, profileDisplay: userDispaly });
+  };
   navigateBookmark = slug => {
     this.props.history.push(`/articles/${slug}`);
   };
@@ -102,6 +112,7 @@ class ViewProfile extends Component {
     this.props.getUserFollowing(user.username);
     this.props.getArticles();
     this.props.fetchBookmarks();
+    this.props.readStats();
   }
   componentWillReceiveProps(nextProps) {
     const { isBookmarked } = nextProps.bookmarks;
@@ -171,6 +182,12 @@ class ViewProfile extends Component {
           numFollows: following
         }
       });
+      if (nextProps.stats.isStatsFetched === 'done') {
+        const { stats } = nextProps.stats;
+        let Statistics = { ...this.state.statistics };
+        Statistics = stats;
+        this.setState({ statistics: Statistics });
+      }
     }
   }
 
@@ -192,7 +209,9 @@ class ViewProfile extends Component {
       modalDisplay,
       profileDisplay,
       followModalDisplay,
-      followModalOption
+      followModalOption,
+      statsModalDisplay,
+      statistics
     } = this.state;
     const {
       image,
@@ -214,7 +233,14 @@ class ViewProfile extends Component {
         <ToastContainer />
         <NavBar />
         <div className='main'>
-          <div className='content-user'>
+          <div
+            className='content-user'
+            style={
+              statsModalDisplay !== 'none'
+                ? { width: '100%' }
+                : { width: '71%' }
+            }
+          >
             <Modal
               display={modalDisplay}
               firstName={firstName}
@@ -237,6 +263,11 @@ class ViewProfile extends Component {
               handleFollow={this.handleFollow}
               handleUnFollow={this.handleUnFollow}
             />
+            <ReadStats
+              display={statsModalDisplay}
+              setModal={this.setStatsModal}
+              stats={statistics}
+            />
             {!username ? (
               <h2>Your profile will be displayed in a moment</h2>
             ) : (
@@ -253,6 +284,12 @@ class ViewProfile extends Component {
                     </li>
                     <li onClick={() => this.toggleFollowModel('Followers')}>
                       {numFollowers.length} followers
+                    </li>
+                    <li
+                      onClick={this.setStatsModal}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      Reading Stats
                     </li>
                   </ul>
                   <div className='clear' />
@@ -311,14 +348,14 @@ class ViewProfile extends Component {
                       return (
                         <div className='bookmarked-article' key={bookmark.id}>
                           <div>
-                            <li
+                            <p
                               className='article-title'
                               onClick={() =>
                                 this.navigateBookmark(bookmark.article.slug)
                               }
                             >
                               <strong>{bookmark.article.title}</strong>
-                            </li>
+                            </p>
                             <br />
                             <li>{bookmark.article.description}</li>
                             <li className='author-name'>
@@ -367,7 +404,8 @@ const mapStateToProps = state => ({
   userInfo: state.userInfo,
   bookmarks: state.bookmark,
   follow: state.follow,
-  auth: state.auth
+  auth: state.auth,
+  stats: state.stats
 });
 
 ViewProfile.propTypes = {
@@ -386,7 +424,9 @@ ViewProfile.propTypes = {
   follow: PropTypes.object,
   auth: PropTypes.object,
   fetchFollowing: PropTypes.func,
-  fetchFollowers: PropTypes.func
+  fetchFollowers: PropTypes.func,
+  readStats: PropTypes.func,
+  stats: PropTypes.object
 };
 export default connect(
   mapStateToProps,
@@ -402,6 +442,7 @@ export default connect(
     followUser,
     unfollowUser,
     fetchFollowing,
-    fetchFollowers
+    fetchFollowers,
+    readStats
   }
 )(ViewProfile);
