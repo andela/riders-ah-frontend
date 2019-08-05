@@ -14,7 +14,6 @@ const props = {
 };
 describe('app component', () => {
   const login = mount(<DefaultLogin {...props} store={store} />);
-
   it('should render without error', () => {
     const loginComponent = findTestByAttr(login, 'component-Login');
     expect(loginComponent.length).toEqual(1);
