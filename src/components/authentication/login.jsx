@@ -14,6 +14,7 @@ import {
 } from '../../actions/login';
 import validateCredentials from '../../../helpers/credentialsValidation';
 import Helpers from '../../helpers/helpers';
+import { ToastContainer } from 'react-toastify';
 
 export class Login extends Component {
   constructor() {
@@ -30,21 +31,21 @@ export class Login extends Component {
     }
   }
   componentDidMount() {
-    document.body.style.backgroundImage = "url('../../assets/images/auth-background.jpg')";
     if (localStorage.token) {
-      this.props.history.replace('/articles');
+      window.location.replace('/articles');
     }
     const { location } = this.props.history;
     const { token, username, image } = queryString.parse(location.search);
     if (token && username) {
-      const userInfo = Helpers.getUserInfoFromToken();
-      localStorage.setItem('user', JSON.stringify(userInfo));
-
       localStorage.token = token;
       localStorage.username = username;
       localStorage.image = image;
+      const userInfo = Helpers.getUserInfoFromToken();
+      localStorage.setItem('user', JSON.stringify(userInfo));
       window.location.replace('/articles');
     }
+    document.body.style.backgroundImage =
+      "url('../../assets/images/auth-background.jpg')";
   }
   handleEmailInput = event => {
     this.props.setEmail(event.target.value);
@@ -59,7 +60,7 @@ export class Login extends Component {
     if (result === true) {
       this.props.loginUser(credentials);
     } else {
-      this.props.credentialsValidation(result);
+      Helpers.setAlertError(result);
     }
   };
 
@@ -79,6 +80,7 @@ export class Login extends Component {
     const { credentials } = auth;
     return (
       <div className='container' id='component-Login'>
+        <ToastContainer />
         <h1>Authors Haven - Log In</h1>
         <form
           onSubmit={e => e.preventDefault()}

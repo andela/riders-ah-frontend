@@ -8,7 +8,11 @@ import notification from '../../assets/images/notification.png';
 import Search from '../articles/search';
 import { query } from '../../actions/viewArticles';
 import { PropTypes } from 'prop-types';
-import { getNotifications, switchNotifications, getUserInfo } from '../../actions/profile';
+import {
+  getNotifications,
+  switchNotifications,
+  getUserInfo
+} from '../../actions/profile';
 import { logoutUser } from '../../actions/logout';
 import Helpers from '../../helpers/helpers';
 
@@ -26,7 +30,9 @@ class UserProfile extends Component {
     };
   }
   componentDidMount() {
-    this.props.getNotifications();
+    if (this.props.auth.id) {
+      this.props.getNotifications();
+    }
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
       const { notificationSettings } = user;
@@ -67,7 +73,7 @@ class UserProfile extends Component {
         notificationDiv: viewNotifications
       });
     }
-  }
+  };
   turnNotifications = e => {
     e.preventDefault();
     const { checked } = e.target;
@@ -84,7 +90,12 @@ class UserProfile extends Component {
   render() {
     const { image } = this.props.auth;
     const profileImage = image ? image : { avatar };
-    const { profileDiv, notifications, notificationDiv, isNotificationOpen } = this.state;
+    const {
+      profileDiv,
+      notifications,
+      notificationDiv,
+      isNotificationOpen
+    } = this.state;
     return (
       <div>
         <img src={writting} id='logo' />
@@ -98,7 +109,9 @@ class UserProfile extends Component {
           <div className={`dropdown-content ${profileDiv}`}>
             <Link to='/profile'>Profile</Link>
             <Link to='/articles/create'>New story</Link>
-            <Link to='/login' onClick={this.handleLogout}>Sign out</Link>
+            <Link to='/login' onClick={this.handleLogout}>
+              Sign out
+            </Link>
           </div>
         </div>
         <div
@@ -126,16 +139,16 @@ class UserProfile extends Component {
                   <h4>No notifications</h4>
                 </div>
               ) : (
-                  notifications.map((notification, index) => (
-                    <div className='notif-one' key={index}>
-                      <h4>
-                        {notification.notificationMessage} - &nbsp;
+                notifications.map((notification, index) => (
+                  <div className='notif-one' key={index}>
+                    <h4>
+                      {notification.notificationMessage} - &nbsp;
                       <Moment fromNow>{notification.createdAt}</Moment>
-                      </h4>
-                      <hr />
-                    </div>
-                  ))
-                )}
+                    </h4>
+                    <hr />
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
@@ -160,7 +173,7 @@ UserProfile.propTypes = {
   query: PropTypes.func,
   switchNotifications: PropTypes.func,
   getUserInfo: PropTypes.func,
-  logoutUser:PropTypes.func
+  logoutUser: PropTypes.func
 };
 const mapStateToProps = state => ({
   auth: state.auth.user,

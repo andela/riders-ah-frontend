@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-
+import Helpers from '../../helpers/helpers';
 import comment from '../../../helpers/commentToggle';
 import { createComment } from '../../actions/comment';
 import Avatar from '../../assets/images/avatar.png';
@@ -20,9 +20,14 @@ class WriteComment extends Component {
 
   handleComment = () => {
     const { slug } = this.props.params;
-    const Comment = this.state.comment;
-    this.props.createComment(Comment, slug);
-    this.handleChange({ target: { value: '' } });
+    const { isAuthanticated } = this.props.auth;
+    if (isAuthanticated) {
+      const Comment = this.state.comment;
+      this.props.createComment(Comment, slug);
+      this.handleChange({ target: { value: '' } });
+    } else {
+      Helpers.setAlertError('Login first');
+    }
   };
   render() {
     const { auth } = this.props;

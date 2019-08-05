@@ -8,12 +8,20 @@ const errorHandler = () => {
 
     if (!action.meta || !action.meta.localError) {
       return next(action).catch(error => {
-        if(error.response.data.errors !== undefined){
-          Notify.setAlertError(error.response.data.errors.body[0]);
+        let message = '';
+        const { data } = error.response;
+        if (data.errors !== undefined) {
+          message = data.errors.body[0];
+        } else if (data.err) {
+          message = data.err.message;
+        } else if (data.error) {
+          if (data.error.name === 'JsonWebTokenError') {
+            message = 'You have to log in';
+          }
+        } else {
+          message = error.message;
         }
-        else{
-        Notify.setAlertError(error.message);
-        }
+        Notify.setAlertError(message);
       });
     }
 
