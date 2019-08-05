@@ -33,3 +33,26 @@
     width: 80%;
   }
 }
+.container3 {
+  display: flex;
+  justify-content: center;
+  padding-right: 46%;
+  margin-bottom: 10%;
+  margin-left: auto;
+  margin-right: auto;
+  ul {
+    width: 5%;
+
+    li {
+      font-size: 14px;
+      display: inline;
+      margin: auto;
+      color: white;
+      margin: 15%;
+      cursor: pointer;
+      background-color:teal;
+      padding: 40%;
+      border-radius: 5px;
+    }
+  }
+}

@@ -5,12 +5,16 @@ import { PropTypes } from 'prop-types';
 import Input from '../common/input';
 import Button from '../common/button';
 import NavBar from '../common/navBar';
+import { Loader } from '../common/loader'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Notify from '../../helpers/helpers';
 import { ToastContainer } from 'react-toastify';
 import { fetchOneStory } from '../../actions/oneStory';
-import { createOrUpdateArticle } from '../../actions/articleAction';
+import {
+  createOrUpdateArticle,
+  fetchArticle,createTag
+} from '../../actions/articleAction';
 import Joi from 'joi-browser';
 import Helpers from '../../helpers/helpers';
 import { modules, formats } from './editor';
@@ -59,10 +63,14 @@ class CreateOrUpdateArticle extends Component {
     const slug = this.props.match.params.slug;
     if (slug) {
       if (nextProps.article.fetched === 'done') {
-        const { title, tag, category,description, body } = nextProps.article.article;
+        const {
+          title,
+          category,
+          description,
+          body,
+        } = nextProps.article.article ;
         const retrievedArticle = { ...this.state.article };
         retrievedArticle.title = title;
-        retrievedArticle.tag = tag;
         retrievedArticle.body = body;
         retrievedArticle.category = category;
         retrievedArticle.description = description;
@@ -85,7 +93,6 @@ class CreateOrUpdateArticle extends Component {
   };
   handleSubmit = () => {
     const validArticle = { ...this.state.article };
-    delete validArticle['tag'];
     const errors = Helpers.validate(validArticle, this.schema);
     this.setState({ errors: errors || {} });
     if (errors) {
@@ -95,15 +102,17 @@ class CreateOrUpdateArticle extends Component {
       return;
     }
     const slug = this.props.match.params.slug;
-    const { title, body, category, description, image } = this.state.article;
+    const { title, body, category, description, image, tag } = this.state.article;
     const article = {
       title,
       body,
       category,
       description,
-      image
+      image,
+      tag
     };
     this.props.createOrUpdateArticle(slug, article);
+    this.props.createTag(slug, tag) 
   };
   render() {
     const { article } = this.props;
@@ -195,7 +204,8 @@ class CreateOrUpdateArticle extends Component {
     } else {
       return (
         <Fragment>
-          <ToastContainer /> <h2> Wait ..., Trying to retrieve an Article </h2>
+          <ToastContainer />
+          <Loader />
         </Fragment>
       );
     }
@@ -204,6 +214,9 @@ class CreateOrUpdateArticle extends Component {
     title: Joi.string()
       .required()
       .label('Title'),
+      tag: Joi.string()
+      .required()
+      .label('tag'),
     category: Joi.string()
       .required()
       .label('Category'),
@@ -229,6 +242,8 @@ CreateOrUpdateArticle.defaultProps = {
 
 CreateOrUpdateArticle.propTypes = {
   fetchOneStory: PropTypes.func,
+  createTag: PropTypes.func,
+  fetchArticle: PropTypes.func,
   createOrUpdateArticle: PropTypes.func,
   article: PropTypes.object,
   history: PropTypes.object,
@@ -237,5 +252,5 @@ CreateOrUpdateArticle.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { createOrUpdateArticle, fetchOneStory }
+  { createOrUpdateArticle, fetchArticle, createTag , fetchOneStory}
 )(CreateOrUpdateArticle);
