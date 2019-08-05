@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component , Fragment} from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { ToastContainer } from 'react-toastify';
@@ -10,7 +10,7 @@ import { Tags } from '../common/tag';
 import Moment from 'react-moment';
 import WriteComment from '../comment/writeComment';
 import ReadComment from '../comment/readComment';
-import { fetchComment, deleteComment } from '../../actions/comment';
+import { fetchComment, deleteComment, fetchOneComment } from '../../actions/comment';
 import Helpers from '../../helpers/helpers';
 import LikeAndDislike from './likeAndDislike';
 import { rateArticle, getAllRates } from '../../actions/article/ratingAction';
@@ -20,6 +20,7 @@ import Bookmark from './bookmark';
 import { bookmarkArticle, fetchBookmarks } from '../../actions/bookmarkAction';
 import { isBookmarking } from '../../helpers/bookmarkHelper';
 
+import  CommentEditHistory  from '../comment/editHistory'
 import {
   getLikeAndDislikeCount,
   likeArticle,
@@ -41,8 +42,19 @@ export class OneStory extends Component {
       allRates: []
     },
     disable: true,
-    isAuthanticated: false
+    isAuthanticated: false,
+    editHistory: false,
+    commentId: '',
+    commentSlug: ''
   };
+  toggleModal = (id, slug) => {
+    this.setState({
+        commentSlug: slug,
+        editHistory: !this.state.editHistory,
+        commentId: id,
+    });
+    return slug && id && this.props.fetchOneComment(slug, id);
+  }
   componentDidMount() {
     const {
       match: {
@@ -62,6 +74,9 @@ export class OneStory extends Component {
     const paginate = `limit=${limit}&offset=${offset}`;
     this.props.getAllRates(slug, paginate);
   }
+
+  displayComments = () => {
+  };
 
   componentDidUpdate(prevProps) {
     const { isCommentFetched } = this.props.state.comment;
@@ -183,12 +198,15 @@ export class OneStory extends Component {
   render() {
     const { bookmark, article } = this.props.state;
     let isBookmark = isBookmarking(bookmark, article.article.title);
+    const { isBookmarked } = this.props.state.bookmark;
+    const { editHistory, commentId, commentSlug } = this.state;
     const { slug } = this.props.match.params;
     const { comments, rate, rates } = this.state;
     const data = this.props.state.article.article;
-    const { isBookmarked } = this.props.state.bookmark;
     if (this.props.state.article.fetched === 'done') {
       return (
+      <Fragment>
+      <CommentEditHistory display={editHistory} onClose={this.toggleModal} id={commentId} slug={commentSlug} />
         <div id='component-oneStory'>
           <NavBar />
           {localStorage.token === undefined ? '' : <ToastContainer />}
@@ -250,6 +268,8 @@ export class OneStory extends Component {
                           onDelete={() => {
                             this.handleDelete(comment.id, slug);
                           }}
+                          articleSlug={slug}
+                          onOpenModal={this.toggleModal}
                         />
                       );
                     })}
@@ -257,6 +277,7 @@ export class OneStory extends Component {
             </div>
           </div>
         </div>
+        </Fragment>
       );
     } else {
       return (
@@ -301,6 +322,7 @@ export default connect(
     rateArticle,
     getAllRates,
     fetchBookmarks,
-    bookmarkArticle
+    bookmarkArticle,
+    fetchOneComment
   }
 )(OneStory);

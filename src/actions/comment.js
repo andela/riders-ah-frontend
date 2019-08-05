@@ -5,7 +5,8 @@ import {
   DELETE_COMMENT,
   UPDATE_COMMENT,
   LIKE_COMMENT,
-  GET_COMMENT_LIKES
+  GET_COMMENT_LIKES,
+  FETCH_ONE_COMMENT
 } from './types';
 
 export const createComment = (comment, slug) => dispatch => {
@@ -21,7 +22,12 @@ export const fetchComment = slug => dispatch => {
     payload: http.get(`/api/v1/article/${slug}/comments`)
   });
 };
-
+export const fetchOneComment = (slug, id) => dispatch => {
+  dispatch({
+    type: FETCH_ONE_COMMENT,
+    payload: http.get(`/api/v1/article/${slug}/comments/${ id }`)
+  });
+};
 export const deleteComment = (id, slug) => dispatch => {
   dispatch({
     type: DELETE_COMMENT,

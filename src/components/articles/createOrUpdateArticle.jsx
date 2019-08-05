@@ -4,8 +4,8 @@ import { Fragment } from 'react';
 import { PropTypes } from 'prop-types';
 import Input from '../common/input';
 import Button from '../common/button';
+import Loader from '../common/loader';
 import NavBar from '../common/navBar';
-import { Loader } from '../common/loader'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Notify from '../../helpers/helpers';
