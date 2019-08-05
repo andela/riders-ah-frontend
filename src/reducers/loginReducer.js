@@ -4,7 +4,8 @@ import {
   SET_PASSWORD,
   VALIDATE_CREDENTIALS,
   LOGIN_USER,
-  SET_CURRENT_USER
+  SET_CURRENT_USER,
+  LOGOUT_USER
 } from '../actions/types';
 
 import { pending, fulfilled, rejected } from '../utils/actionUtil';
@@ -94,6 +95,12 @@ const loginReducer = (state = initialState, action) => {
         isAuthanticated: true,
         user: { ...action.payload }
       };
+      case LOGOUT_USER:
+        return {
+          ...state,
+          isAuthenticated: false,
+          user: {}
+        };
     default:
       return state;
   }
