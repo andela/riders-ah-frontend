@@ -53,3 +53,4 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 export const READ_STATS = 'READ_STATS';
 export const HIGHLIGHT_TEXT = 'HIGHLIGHT_TEXT';
 export const GET_HIGHLIGHT = 'GET_HIGHLIGHT';
+export const GET_MESSAGES = 'GET_MESSAGES';

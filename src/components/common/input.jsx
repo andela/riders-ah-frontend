@@ -10,7 +10,8 @@ const Input = ({
   placeholder,
   className,
   id,
-  validateMessage
+  validateMessage,
+  autocomplete
 }) => {
   return (
     <Fragment>
@@ -22,6 +23,7 @@ const Input = ({
         placeholder={placeholder}
         className={className}
         id={id}
+        autoComplete={autocomplete}
       />
       {validateMessage ||
         (error && <div className='error-message'>{error}</div>)}
@@ -37,6 +39,7 @@ Input.propTypes = {
   placeholder: PropTypes.string,
   className: PropTypes.string,
   id: PropTypes.string,
-  validateMessage: PropTypes.object
+  validateMessage: PropTypes.object,
+  autocomplete: PropTypes.string,
 };
 export default Input;
