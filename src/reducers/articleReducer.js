@@ -7,7 +7,8 @@ import {
   LIKE_ARTICLE,
   DISLIKE_ARTICLE,
   CREATE_TAG,
-  REPORT_ARTICLE
+  REPORT_ARTICLE,
+  GET_REPORTED_ARTICLES
 } from '../actions/types';
 import { pending, fulfilled } from '../utils/actionUtil';
 
@@ -17,7 +18,9 @@ const initialState = {
   article: {},
   dislikes: {},
   likes: {},
-  isReportSuccess: false
+  isReportSuccess: false,
+  reportedSuccess: false,
+  reported: {}
 };
 
 const articleReducer = (state = initialState, action) => {
@@ -77,6 +80,11 @@ const articleReducer = (state = initialState, action) => {
       return {
         ...state,
         isReportSuccess: true
+      };
+    case fulfilled(GET_REPORTED_ARTICLES):
+      return {
+        reportedSuccess: true,
+        reported: action.payload.data.data
       };
     default:
       return state;
