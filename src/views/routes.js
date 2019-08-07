@@ -18,6 +18,7 @@ import {
   OneStory,
   Follow
 } from '../components';
+import emailInUse from '../components/common/loginError'
 
 const Routes = props => {
   return (
@@ -27,6 +28,7 @@ const Routes = props => {
       <Route path='/reset' exact component={Reset} />
       <Route path='/completReset/:token' exact component={CompletReset} />
       <Route exact path='/' render={props => <Home {...props} />} />
+      <Route path='/verify/409' exact component = {emailInUse} />
       <Route exact path='/login' render={props => <Login {...props} />} />
       <Route
         exact
