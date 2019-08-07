@@ -112,7 +112,9 @@ class CreateOrUpdateArticle extends Component {
       tag
     };
     this.props.createOrUpdateArticle(slug, article);
+    if(slug){
     this.props.createTag(slug, tag) 
+    }
   };
   render() {
     const { article } = this.props;

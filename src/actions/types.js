@@ -51,3 +51,5 @@ export const FETCH_FOLLOWERS = 'FETCH_FOLLOWING';
 export const UNFOLLOW_USER = 'UNFOLLOW_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const READ_STATS = 'READ_STATS';
+export const HIGHLIGHT_TEXT = 'HIGHLIGHT_TEXT';
+export const GET_HIGHLIGHT = 'GET_HIGHLIGHT';
