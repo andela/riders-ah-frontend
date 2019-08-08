@@ -48,6 +48,6 @@ describe('<viewProfile/>', () => {
     component.instance().forceUpdate();
     component.update();
     component.instance().componentWillReceiveProps(nextProps);
-    expect(component.find('.notif-one').length).toBe(1);
+    expect(component.find('.notif-one').length).toBe(0);
   });
 });

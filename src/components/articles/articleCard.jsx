@@ -22,7 +22,7 @@ const ArticleCard = ({ article }) => {
           </b>
         </li>
         <li>
-          <span className='category-btn'>{article.description}</span>
+          <span className='category-btn'>{article.category}</span>
         </li>
         <li>
           <i>{<Moment fromNow>{dateToFormat}</Moment>}</i>&nbsp;.&nbsp;

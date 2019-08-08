@@ -106,6 +106,7 @@ class UserProfile extends Component {
     return (
       <div>
         <img src={writting} id='logo' />
+        {localStorage.token ? (
         <div className='dropdown'>
           <img
             src={profileImage}
@@ -115,7 +116,6 @@ class UserProfile extends Component {
             className='user-avatar'
           />
           <div className={`dropdown-content ${profileDiv}`}>
-            {localStorage.token ? (
               <div>
                 <Link to='/profile'>Profile</Link>
                 <Link to='/articles/create'>New story</Link>
@@ -127,14 +127,10 @@ class UserProfile extends Component {
                   Sign out
                 </Link>
               </div>
-            ) : (
-              <div>
-                <Link to='/login'>Login</Link>
-                <Link to='/signup'>Signup</Link>
-              </div>
-            )}
           </div>
         </div>
+        ):null}
+        {localStorage.token ? (
         <div
           className='notification-bar'
           id='set-menu'
@@ -173,6 +169,7 @@ class UserProfile extends Component {
             </div>
           </div>
         </div>
+        ):(<div className='notification-bar auth-button'><Link to='/login' className='green'>Login</Link><Link to='/signup' className='blue'>Signup</Link></div>)}
         <Search
           value={this.props.articles.query}
           onChange={this.handleSearch}
