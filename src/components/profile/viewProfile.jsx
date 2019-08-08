@@ -317,7 +317,7 @@ class ViewProfile extends Component {
                         {articles.map((article, i) => (
                           <tr key={i}>
                             <td>
-                              <b>{article.title}</b>
+                              <b><a href={`/articles/${article.slug}`}>{article.title}</a></b>
                             </td>
                             <td>
                               <i>{article.readingTime}</i>
