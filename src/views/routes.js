@@ -17,7 +17,8 @@ import {
   CreateOrUpdateArticle,
   ViewProfile,
   OneStory,
-  Follow
+  Follow,
+  ReportedArticles
 } from '../components';
 import emailInUse from '../components/common/loginError'
 
@@ -40,6 +41,12 @@ const Routes = props => {
         path='/articles/create'
         exact
         component={CreateOrUpdateArticle}
+        isAuthanticated={props.auth.isAuthanticated}
+      />
+      <PrivateRoute
+        path='/articles/reported'
+        exact
+        component={ReportedArticles}
         isAuthanticated={props.auth.isAuthanticated}
       />
       <Route path='/articles/:slug' exact component={OneStory} />

@@ -3,7 +3,8 @@ import {
   FETCH_ARTICLE,
   UPDATE_ARTICLE,
   CREATE_TAG,
-  REPORT_ARTICLE
+  REPORT_ARTICLE,
+  GET_REPORTED_ARTICLES
 } from './types';
 import http from '../helpers/httpServices';
 
@@ -42,5 +43,11 @@ export const reportArticle = (slug, reason, type) => dispatch => {
   dispatch({
     type: REPORT_ARTICLE,
     payload: http.post(`/api/v1/articles/${slug}/report/${type}`, { reason })
+  });
+};
+export const getReportedArticles = () => dispatch => {
+  dispatch({
+    type: GET_REPORTED_ARTICLES,
+    payload: http.get('/api/v1/articles/reported')
   });
 };

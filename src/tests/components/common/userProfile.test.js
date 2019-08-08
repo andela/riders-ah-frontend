@@ -8,14 +8,15 @@ const props = {
   getNotifications: jest.fn(),
   switchNotifs: jest.fn(),
   getUserInfo: jest.fn(),
-  auth: { user: {} },
+  auth: { user: {} }
 };
 const nextProps = {
   userInfo: {
     notifFetched: true,
     notifications: [{ notificationMessage: 'test', createdAt: '2019-07-29' }],
     switchDone: true
-  }
+  },
+  auth: { roles: 'super_admin' }
 };
 let imgMenus = null;
 const userProfileComponent = mount(
@@ -48,5 +49,5 @@ describe('<viewProfile/>', () => {
     component.update();
     component.instance().componentWillReceiveProps(nextProps);
     expect(component.find('.notif-one').length).toBe(1);
-  })
+  });
 });

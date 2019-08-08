@@ -27,7 +27,8 @@ class UserProfile extends Component {
       notifications: [],
       user: {},
       notifitions: [],
-      isNotificationOpen: false
+      isNotificationOpen: false,
+      isSuperAdmin: false
     };
   }
   componentDidMount() {
@@ -44,6 +45,7 @@ class UserProfile extends Component {
   componentWillReceiveProps(nextProps) {
     const { notifFetched, notifications, switchDone } = nextProps.userInfo;
     const { isNotificationOpen } = this.state;
+    const { roles } = nextProps.auth;
     if (notifFetched) {
       this.setState({ notifications });
     }
@@ -58,6 +60,9 @@ class UserProfile extends Component {
       );
       user.notificationSettings = settings;
       localStorage.setItem('user', JSON.stringify(user));
+    }
+    if (roles === 'super_admin') {
+      this.setState({ isSuperAdmin: true });
     }
   }
   setMenu = type => {
@@ -95,7 +100,8 @@ class UserProfile extends Component {
       profileDiv,
       notifications,
       notificationDiv,
-      isNotificationOpen
+      isNotificationOpen,
+      isSuperAdmin
     } = this.state;
     return (
       <div>
@@ -114,6 +120,9 @@ class UserProfile extends Component {
                 <Link to='/profile'>Profile</Link>
                 <Link to='/articles/create'>New story</Link>
                 <Link to='/chatroom'>Chat & Support</Link>
+                {isSuperAdmin ? (
+                  <Link to='/articles/reported'>View reported articles</Link>
+                ) : null}
                 <Link to='/login' onClick={this.handleLogout}>
                   Sign out
                 </Link>

@@ -10,8 +10,12 @@ const errorHandler = () => {
       return next(action).catch(error => {
         let message = '';
         const { data } = error.response;
-        if (data.errors !== undefined) {
-          message = data.errors.body[0];
+        if (data.errors) {
+          if (data.errors.body) {
+            message = data.errors.body[0];
+          } else if (data.errors.message) {
+            message = data.errors.message;
+          }
         } else if (data.err) {
           message = data.err.message;
         } else if (data.Error) {
@@ -22,6 +26,8 @@ const errorHandler = () => {
           } else {
             message = data.error;
           }
+        } else if (data.message) {
+          message = data.message;
         } else {
           message = error.message;
         }
