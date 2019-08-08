@@ -1,5 +1,5 @@
-.search-data{
-  h2{
+.search-data {
+  h2 {
     margin: 29px 0px 0px 82px;
     color: teal;
     border-bottom: 1px solid;
@@ -23,6 +23,19 @@
       list-style-type: none;
       padding: 0px;
       line-height: 30px;
+      li {
+        a {
+          text-decoration: none;
+          color: #000000;
+        }
+        .category-btn {
+          border: none;
+          background-color: teal;
+          color: white;
+          padding: 8px;
+          cursor: auto;
+        }
+      }
     }
   }
   .element {
@@ -30,17 +43,6 @@
     transition: all 0.5s ease-in;
     &:hover {
       opacity: 0.8;
-    }
-  }
-  .btn-category {
-    border: none;
-    background-color: teal;
-    color: white;
-    padding: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    &:hover {
-      border: 2px solid teal;
     }
   }
 }

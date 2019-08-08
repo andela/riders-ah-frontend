@@ -10,18 +10,19 @@ const ArticleCard = ({ article }) => {
   return (
     <div id={article.slug}>
       <a href={`/articles/${article.slug}`}>
-        <img src={article.image !=='null'?article.image:ArticleImage} className='element' />
+        <img
+          src={article.image !== 'null' ? article.image : ArticleImage}
+          className='element'
+        />
       </a>
       <ul>
         <li>
-          <b>{article.title}</b>
+          <b>
+            <a href={`/articles/${article.slug}`}>{article.title}</a>
+          </b>
         </li>
         <li>
-          <input
-            type='button'
-            className='btn-category'
-            value={article.description}
-          />
+          <span className='category-btn'>{article.description}</span>
         </li>
         <li>
           <i>{<Moment fromNow>{dateToFormat}</Moment>}</i>&nbsp;.&nbsp;

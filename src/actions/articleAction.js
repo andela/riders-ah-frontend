@@ -1,17 +1,17 @@
-import { CREATE_ARTICLE, FETCH_ARTICLE, UPDATE_ARTICLE, CREATE_TAG } from './types';
+import {
+  CREATE_ARTICLE,
+  FETCH_ARTICLE,
+  UPDATE_ARTICLE,
+  CREATE_TAG,
+  REPORT_ARTICLE
+} from './types';
 import http from '../helpers/httpServices';
 
 export const createOrUpdateArticle = (slug = null, article) => dispatch => {
+  const { tag, ...newArticle } = article;
+  newArticle.image = newArticle.image || 'null';
   const tags = [];
-  tags.push(article.tag);
-  const newArticle = {
-    title: article.title,
-    body: article.body,
-    category: article.category,
-    description: article.description,
-    image: article.image || 'null',
-    tags
-  };
+  tags.push(tag);
 
   if (slug) {
     dispatch({
@@ -19,6 +19,7 @@ export const createOrUpdateArticle = (slug = null, article) => dispatch => {
       payload: http.put(`/api/v1/articles/${slug}`, newArticle)
     });
   } else {
+    newArticle.tags = tags;
     dispatch({
       type: CREATE_ARTICLE,
       payload: http.post('/api/v1/articles', newArticle)
@@ -34,6 +35,12 @@ export const fetchArticle = slug => dispatch => {
 export const createTag = (slug, tag) => dispatch => {
   dispatch({
     type: CREATE_TAG,
-    payload: http.post(`/api/v1/articles/${slug}/tag`, {name: tag})
+    payload: http.post(`/api/v1/articles/${slug}/tag`, { name: tag })
+  });
+};
+export const reportArticle = (slug, reason, type) => dispatch => {
+  dispatch({
+    type: REPORT_ARTICLE,
+    payload: http.post(`/api/v1/articles/${slug}/report/${type}`, { reason })
   });
 };

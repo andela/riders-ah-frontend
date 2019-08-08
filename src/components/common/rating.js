@@ -5,8 +5,9 @@ import greyStar from '../../assets/images/star-grey.png';
 import Button from './button';
 
 const Ratings = ({ rate, onChange, rates, id }) => {
+  const actualRate = rates.actual.toFixed(1);
   return (
-    <div className='div'>
+    <React.Fragment>
       <h4>Rating </h4>
       <Rating
         id={id}
@@ -16,8 +17,8 @@ const Ratings = ({ rate, onChange, rates, id }) => {
         placeholderSymbol={<img src={greyStar} className='ratings' />}
         fullSymbol={<img src={yellowStar} className='ratings' />}
       />
-      <Button className='btn btn-edit btn-rate' value={String(rates.actual)} />
-    </div>
+      <Button className='btn btn-edit btn-rate' value={String(actualRate)} />
+    </React.Fragment>
   );
 };
 

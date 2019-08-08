@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { deleteOneStory } from '../../actions/viewArticles';
 import Button from '../common/button';
-import avatar from '../../assets/images/avatar.png';
+import avatar from '../../assets/images/default.png';
 import {
   followUser,
   fetchFollowing,
@@ -13,15 +13,17 @@ import { isFollowing } from '../../helpers/followHelper';
 class Author extends Component {
   componentDidMount() {
     const { auth } = this.props;
-    this.props.fetchFollowing(auth.user.username);
+    if (auth.user.username) {
+      this.props.fetchFollowing(auth.user.username);
+    }
   }
 
   update = slug => {
     window.location.replace(`/articles/update/${slug}`);
   };
   delete = slug => {
-      this.props.deleteOneStory(slug);
-      window.location.replace('/articles');
+    this.props.deleteOneStory(slug);
+    window.location.replace('/articles');
   };
 
   handleFollow = username => {

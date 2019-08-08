@@ -14,9 +14,13 @@ const errorHandler = () => {
           message = data.errors.body[0];
         } else if (data.err) {
           message = data.err.message;
+        } else if (data.Error) {
+          message = data.Error[0];
         } else if (data.error) {
           if (data.error.name === 'JsonWebTokenError') {
             message = 'You have to log in';
+          } else {
+            message = data.error;
           }
         } else {
           message = error.message;

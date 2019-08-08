@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
-import avatar from '../../assets/images/avatar.png';
+import avatar from '../../assets/images/default.png';
 import writting from '../../assets/images/writing.png';
 import notification from '../../assets/images/notification.png';
 import Search from '../articles/search';
@@ -15,6 +15,7 @@ import {
 } from '../../actions/profile';
 import { logoutUser } from '../../actions/logout';
 import Helpers from '../../helpers/helpers';
+import { Signup } from '../authentication/signup';
 
 class UserProfile extends Component {
   constructor(props) {
@@ -89,7 +90,7 @@ class UserProfile extends Component {
   };
   render() {
     const { image } = this.props.auth;
-    const profileImage = image ? image : { avatar };
+    const profileImage = image ? image : avatar;
     const {
       profileDiv,
       notifications,
@@ -103,16 +104,26 @@ class UserProfile extends Component {
           <img
             src={profileImage}
             id='set-menu'
+            alt='Profile'
             onClick={() => this.setMenu('profile')}
             className='user-avatar'
           />
           <div className={`dropdown-content ${profileDiv}`}>
-            <Link to='/profile'>Profile</Link>
-            <Link to='/articles/create'>New story</Link>
-            <Link to='/chatroom'>Chat & Support</Link>
-            <Link to='/login' onClick={this.handleLogout}>
-              Sign out
-            </Link>
+            {localStorage.token ? (
+              <div>
+                <Link to='/profile'>Profile</Link>
+                <Link to='/articles/create'>New story</Link>
+                <Link to='/chatroom'>Chat & Support</Link>
+                <Link to='/login' onClick={this.handleLogout}>
+                  Sign out
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <Link to='/login'>Login</Link>
+                <Link to='/signup'>Signup</Link>
+              </div>
+            )}
           </div>
         </div>
         <div

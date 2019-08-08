@@ -19,6 +19,10 @@ class ResetPassword extends Form {
     const { email } = this.props.reset;
     this.props.resetPassword(email);
   };
+  componentDidMount() {
+    document.body.style.backgroundImage =
+      "url('../../assets/images/auth-background.jpg')";
+  }
   render() {
     const { errors } = this.state;
     const { reset } = this.props;
@@ -27,25 +31,25 @@ class ResetPassword extends Form {
       setTimeout(() => this.props.history.push('/login'), 5000);
     }
     return (
-      <div className="container">
+      <div className='container'>
         <ToastContainer />
         <h2>Enter your email</h2>
         <form onSubmit={this.handleOnSubmit}>
           <Input
             value={reset.email}
-            type="email"
-            name="email"
+            type='email'
+            name='email'
             onChange={this.handleChange}
             error={errors.email}
-            placeholder="Email Address"
-            className="form-input"
-            id="email"
+            placeholder='Email Address'
+            className='form-input'
+            id='email'
           />
           <Button
-            value="Send Password Reset Email"
-            name="sendEmail"
-            className="input btn-blue"
-            id="sendEmail"
+            value='Send Password Reset Email'
+            name='sendEmail'
+            className='input btn-blue'
+            id='sendEmail'
           />
         </form>
       </div>
