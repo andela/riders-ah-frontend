@@ -407,6 +407,7 @@ export class OneStory extends Component {
             <NavBar />
             <ToastContainer />
             <h2 className='article-title'>{data.title}</h2>
+            <i className='article-title' style={{fontSize: '14px'}}>"{data.description}"</i>
             <Author
               names={data.author.username}
               readingTime={data.readingTime}
@@ -435,6 +436,7 @@ export class OneStory extends Component {
               </div>
               <div className='words'>
                 <div
+                className='body-article'
                   dangerouslySetInnerHTML={{
                     __html: this.mapIdToTag(data.body)
                   }}

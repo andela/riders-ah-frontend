@@ -147,7 +147,8 @@
       .article-title {
         cursor: pointer;
         position: relative;
-        right: 402px;
+        right: 333px;
+        overflow-wrap: break-word;
       }
       .article-date {
         margin: -33px 0px 0px 195px;

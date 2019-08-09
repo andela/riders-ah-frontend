@@ -81,6 +81,22 @@
         display: block;
       }
     }
+    .auth-button {
+      margin-top: 20px;
+      a {
+        text-decoration: none;
+        color: #ffffff;
+        padding: 10px 40px 10px 40px;
+        border-radius: 10px;
+        margin-left: 12px;
+      }
+      .blue {
+        background-color: #3492e2;
+      }
+      .green {
+        background-color: #43a943e3;
+      }
+    }
     .dropdown {
       width: 50px;
       height: 50px;

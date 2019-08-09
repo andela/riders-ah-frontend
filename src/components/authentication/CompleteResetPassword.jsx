@@ -25,6 +25,8 @@ class CompleteResetPassword extends Form {
   componentDidMount() {
     const token = this.props.match.params.token;
     Helpers.setToken(token);
+    document.body.style.backgroundImage =
+      "url('../../assets/images/auth-background.jpg')";
   }
   doAction = () => {
     const {
